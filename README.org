@@ -1,0 +1,13 @@
+
+* Install
+
+#+BEGIN_SRC shell
+git clone https://github.com/hlissner/doom-emacs.git ~/.emacs.d
+git clone https://github.com:driftcrow/doom-emacs-private.git ~/workspace/doom-emacs-private
+cd ~/.emacs.d
+git checkout develop  # this repo is meant to be used with Doom's develop branch
+ln -s ~/workspace/doom-emacs-private/init.el .
+ln -s ~/workspace/doom-emacs-private/private/* modules/private
+make install
+make compile
+#+END_SRC

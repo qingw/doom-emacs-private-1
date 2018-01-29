@@ -55,8 +55,8 @@
   :config
   (magithub-feature-autoinject t)
   (setq
-   magithub-clone-default-directory "~/workspace/source/"
-   magithub-dir (concat doom-etc-dir "magithub/")
+   magithub-clone-default-directory "~/workspace/"
+   ;; magithub-dir (concat doom-etc-dir "magithub/")
    magithub-preferred-remote-method 'clone_url))
 (def-package! evil-magit :after magit
   :init

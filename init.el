@@ -30,7 +30,7 @@
 (require 'core (concat user-emacs-directory "core/core"))
 
 (doom! :feature
-      ;debugger          ; FIXME stepping through code, to help you add bugs
+       debugger          ; FIXME stepping through code, to help you add bugs
        eval              ; run code, run (also, repls)
        evil              ; come to the dark side, we have cookies
        file-templates    ; auto-snippets for empty files
@@ -68,7 +68,7 @@
        gist              ; interacting with github gists
        imenu             ; an imenu sidebar and searchable code index
        impatient-mode    ; show off code over HTTP
-	   macos             ; MacOS-specific commands
+       macos             ; MacOS-specific commands
        make              ; run make tasks from Emacs
        neotree           ; a project drawer, like NERDTree for vim
        ;; password-store    ; password manager for nerds

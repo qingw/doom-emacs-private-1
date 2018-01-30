@@ -3,6 +3,12 @@
 ** multiedit
 ** chinease module
 ** lilypond mode
+** vlf mode
+** integrate evil-collection
+
 * Question
 ** Ctrl-Meta key seem not sent in ubuntu
 ** lead-local not working
+** toggle-frame-maximized not work in MACOS
+* Issues
+** describe-module error at dashboard

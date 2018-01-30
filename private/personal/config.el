@@ -35,7 +35,7 @@
 (def-package-hook! ace-window
   :pre-config
   (setq aw-keys '(?a ?s ?d ?f ?g ?j ?k ?l ?\;)
-        aw-scope 'frame
+        aw-scope 'visible
         aw-background nil)
   nil)
 
@@ -55,7 +55,7 @@
   :config
   (magithub-feature-autoinject t)
   (setq
-   magithub-clone-default-directory "~/workspace/"
+   magithub-clone-default-directory "~/workspace/source/"
    ;; magithub-dir (concat doom-etc-dir "magithub/")
    magithub-preferred-remote-method 'clone_url))
 (def-package! evil-magit :after magit

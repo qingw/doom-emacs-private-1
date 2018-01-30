@@ -17,20 +17,21 @@
       ;; A little sandbox to run code in
       :gnvime "M-;" #'evil-commentary-line
       :gnvime "M-:" #'eval-expression
-      :gnvime "s-;" #'doom/open-scratch-buffer
-      :gnvime "s-:" #'evil-ex
+      :gnvime "s-:" #'doom/open-scratch-buffer
+      :gnvime "s-;" #'evil-ex
 
-      "C-M-h"         #'previous-multiframe-window
-      "C-M-l"         #'next-multiframe-window
+      "C-s-h"         #'previous-multiframe-window
+      "C-s-l"         #'next-multiframe-window
       "s-<return>"    #'doom/toggle-fullscreen
       "s-i"           #'ivy-resume
       "s-m"           #'doom/window-zoom
 
-      "s-t"           #'+neotree/toggle
       "s-/"           #'counsel-imenu
       "s-?"           #'ivy-imenu-anywhere
-      "s-l"           #'avy-goto-line
+      "s-j"           #'avy-goto-line
       "s-h"           #'avy-goto-word-1
+
+      "C-s"           #'swiper
 
       :gnvime "s-r" #'counsel-org-capture
       :gnvime "s-g" #'org-agenda-show-daily
@@ -74,7 +75,7 @@
       :n  "M-s"   #'save-buffer
       :m  "A-j"   #'+default:multi-next-line
       :m  "A-k"   #'+default:multi-previous-line
-      :nv "C-SPC" #'+evil:fold-toggle
+      :nv "C-TAB" #'+evil:fold-toggle
       :gnvimer "s-v" #'clipboard-yank
       ;; Easier window navigation
       :en "C-h"   #'evil-window-left
@@ -84,7 +85,7 @@
 
       "C-x p"     #'+popup/other
 
-      :n  "/"     #'swiper
+      :n  "/"     #'isearch-forward
 
       ;; --- <leader> -------------------------------------
       (:leader
@@ -180,7 +181,7 @@
                                             :v  "e" #'+eval/region
           :desc "Evaluate & replace region" :nv "E" #'+eval:replace-region
           :desc "Build tasks"               :nv "b" #'+eval/build
-          :desc "Jump to definition"        :n  "d" #'+lookup/definition
+          :desc "Jump to definition"        :n  "d" #'evil-goto-definition
           :desc "Jump to references"        :n  "D" #'+lookup/references
           :desc "Open REPL"                 :n  "r" #'+eval/open-repl
                                             :v  "r" #'+eval:repl)
@@ -231,7 +232,7 @@
           :desc "Describe DOOM module"  :n  "d" #'doom/describe-module
           :desc "Find definition"       :n  "." #'+lookup/definition
           :desc "Find references"       :n  "/" #'+lookup/references
-          :desc "Find documentation"    :n  "h" #'+lookup/documentation
+          :desc "Find documentation"    :n  "H" #'+lookup/documentation
           :desc "Describe at point"     :n  "." #'helpful-at-point
           :desc "What face"             :n  "'" #'doom/what-face
           :desc "What minor modes"      :n  ";" #'doom/what-minor-mode
@@ -379,7 +380,7 @@
           "C-S-h"      #'company-show-doc-buffer
           "C-S-s"      #'company-search-candidates
           "C-s"        #'company-filter-candidates
-          "C-SPC"      #'company-complete-common
+          "C-c"        #'company-complete-common
           "C-h"        #'company-quickhelp-manual-begin
           [tab]        #'company-complete-common-or-cycle
           [backtab]    #'company-select-previous
@@ -395,7 +396,7 @@
       (:after counsel
         (:map counsel-ag-map
           [backtab]  #'+ivy/wgrep-occur      ; search/replace on results
-          "C-SPC"    #'ivy-call-and-recenter ; preview
+          "C-TAB"    #'ivy-call-and-recenter ; preview
           "M-RET"    (+ivy-do-action! #'+ivy-git-grep-other-window-action)))
 
       ;; evil
@@ -580,21 +581,22 @@
       (:after ivy
         :map ivy-minibuffer-map
         [escape] #'keyboard-escape-quit
-        "C-SPC" #'ivy-call-and-recenter
+        "C-TAB" #'ivy-call-and-recenter
         "M-v" #'yank
         "M-z" #'undo
         "C-r" #'evil-paste-from-register
         "C-k" #'ivy-previous-line
         "C-j" #'ivy-next-line
-        "s-l" #'ivy-avy
+        "s-j" #'ivy-avy
         "C-l" #'ivy-alt-done
         "C-w" #'ivy-backward-kill-word
+        "C-h" #'ivy-backward-kill-word
         "C-u" #'ivy-kill-line
         "C-b" #'backward-word
         "C-f" #'forward-word)
       (:after swiper
         :map swiper-map
-        "s-l" #'swiper-avy)
+        "s-j" #'swiper-avy)
 
       ;; neotree
       (:after neotree

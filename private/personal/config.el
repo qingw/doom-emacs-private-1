@@ -105,3 +105,22 @@
    `(("h" +ivy/helpful-function "Helpful")))
 
   )
+
+
+;; https://en.wikipedia.org/wiki/list_of_tz_database_time_zones
+(setq display-time-world-list
+      '(("America/New_York" "New York")
+        ("America/Los_Angeles" "Seattle")
+        ("Asia/Shanghai" "Shanghai")
+        ("Asia/Tokyo" "Tokyo")
+        ("Australia/Sydney" "Sydney")
+        ("Europe/London" "London")
+        ("Europe/Berlin" "Germany")
+        ("Europe/Rome" "Italy")
+        ("Europe/Paris" "Paris")))
+
+;; quick way to dispaly world time clock
+(defalias 'wc 'display-time-world)
+
+;; maximize emacs upon startup
+(toggle-frame-maximized)

@@ -5,3 +5,4 @@
 ** lilypond mode
 * Question
 ** Ctrl-Meta key seem not sent in ubuntu
+** lead-local not working

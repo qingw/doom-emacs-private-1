@@ -12,7 +12,7 @@
       ;; --- Global keybindings ---------------------------
       ;; Make M-x available everywhere
       :gnvime "M-x" #'execute-extended-command
-      :gnvime "s-x" #'execute-extended-command
+      :gnvime "s-x" #'evil-ex
 
       ;; A little sandbox to run code in
       :gnvime "M-;" #'evil-commentary-line
@@ -20,9 +20,14 @@
       :gnvime "s-:" #'doom/open-scratch-buffer
       :gnvime "s-;" #'evil-ex
 
+      ;; Window Movements
+      "C-h"           #'evil-window-left
+      "C-j"           #'evil-window-down
+      "C-k"           #'evil-window-up
+      "C-l"           #'evil-window-right
       "C-s-h"         #'previous-multiframe-window
       "C-s-l"         #'next-multiframe-window
-      "s-<return>"    #'doom/toggle-fullscreen
+
       "s-i"           #'ivy-resume
       "s-m"           #'doom/window-zoom
 
@@ -32,6 +37,9 @@
       "s-h"           #'avy-goto-word-1
 
       "C-s"           #'swiper
+      "C-S"           #'swiper
+
+      :nvime  "C-y" #'yank
 
       :gnvime "s-r" #'counsel-org-capture
       :gnvime "s-g" #'org-agenda-show-daily
@@ -44,22 +52,22 @@
       ;; Simple window navigation/manipulation
       "C-`"       #'+popup/toggle
       "C-~"       #'+popup/raise
-      "s-t"       #'+workspace/new
-      "s-T"       #'+workspace/display
-      "s-w"       #'+my-workspace/close-window-or-workspace
-      "s-W"       #'+workspace/close-workspace-or-frame
+      "M-T"       #'+workspace/new
+      "M-t"       #'+workspace/display
+      "M-w"       #'+my-workspace/close-window-or-workspace
+      "M-W"       #'+workspace/close-workspace-or-frame
       "M-n"       #'evil-buffer-new
-      "s-N"       #'make-frame
-      "s-1"       (λ! (+workspace/switch-to 0))
-      "s-2"       (λ! (+workspace/switch-to 1))
-      "s-3"       (λ! (+workspace/switch-to 2))
-      "s-4"       (λ! (+workspace/switch-to 3))
-      "s-5"       (λ! (+workspace/switch-to 4))
-      "s-6"       (λ! (+workspace/switch-to 5))
-      "s-7"       (λ! (+workspace/switch-to 6))
-      "s-8"       (λ! (+workspace/switch-to 7))
-      "s-9"       (λ! (+workspace/switch-to 8))
-      "s-0"       #'+workspace/switch-to-last
+      "M-N"       #'make-frame
+      "M-1"       (λ! (+workspace/switch-to 0))
+      "M-2"       (λ! (+workspace/switch-to 1))
+      "M-3"       (λ! (+workspace/switch-to 2))
+      "M-4"       (λ! (+workspace/switch-to 3))
+      "M-5"       (λ! (+workspace/switch-to 4))
+      "M-6"       (λ! (+workspace/switch-to 5))
+      "M-7"       (λ! (+workspace/switch-to 6))
+      "M-8"       (λ! (+workspace/switch-to 7))
+      "M-9"       (λ! (+workspace/switch-to 8))
+      "M-0"       #'+workspace/switch-to-last
 
       :n  "\\"    #'ace-window
 
@@ -86,6 +94,7 @@
       "C-x p"     #'+popup/other
 
       :n  "/"     #'isearch-forward
+      :n  "M-Y"   #'evil-paste-pop-next
 
       ;; --- <leader> -------------------------------------
       (:leader
@@ -135,6 +144,9 @@
           :desc "Swiper"                :nv "/" #'swiper
           :desc "Imenu"                 :nv "i" #'imenu
           :desc "Imenu across buffers"  :nv "I" #'imenu-anywhere
+          :desc "jump back"            :nv "b" #'avy-pop-mark
+          :desc "show marks"           :nv "m" #'evil-show-marks
+          :desc "show registers"       :nv "r" #'evil-show-registers
           :desc "Online providers"      :nv "o" #'+lookup/online-select)
 
         (:desc "workspace" :prefix "TAB"
@@ -169,6 +181,8 @@
           :desc "Kill buffer"             :n "d" #'doom/kill-this-buffer-in-all-windows
           :desc "Kill other buffers"      :n "o" #'doom/kill-other-buffers
           :desc "Save buffer"             :n "s" #'save-buffer
+          :desc "Revert buffer"           :n "r" #'revert-buffer
+          :desc "VC Revert buffer"        :n "R" #'vc-revert-buffer
           :desc "Pop scratch buffer"      :n "x" #'doom/open-scratch-buffer
           :desc "Bury buffer"             :n "z" #'bury-buffer
           :desc "Next buffer"             :n "]" #'doom/next-buffer
@@ -215,7 +229,7 @@
           :desc "Previous hunk"         :nv "[" #'git-gutter:previous-hunk)
 
         (:desc "help" :prefix "h"
-          :n "h" help-map
+          :desc "Help map"              :n  "h" help-map
           :desc "Apropos"               :n  "a" #'apropos
           :desc "Reload theme"          :n  "R" #'doom//reload-theme
           :desc "Find library"          :n  "l" #'find-library
@@ -223,8 +237,8 @@
           :desc "Command log"           :n  "L" #'global-command-log-mode
           :desc "Describe function"     :n  "f" #'describe-function
           :desc "Describe key"          :n  "k" #'describe-key
-          :desc "Describe keybriefly"   :n  "K" #'describe-key-briefly
-          :desc "Describe char"         :n  "c" #'describe-char
+          :desc "Describe keybriefly"   :n  "c" #'describe-key-briefly
+          :desc "Describe char"         :n  "C" #'describe-char
           :desc "Describe mode"         :n  "M" #'describe-mode
           :desc "Describe variable"     :n  "v" #'describe-variable
           :desc "Describe face"         :n  "F" #'describe-face
@@ -250,7 +264,7 @@
           :desc "Browse mode notes"     :n  "m" #'+org/browse-notes-for-major-mode
           :desc "Browse project notes"  :n  "p" #'+org/browse-notes-for-project)
 
-        (:desc "open" :prefix "o"
+        (:desc "open" :prefix "a"
           :desc "Default browser"       :n  "b" #'browse-url-of-file
           :desc "Debugger"              :n  "d" #'+debug/open
           :desc "REPL"                  :n  "r" #'+eval/open-repl
@@ -314,6 +328,7 @@
           :desc "Highlight Lines"        :n "h" #'hl-line-mode
           :desc "Visual Lines"           :n "v" #'visual-line-mode
           :desc "Fullscreen"             :n "f" #'doom/toggle-fullscreen
+          :desc "Frame maximized"        :n "m" #'toggle-frame-maximized
           :desc "Indent guides"          :n "i" #'highlight-indentation-mode
           :desc "Indent guides (column)" :n "I" #'highlight-indentation-current-column-mode
           :desc "Impatient mode"         :n "p" #'+impatient-mode/toggle
@@ -582,8 +597,8 @@
         :map ivy-minibuffer-map
         [escape] #'keyboard-escape-quit
         "C-TAB" #'ivy-call-and-recenter
-        "M-v" #'yank
-        "M-z" #'undo
+        "C-v" #'yank
+        "C-/" #'undo
         "C-r" #'evil-paste-from-register
         "C-k" #'ivy-previous-line
         "C-j" #'ivy-next-line
@@ -594,9 +609,6 @@
         "C-u" #'ivy-kill-line
         "C-b" #'backward-word
         "C-f" #'forward-word)
-      (:after swiper
-        :map swiper-map
-        "s-j" #'swiper-avy)
 
       ;; neotree
       (:after neotree

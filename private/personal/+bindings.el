@@ -52,10 +52,10 @@
       ;; Simple window navigation/manipulation
       "C-`"       #'+popup/toggle
       "C-~"       #'+popup/raise
-      "M-T"       #'+workspace/new
-      "M-t"       #'+workspace/display
-      "M-w"       #'+my-workspace/close-window-or-workspace
-      "M-W"       #'+workspace/close-workspace-or-frame
+      "M-t"       #'+workspace/new
+      "M-T"       #'+workspace/display
+      "M-w"       #'delete-window
+      "M-W"       #'delete-frame
       "M-n"       #'evil-buffer-new
       "M-N"       #'make-frame
       "M-1"       (λ! (+workspace/switch-to 0))
@@ -144,9 +144,9 @@
           :desc "Swiper"                :nv "/" #'swiper
           :desc "Imenu"                 :nv "i" #'imenu
           :desc "Imenu across buffers"  :nv "I" #'imenu-anywhere
-          :desc "jump back"            :nv "b" #'avy-pop-mark
-          :desc "show marks"           :nv "m" #'evil-show-marks
-          :desc "show registers"       :nv "r" #'evil-show-registers
+          :desc "jump back"             :nv "b" #'avy-pop-mark
+          :desc "show marks"            :nv "m" #'evil-show-marks
+          :desc "show registers"        :nv "r" #'evil-show-registers
           :desc "Online providers"      :nv "o" #'+lookup/online-select)
 
         (:desc "workspace" :prefix "TAB"
@@ -657,6 +657,11 @@
       :m  "g]" #'smart-forward
       :m  "g[" #'smart-backward
 
+      ;; swiper
+      (:after swiper
+        (:map swiper-map
+          [backtab]  #'+ivy/wgrep-occur))
+
       ;; undo-tree -- undo/redo for visual regions
       :v "C-u" #'undo-tree-undo
       :v "C-r" #'undo-tree-redo
@@ -704,7 +709,7 @@
         :n "]]"  #'help-go-forward
         :n "o"   #'ace-link-help
         :n "q"   #'quit-window
-        :n "Q"   #'+ivy-quit-and-resume)
+        :n "Q"   #'ivy-resume)
 
       (:after vc-annotate
         :map vc-annotate-mode-map

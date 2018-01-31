@@ -1,7 +1,6 @@
 ;;; packages.el -*- lexical-binding: t; -*-
 
 ;; (package! centered-window-mode :ignore t)
-(package! color-theme-sanityinc-tomorrow)
 
 (package! orgit)
 (package! evil-magit)

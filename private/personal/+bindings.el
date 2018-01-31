@@ -195,7 +195,7 @@
                                             :v  "e" #'+eval/region
           :desc "Evaluate & replace region" :nv "E" #'+eval:replace-region
           :desc "Build tasks"               :nv "b" #'+eval/build
-          :desc "Jump to definition"        :n  "d" #'evil-goto-definition
+          :desc "Jump to definition"        :n  "d" #'+lookup/definition
           :desc "Jump to references"        :n  "D" #'+lookup/references
           :desc "Open REPL"                 :n  "r" #'+eval/open-repl
                                             :v  "r" #'+eval:repl)
@@ -236,6 +236,7 @@
           :desc "Toggle Emacs log"      :n  "m" #'view-echo-area-messages
           :desc "Command log"           :n  "L" #'global-command-log-mode
           :desc "Describe function"     :n  "f" #'describe-function
+          :desc "Find function"         :n  "j" #'find-function
           :desc "Describe key"          :n  "k" #'describe-key
           :desc "Describe keybriefly"   :n  "c" #'describe-key-briefly
           :desc "Describe char"         :n  "C" #'describe-char

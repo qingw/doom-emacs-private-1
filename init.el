@@ -30,13 +30,14 @@
 (require 'core (concat user-emacs-directory "core/core"))
 
 (doom! :feature
+       popup             ; tame sudden yet inevitable temporary windows
        debugger          ; FIXME stepping through code, to help you add bugs
        eval              ; run code, run (also, repls)
        evil              ; come to the dark side, we have cookies
        file-templates    ; auto-snippets for empty files
-       lookup
-       popup
-       ;; jump              ; helping you get around
+       (lookup           ; helps you navigate your code and documentation
+        +devdocs         ; ...on devdocs.io online
+        +docsets)        ; ...or in Dash docsets locally
        services          ; TODO managing external services & code builders
        snippets          ; my elves. They type so I don't have to
        spellcheck        ; tasing you for misspelling mispelling
@@ -61,7 +62,7 @@
       ;unicode           ; extended unicode support for various languages
       ;tabbar            ; FIXME an (incomplete) tab bar for Emacs
        vi-tilde-fringe   ; fringe tildes to mark beyond EOB
-       (window-select +ace-window)  ; visually switch windows
+       window-select     ; visually switch windows
 
        :tools
        dired             ; making dired pretty [functional]
@@ -91,7 +92,7 @@
        emacs-lisp        ; drown in parentheses
        go                ; the hipster dialect
        ;(haskell +intero) ; a language that's lazier than I am
-       hy                ; readability of scheme w/ speed of python
+       ;hy                ; readability of scheme w/ speed of python
        ;(java +meghanada) ; the poster child for carpal tunnel syndrome
        javascript        ; all(hope(abandon(ye(who(enter(here))))))
        ;julia             ; a better, faster MATLAB
@@ -114,8 +115,8 @@
        ;purescript        ; javascript, but functional
        python            ; beautiful is better than ugly
        rest              ; Emacs as a REST client
-       ;ruby              ; 1.step do {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
-       ;rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
+       ruby              ; 1.step do {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
+       rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;scala             ; java, but good
        sh                ; she sells (ba|z)sh shells on the C xor
        ;swift             ; who asked for emoji variables?
@@ -126,7 +127,7 @@
        ;; toward a specific purpose. They may have additional dependencies and
        ;; should be loaded late.
        :app
-      ;email             ; emacs as an email client
+      ;(email +gmail)    ; emacs as an email client
       ;irc               ; how neckbeards socialize
       ;rss               ; emacs as an RSS reader
       ;twitter           ; twitter client https://twitter.com/vnought

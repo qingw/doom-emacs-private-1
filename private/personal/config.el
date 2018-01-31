@@ -3,7 +3,12 @@
 
 (load! +bindings)
 
+(def-package! color-theme-sanityinc-tomorrow)
 
+(after! color-theme-sanityinc-tomorrow
+  (color-theme-sanityinc-tomorrow-night)
+  ;; (setq doom-theme color-theme-sanityinc-tomorrow-light)
+  )
 
 (setq-default indent-tabs-mode nil)           ; no tabs
 

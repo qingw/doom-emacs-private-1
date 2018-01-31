@@ -34,7 +34,9 @@
        eval              ; run code, run (also, repls)
        evil              ; come to the dark side, we have cookies
        file-templates    ; auto-snippets for empty files
-       jump              ; helping you get around
+       lookup
+       popup
+       ;; jump              ; helping you get around
        services          ; TODO managing external services & code builders
        snippets          ; my elves. They type so I don't have to
        spellcheck        ; tasing you for misspelling mispelling
@@ -136,7 +138,9 @@
        ;; scheme and additional ex commands for evil-mode. Use it as a reference
        ;; for your own.
        :private
-       (default)
+       ;;(default +bindings +snippets +evil-commands)
+       (default +snippets +evil-commands)
        personal
-       org)
+       org
+       )
 

@@ -1,4 +1,11 @@
 #+TITLE: TODO
+
+* features
+
+  - use hydra/ivy/evil for main kernal
+  - key map convinience
+  - after!
+
 * TODO
 ** multiedit
 ** chinease module
@@ -10,5 +17,6 @@
 ** Ctrl-Meta key seem not sent in ubuntu
 ** lead-local not working
 ** toggle-frame-maximized not work in MACOS
+** how to involve lisp variable,keybriefly quick in echo area
 * Issues
 ** describe-module error at dashboard

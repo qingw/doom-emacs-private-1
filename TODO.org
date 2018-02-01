@@ -8,7 +8,7 @@
 
 * TODO
 ** multiedit
-** chinease module
+** chinese module
 ** lilypond mode
 ** vlf mode
 ** integrate evil-collection
@@ -18,5 +18,7 @@
 ** lead-local not working
 ** toggle-frame-maximized not work in MACOS
 ** how to involve lisp variable,keybriefly quick in echo area
+** key binding not work in *doom:scrath* buffer, ex: M-n
+seems popup window mode
 * Issues
 ** describe-module error at dashboard

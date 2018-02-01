@@ -12,15 +12,22 @@
 (setq-default mode-line-format nil)
 
 ;; I've swapped these keys on my keyboard
-(setq user-mail-address "drfitcrow@gmail.com"
-      user-full-name    "driftcrow"
+(setq user-mail-address "hhdslb@gmail.com"
+      user-full-name    "hhdslb"
 
       doom-font (font-spec :family "Input Mono Narrow" :size 12 :weight 'semi-light)
       doom-variable-pitch-font (font-spec :family "Fira Sans")
       doom-unicode-font (font-spec :family "Input Mono Narrow" :size 12)
-      doom-big-font (font-spec :family "Fira Mono" :size 19)
+      doom-big-font (font-spec :family "Fira Mono" :size 16)
 
       org-ellipsis " ▼ ")
 
+;; (setq
+ ;; epa-file-encrypt-to user-mail-address
+      ;; auth-sources (list (expand-file-name ".authinfo.gpg" "~")))
+
 (add-hook! doom-big-font-mode
   (setq +doom-modeline-height (if doom-big-font-mode 37 29)))
+
+(setq-default explicit-shell-file-name "/bin/bash")
+(setq-default shell-file-name "/bin/bash")

@@ -143,5 +143,6 @@
        (default +snippets +evil-commands)
        personal
        org
+       chinese
        )
 

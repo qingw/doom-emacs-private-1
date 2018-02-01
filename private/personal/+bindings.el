@@ -13,6 +13,7 @@
       ;; Make M-x available everywhere
       :gnvime "M-x" #'execute-extended-command
       :gnvime "s-x" #'evil-ex
+      :gnvime "<C-escape>" #'universal-argument
 
       ;; A little sandbox to run code in
       :gnvime "M-;" #'evil-commentary-line
@@ -78,7 +79,7 @@
       :ne "M-a"   #'mark-whole-buffer
       :ne "M-c"   #'evil-yank
       :ne "M-q"   #'evil-quit
-      :ne "M-f"   #'swiper
+      ;; :ne "M-f"   #'swiper
       :ne "C-M-f" #'doom/toggle-fullscreen
       :n  "M-s"   #'save-buffer
       :m  "A-j"   #'+default:multi-next-line
@@ -142,8 +143,8 @@
         (:desc "search" :prefix "s"
           :desc "counsel-rg"            :nv "r" #'counsel-rg
           :desc "Swiper"                :nv "/" #'swiper
-          :desc "Imenu"                 :nv "i" #'imenu
-          :desc "Imenu across buffers"  :nv "I" #'imenu-anywhere
+          :desc "Imenu"                 :nv "j" #'imenu
+          :desc "Imenu across buffers"  :nv "J" #'imenu-anywhere
           :desc "jump back"             :nv "b" #'avy-pop-mark
           :desc "show marks"            :nv "m" #'evil-show-marks
           :desc "show registers"        :nv "r" #'evil-show-registers
@@ -441,6 +442,9 @@
           "C-u"     #'winner-undo
           "C-r"     #'winner-redo
           "o"       #'doom/window-enlargen
+          ;; Window split
+          "-"       #'evil-window-split
+          "/"       #'evil-window-vsplit
           ;; Delete window
           "c"       #'+workspace/close-window-or-workspace
           "C-C"     #'ace-delete-window))
@@ -608,8 +612,11 @@
         "C-w" #'ivy-backward-kill-word
         "C-h" #'ivy-backward-kill-word
         "C-u" #'ivy-kill-line
-        "C-b" #'backward-word
-        "C-f" #'forward-word)
+        "C-b" #'backward-char
+        "M-b" #'backward-word
+        "C-f" #'forward-char
+        "M-f" #'forward-word
+        )
 
       ;; neotree
       (:after neotree
@@ -741,7 +748,8 @@
       ;; jumping to eol.
       :i "C-a" #'doom/backward-to-bol-or-indent
       :i "C-e" #'doom/forward-to-last-non-comment-or-eol
-      :i "C-u" #'doom/backward-kill-to-bol-and-indent
+      :ni "C-S-u" #'doom/backward-kill-to-bol-and-indent
+      :ni "C-u" #'kill-line
 
       ;; textmate-esque newline insertion
       :i [M-return]     #'evil-open-below
@@ -750,9 +758,11 @@
       [M-backspace]     #'doom/backward-kill-to-bol-and-indent
       :i [backspace]    #'delete-backward-char
       :i [M-backspace]  #'doom/backward-kill-to-bol-and-indent
-      ;; Emacsien motions for insert mode
-      :i "C-b" #'backward-word
-      :i "C-f" #'forward-word
+      ;; Emacsien motions for insert mode TODO: complete motions list
+      :i "C-b" #'backward-char
+      :i "C-f" #'forward-char
+      :i "C-n" #'next-line
+      :i "C-p" #'previous-line
 
       ;; Highjacks space/backspace to:
       ;;   a) balance spaces inside brackets/parentheses ( | ) -> (|)
@@ -782,8 +792,10 @@
         "C-a" #'move-beginning-of-line
         "C-w" #'doom/minibuffer-kill-word
         "C-u" #'doom/minibuffer-kill-line
-        "C-b" #'backward-word
-        "C-f" #'forward-word
+        "C-b" #'backward-char
+        "M-b" #'backward-word
+        "C-f" #'forward-char
+        "M-f" #'forward-word
         "M-z" #'doom/minibuffer-undo)
 
       (:map messages-buffer-mode-map

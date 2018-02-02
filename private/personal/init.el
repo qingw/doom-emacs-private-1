@@ -15,19 +15,20 @@
 (setq user-mail-address "hhdslb@gmail.com"
       user-full-name    "hhdslb"
 
-      doom-font (font-spec :family "Input Mono Narrow" :size 12 :weight 'semi-light)
+      doom-font (font-spec :family "Input Mono Narrow" :size 14 :weight 'semi-light)
       doom-variable-pitch-font (font-spec :family "Fira Sans")
-      doom-unicode-font (font-spec :family "Input Mono Narrow" :size 12)
-      doom-big-font (font-spec :family "Fira Mono" :size 16)
+      doom-unicode-font (font-spec :family "Input Mono Narrow" :size 14)
+      doom-big-font (font-spec :family "Fira Mono" :size 18)
 
-      org-ellipsis " ▼ ")
+      )
+
+(add-hook! doom-big-font-mode
+  (setq +doom-modeline-height (if doom-big-font-mode 37 29)))
 
 ;; (setq
  ;; epa-file-encrypt-to user-mail-address
       ;; auth-sources (list (expand-file-name ".authinfo.gpg" "~")))
 
-(add-hook! doom-big-font-mode
-  (setq +doom-modeline-height (if doom-big-font-mode 37 29)))
 
 (setq-default explicit-shell-file-name "/bin/bash")
 (setq-default shell-file-name "/bin/bash")

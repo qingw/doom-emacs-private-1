@@ -12,3 +12,23 @@
   (fcitx-aggressive-setup)
   ;; (setq fcitx-use-dbus t) ; uncomment if you're using Linux
   )
+
+
+(def-package! youdao-dictionary
+  :config
+  (progn
+    ;; Enable Cache
+    (setq url-automatic-caching t
+          ;; Set file path for saving search history
+          youdao-dictionary-search-history-file
+          (concat doom-cache-dir ".youdao")
+          ;; Enable Chinese word segmentation support
+          youdao-dictionary-use-chinese-word-segmentation t))
+  )
+
+(map!
+ "s-y"           #'youdao-dictionary-search-at-point+
+
+ (:leader
+   (:prefix "a"
+     (:desc "Youdao"  :nv "y"   #'youdao-dictionary-search-at-point+))))

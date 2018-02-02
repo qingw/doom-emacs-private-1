@@ -166,3 +166,11 @@ If run interactively, get ENTRY from context."
      :n "g" 'org-brain-goto
      :n [tab] 'org-brain-goto-current
      )))
+
+
+(after! org-bullets
+  ;; The standard unicode characters are usually misaligned depending on the
+  ;; font. This bugs me. Personally, markdown #-marks for headlines are more
+  ;; elegant, so we use those.
+
+  (setq org-bullets-bullet-list '("⊢" "⋮" "⋱" " ")))

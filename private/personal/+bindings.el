@@ -78,7 +78,7 @@
       :ne "M-b"   #'+eval/build
       :ne "M-a"   #'mark-whole-buffer
       :ne "M-c"   #'evil-yank
-      :ne "M-q"   #'evil-quit
+      :ne "s-q"   (if (daemonp) #'delete-frame #'save-buffers-kill-emacs)
       ;; :ne "M-f"   #'swiper
       :ne "C-M-f" #'doom/toggle-fullscreen
       :n  "M-s"   #'save-buffer
@@ -120,7 +120,7 @@
 
         (:desc "previous..." :prefix "["
           :desc "Text size"             :nv "[" #'text-scale-decrease
-          :desc "Buffer"                :nv "b" #'doom/previous-buffer
+          :desc "Buffer"                :nv "b" #'previous-buffer
           :desc "Diff Hunk"             :nv "d" #'git-gutter:previous-hunk
           :desc "Todo"                  :nv "t" #'hl-todo-previous
           :desc "Error"                 :nv "e" #'previous-error
@@ -131,7 +131,7 @@
 
         (:desc "next..." :prefix "]"
           :desc "Text size"             :nv "]" #'text-scale-increase
-          :desc "Buffer"                :nv "b" #'doom/next-buffer
+          :desc "Buffer"                :nv "b" #'next-buffer
           :desc "Diff Hunk"             :nv "d" #'git-gutter:next-hunk
           :desc "Todo"                  :nv "t" #'hl-todo-next
           :desc "Error"                 :nv "e" #'next-error
@@ -186,8 +186,8 @@
           :desc "VC Revert buffer"        :n "R" #'vc-revert-buffer
           :desc "Pop scratch buffer"      :n "x" #'doom/open-scratch-buffer
           :desc "Bury buffer"             :n "z" #'bury-buffer
-          :desc "Next buffer"             :n "]" #'doom/next-buffer
-          :desc "Previous buffer"         :n "[" #'doom/previous-buffer
+          :desc "Next buffer"             :n "]" #'next-buffer
+          :desc "Previous buffer"         :n "[" #'previous-buffer
           :desc "Sudo edit this file"     :n "S" #'doom/sudo-this-file)
 
         (:desc "code" :prefix "c"
@@ -245,10 +245,10 @@
           :desc "Describe variable"     :n  "v" #'describe-variable
           :desc "Describe face"         :n  "F" #'describe-face
           :desc "Describe DOOM setting" :n  "s" #'doom/describe-setting
-          :desc "Describe DOOM module"  :n  "d" #'doom/describe-module
+          :desc "Describe DOOM module"  :n  "D" #'doom/describe-module
           :desc "Find definition"       :n  "." #'+lookup/definition
           :desc "Find references"       :n  "/" #'+lookup/references
-          :desc "Find documentation"    :n  "H" #'+lookup/documentation
+          :desc "Find documentation"    :n  "d" #'+lookup/documentation
           :desc "Describe at point"     :n  "." #'helpful-at-point
           :desc "What face"             :n  "'" #'doom/what-face
           :desc "What minor modes"      :n  ";" #'doom/what-minor-mode
@@ -343,8 +343,8 @@
       ;; --- Personal vim-esque bindings ------------------
       :n  "zx" #'doom/kill-this-buffer-in-all-windows
       :n  "ZX" #'bury-buffer
-      :n  "]b" #'doom/next-buffer
-      :n  "[b" #'doom/previous-buffer
+      :n  "]b" #'next-buffer
+      :n  "[b" #'previous-buffer
       :n  "]w" #'+workspace/switch-right
       :n  "[w" #'+workspace/switch-left
       :m  "gt" #'+workspace/switch-right
@@ -375,6 +375,7 @@
       :nv [C-tab] #'aya-create
 
       ;; company-mode (vim-like omnicompletion)
+      :i "C-@"    #'+company/complete
       :i "C-,"  #'+company/complete
       (:prefix "C-."
         :i "C-l"   #'+company/whole-lines
@@ -797,6 +798,10 @@
         "C-f" #'forward-char
         "M-f" #'forward-word
         "M-z" #'doom/minibuffer-undo)
+
+      (:after evil
+        (:map evil-ex-completion-map
+          "C-a" #'move-beginning-of-line))
 
       (:map messages-buffer-mode-map
         "M-;" #'eval-expression

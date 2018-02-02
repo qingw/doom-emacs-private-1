@@ -36,13 +36,7 @@
         aw-background nil)
   nil)
 
-;; lang/org
-(after! org-bullets
-  ;; The standard unicode characters are usually misaligned depending on the
-  ;; font. This bugs me. Personally, markdown #-marks for headlines are more
-  ;; elegant, so we use those.
-
-  (setq org-bullets-bullet-list '("⊢" "⋮" "⋱" " ")))
+(setq company-show-numbers t)
 
 ;; ** Magit
 (def-package! orgit :after magit)
@@ -53,7 +47,7 @@
   (magithub-feature-autoinject t)
   (setq
    magithub-clone-default-directory "~/workspace/source/"
-   ;; magithub-dir (concat doom-etc-dir "magithub/")
+   magithub-dir (concat doom-etc-dir "magithub/")
    magithub-preferred-remote-method 'clone_url))
 (def-package! evil-magit :after magit
   :init
@@ -121,3 +115,8 @@
 
 ;; maximize emacs upon startup
 (toggle-frame-maximized)
+
+(def-package! edit-server
+  :config
+  (edit-server-start)
+  )

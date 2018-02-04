@@ -41,14 +41,16 @@
 ;; ** Magit
 (def-package! orgit :after magit)
 (def-package! magithub
+  :commands (magithub-clone
+             magithub-create)
   :after magit
-  ;; :ensure t
+  :demand
   :config
   (magithub-feature-autoinject t)
   (setq
-   magithub-clone-default-directory "~/workspace/source/"
+   magithub-clone-default-directory "~/workspace/sources/"
    magithub-dir (concat doom-etc-dir "magithub/")
-   magithub-preferred-remote-method 'clone_url))
+   magithub-preferred-remote-method 'ssh_url))
 (def-package! evil-magit :after magit
   :init
   ;; optional: this is the evil state that evil-magit will use
@@ -114,9 +116,11 @@
 (defalias 'wc 'display-time-world)
 
 ;; maximize emacs upon startup
-(toggle-frame-maximized)
+;; (toggle-frame-maximized)
 
-(def-package! edit-server
+(def-package! atomic-chrome
   :config
-  (edit-server-start)
+  (atomic-chrome-start-server)
+  (setq atomic-chrome-default-major-mode 'markdown-mode)
+  (setq atomic-chrome-buffer-open-style 'frame)
   )

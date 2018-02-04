@@ -30,8 +30,10 @@
 (require 'core (concat user-emacs-directory "core/core"))
 
 (doom! :feature
-       popup             ; tame sudden yet inevitable temporary windows
-       debugger          ; FIXME stepping through code, to help you add bugs
+       (popup            ; tame sudden yet inevitable temporary windows
+        +all             ; catch all popups that start with an asterix
+        +defaults)       ; default popup rules
+      ;debugger          ; FIXME stepping through code, to help you add bugs
        eval              ; run code, run (also, repls)
        evil              ; come to the dark side, we have cookies
        file-templates    ; auto-snippets for empty files

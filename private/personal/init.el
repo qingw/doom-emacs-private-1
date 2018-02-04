@@ -32,3 +32,6 @@
 
 (setq-default explicit-shell-file-name "/bin/bash")
 (setq-default shell-file-name "/bin/bash")
+
+;; for maximize in MACOS
+(setq frame-resize-pixelwise t)

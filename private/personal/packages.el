@@ -10,4 +10,4 @@
 (package! graphviz-dot-mode)
 (package! whitespace-cleanup-mode)
 
-(package! edit-server)
+(package! atomic-chrome)

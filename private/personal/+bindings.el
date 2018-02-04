@@ -50,13 +50,14 @@
       "M-="       #'text-scale-increase
       "M--"       #'text-scale-decrease
 
-      ;; Simple window navigation/manipulation
+      ;; Simple window/frame navigation/manipulation
       "C-`"       #'+popup/toggle
       "C-~"       #'+popup/raise
       "M-t"       #'+workspace/new
       "M-T"       #'+workspace/display
       "M-w"       #'delete-window
       "M-W"       #'delete-frame
+      "C-M-f"     #'toggle-frame-fullscreen
       "M-n"       #'evil-buffer-new
       "M-N"       #'make-frame
       "M-1"       (λ! (+workspace/switch-to 0))
@@ -78,9 +79,8 @@
       :ne "M-b"   #'+eval/build
       :ne "M-a"   #'mark-whole-buffer
       :ne "M-c"   #'evil-yank
-      :ne "s-q"   (if (daemonp) #'delete-frame #'save-buffers-kill-emacs)
+      :ne "M-q"   (if (daemonp) #'delete-frame #'save-buffers-kill-emacs)
       ;; :ne "M-f"   #'swiper
-      :ne "C-M-f" #'doom/toggle-fullscreen
       :n  "M-s"   #'save-buffer
       :m  "A-j"   #'+default:multi-next-line
       :m  "A-k"   #'+default:multi-previous-line
@@ -105,7 +105,7 @@
         :desc "Org Capture"             :nv "X"  #'+org-capture/open
 
         ;; Most commonly used
-        :desc "Find file in project"    :n "SPC" #'execute-extended-command
+        :desc "extended command"        :n "SPC" #'execute-extended-command
         :desc "Switch workspace buffer" :n ","   #'persp-switch-to-buffer
         :desc "Switch buffer"           :n "<"   #'switch-to-buffer
         :desc "Browse files"            :n "."   #'find-file
@@ -141,7 +141,7 @@
           :desc "Spelling correction"   :n  "S" #'flyspell-correct-word-generic)
 
         (:desc "search" :prefix "s"
-          :desc "counsel-rg"            :nv "r" #'counsel-rg
+          :desc "counsel-rg"            :nv "s" #'counsel-rg
           :desc "Swiper"                :nv "/" #'swiper
           :desc "Imenu"                 :nv "j" #'imenu
           :desc "Imenu across buffers"  :nv "J" #'imenu-anywhere
@@ -179,7 +179,7 @@
           :desc "New empty buffer"        :n "n" #'evil-buffer-new
           :desc "Switch workspace buffer" :n "b" #'persp-switch-to-buffer
           :desc "Switch buffer"           :n "B" #'switch-to-buffer
-          :desc "Kill buffer"             :n "d" #'doom/kill-this-buffer-in-all-windows
+          :desc "Kill buffer"             :n "k" #'kill-this-buffer
           :desc "Kill other buffers"      :n "o" #'doom/kill-other-buffers
           :desc "Save buffer"             :n "s" #'save-buffer
           :desc "Revert buffer"           :n "r" #'revert-buffer
@@ -202,7 +202,7 @@
                                             :v  "r" #'+eval:repl)
 
         (:desc "file" :prefix "f"
-          :desc "Find file"                 :n "f" #'find-file
+          :desc "Find file"                 :n "." #'find-file
           :desc "Sudo find file"            :n ">" #'doom/sudo-find-file
           :desc "Find file in project"      :n "/" #'projectile-find-file
           :desc "Find file from here"       :n "?" #'counsel-file-jump
@@ -329,7 +329,7 @@
           :desc "Truncate Lines"         :n "l" #'toggle-truncate-lines
           :desc "Highlight Lines"        :n "h" #'hl-line-mode
           :desc "Visual Lines"           :n "v" #'visual-line-mode
-          :desc "Fullscreen"             :n "f" #'doom/toggle-fullscreen
+          :desc "Frame fullscreen"       :n "f" #'toggle-frame-fullscreen
           :desc "Frame maximized"        :n "m" #'toggle-frame-maximized
           :desc "Indent guides"          :n "i" #'highlight-indentation-mode
           :desc "Indent guides (column)" :n "I" #'highlight-indentation-current-column-mode
@@ -341,7 +341,7 @@
 
 
       ;; --- Personal vim-esque bindings ------------------
-      :n  "zx" #'doom/kill-this-buffer-in-all-windows
+      :n  "zx" #'kill-this-buffer
       :n  "ZX" #'bury-buffer
       :n  "]b" #'next-buffer
       :n  "[b" #'previous-buffer
@@ -603,7 +603,7 @@
         :map ivy-minibuffer-map
         [escape] #'keyboard-escape-quit
         "C-TAB" #'ivy-call-and-recenter
-        "C-v" #'yank
+        ;; "C-y" #'yank
         "C-/" #'undo
         "C-r" #'evil-paste-from-register
         "C-k" #'ivy-previous-line

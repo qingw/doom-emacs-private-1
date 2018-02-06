@@ -184,10 +184,13 @@
           :desc "Save buffer"             :n "s" #'save-buffer
           :desc "Revert buffer"           :n "r" #'revert-buffer
           :desc "VC Revert buffer"        :n "R" #'vc-revert-buffer
-          :desc "Pop scratch buffer"      :n "x" #'doom/open-scratch-buffer
+          :desc "Pop scratch buffer"      :n "X" #'doom/open-scratch-buffer
           :desc "Bury buffer"             :n "z" #'bury-buffer
           :desc "Next buffer"             :n "]" #'next-buffer
           :desc "Previous buffer"         :n "[" #'previous-buffer
+          :desc "Doom dashboard"          :n "h" #'+doom-dashboard/open
+          :desc "Switch to *Messages*"    :n "M" (λ! (switch-to-buffer "*Messages*"))
+          :desc "Switch to *scrach*"      :n "x" (λ! (switch-to-buffer "*scratch*"))
           :desc "Sudo edit this file"     :n "S" #'doom/sudo-this-file)
 
         (:desc "code" :prefix "c"

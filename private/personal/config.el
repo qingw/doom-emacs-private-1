@@ -15,8 +15,8 @@
 
 ;; ** Tramp
 (after! tramp-sh
-  (add-to-list 'tramp-remote-path "/research/kevinyip10/xfu/miniconda3/bin")
-  (add-to-list 'tramp-remote-path "/uac/gds/xfu/bin"))
+  (add-to-list 'tramp-remote-path "")
+  (add-to-list 'tramp-remote-path ""))
 
 (after! recentf
   (add-to-list 'recentf-exclude ".*\\.gz")
@@ -46,6 +46,7 @@
   :after magit
   :demand
   :config
+  (autoload 'magithub-completion-enable "magithub-completion")
   (magithub-feature-autoinject t)
   (setq
    magithub-clone-default-directory "~/workspace/sources/"
@@ -93,9 +94,12 @@
 ;; ** counsel-M-x
   (defun +ivy/helpful-function (prompt)
     (helpful-function (intern prompt)))
+  (defun +ivy/find-function (prompt)
+    (find-function (intern prompt)))
   (ivy-add-actions
    'counsel-M-x
-   `(("h" +ivy/helpful-function "Helpful")))
+   `(("h" +ivy/helpful-function "Helpful")
+     ("f" +ivy/find-function "Find")))
 
   )
 
@@ -116,7 +120,7 @@
 (defalias 'wc 'display-time-world)
 
 ;; maximize emacs upon startup
-;; (toggle-frame-maximized)
+(toggle-frame-maximized)
 
 (def-package! atomic-chrome
   :config
@@ -124,3 +128,10 @@
   (setq atomic-chrome-default-major-mode 'markdown-mode)
   (setq atomic-chrome-buffer-open-style 'frame)
   )
+
+;; use daemon
+(require 'server)
+(add-hook 'after-init-hook (lambda ()
+                             (unless (or (daemonp) (server-running-p))
+                               (server-start)
+                               (setq server-raise-frame t))))

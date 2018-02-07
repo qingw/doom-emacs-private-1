@@ -37,8 +37,11 @@
       "s-j"           #'avy-goto-line
       "s-h"           #'avy-goto-word-1
 
-      "C-s"           #'swiper
       "C-S"           #'swiper
+      "C-s"           #'doom/swiper-region-or-symbol
+      "C-s-s"         #'doom/counsel-region-or-symbol
+      "s-S"           #'swiper-all
+      "s-s"           #'doom/swiper-all-region-or-symbol
 
       :nvime  "C-y" #'yank
 
@@ -449,6 +452,8 @@
           ;; Window split
           "-"       #'evil-window-split
           "/"       #'evil-window-vsplit
+          "+"       #'doom/window-layout-toggle
+
           ;; Delete window
           "c"       #'+workspace/close-window-or-workspace
           "C-C"     #'ace-delete-window))
@@ -767,6 +772,7 @@
       :i "C-f" #'forward-char
       :i "C-n" #'next-line
       :i "C-p" #'previous-line
+      :i "C-d" #'delete-char
 
       ;; Highjacks space/backspace to:
       ;;   a) balance spaces inside brackets/parentheses ( | ) -> (|)

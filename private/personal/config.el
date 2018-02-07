@@ -1,11 +1,13 @@
 ;;; config.el -*- lexical-binding: t; -*-
 
-
+(load! +functions)
 (load! +bindings)
 
 
 (setq
  which-key-idle-delay 0.3
+ minibuffer-message-timeout 3
+ counsel-projectile-ag-initial-input '(projectile-symbol-or-selection-at-point)
 
  ;; tramp
  tramp-default-method "ssh"

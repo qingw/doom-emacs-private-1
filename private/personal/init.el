@@ -12,8 +12,8 @@
 (setq-default mode-line-format nil)
 
 ;; I've swapped these keys on my keyboard
-(setq user-mail-address "hhdslb@gmail.com"
-      user-full-name    "hhdslb"
+(setq user-mail-address "driftcrow@gmail.com"
+      user-full-name    "driftcrow"
 
       doom-font (font-spec :family "Input Mono Narrow" :size 14 :weight 'semi-light)
       doom-variable-pitch-font (font-spec :family "Fira Sans")

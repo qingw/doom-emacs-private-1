@@ -1,6 +1,7 @@
 ;;; config.el -*- lexical-binding: t; -*-
 
 (load! +functions)
+(load! +hydras)
 (load! +bindings)
 
 
@@ -8,6 +9,9 @@
  which-key-idle-delay 0.3
  minibuffer-message-timeout 3
  counsel-projectile-ag-initial-input '(projectile-symbol-or-selection-at-point)
+
+ projectile-ignored-projects '("~/"
+                               "/tmp")
 
  ;; tramp
  tramp-default-method "ssh"
@@ -32,9 +36,8 @@
 (set-window-fringes (minibuffer-window) 0 0 nil)
 
 (def-package-hook! ace-window
-  :pre-config
-  (setq aw-keys '(?a ?s ?d ?f ?g ?j ?k ?l ?\;)
-        aw-scope 'visible
+  :post-config
+  (setq aw-scope 'visible
         aw-background nil)
   nil)
 
@@ -44,21 +47,58 @@
 (def-package! orgit :after magit)
 (def-package! magithub
   :commands (magithub-clone
-             magithub-create)
-  :after magit
-  :demand
+             magithub-feature-autoinject)
+  ;; :ensure t
   :config
-  (autoload 'magithub-completion-enable "magithub-completion")
-  (magithub-feature-autoinject t)
+  (autoload 'magithub-completion-enable "magithub-completion" "\
+Enable completion of info from magithub in the current buffer.
+
+\(fn)" nil nil)
+  (require 'parse-time)
+
+  (defmacro magithub--time-number-of-days-since-string (iso8601)
+    `(time-to-number-of-days
+      (time-since
+       (parse-iso8601-time-string
+	(concat ,iso8601 "+00:00")))))
+
+  (defun issue-filter-to-days (days type)
+    `(lambda (issue)
+       (let ((created_at (magithub--time-number-of-days-since-string
+			  (alist-get 'created_at issue)))
+	     (updated_at (magithub--time-number-of-days-since-string
+			  (alist-get 'updated_at issue))))
+	 (or (< created_at ,days) (< updated_at ,days)))))
+
+  (defun magithub-filter-maybe (&optional limit)
+    "Add filters to magithub only if number of issues is greter than LIMIT."
+    (let ((max-issues (length (ignore-errors (magithub-issues))))
+	  (max-pull-requests (length (ignore-errors (magithub-pull-requests))))
+	  (limit (or limit 1)))
+      (when (> max-issues limit)
+	(add-to-list (make-local-variable 'magithub-issue-issue-filter-functions)
+		     (issue-filter-to-days limit "issues")))
+      (when (> max-pull-requests limit)
+	(add-to-list (make-local-variable 'magithub-issue-pull-request-filter-functions)
+		     (issue-filter-to-days limit "pull-requests")))))
+
+  (add-to-list 'magit-status-mode-hook #'magithub-filter-maybe)
   (setq
-   magithub-clone-default-directory "~/workspace/sources/"
+   magithub-clone-default-directory "/Users/xfu/Source/playground/"
    magithub-dir (concat doom-etc-dir "magithub/")
-   magithub-preferred-remote-method 'ssh_url))
+   magithub-preferred-remote-method 'clone_url))
 (def-package! evil-magit :after magit
   :init
-  ;; optional: this is the evil state that evil-magit will use
   (setq evil-magit-state 'normal))
 (after! magit
+  (magithub-feature-autoinject t)
+  (setq magit-repository-directories '("/Users/xfu/Source/"))
+  (set! :evil-state 'magit-repolist-mode 'normal)
+  (push 'magit-repolist-mode evil-snipe-disabled-modes)
+  (map! :map magit-repolist-mode-map
+        :n "j" #'next-line
+        :n "k" #'previous-line
+        :n "s" #'magit-repolist-status)
   (set! :popup "^\\*Magit" '((slot . -1) (side . right) (size . 80)) '((modeline . nil) (select . t)))
   (set! :popup "^\\*magit.*popup\\*" '((slot . 0) (side . right)) '((modeline . nil) (select . t)))
   (set! :popup "^\\*magit-revision:.*" '((vslot . -1) (side . right) (window-height . 0.6)) '((modeline . nil) (select . t)))
@@ -120,7 +160,49 @@
 
 ;; quick way to dispaly world time clock
 (defalias 'wc 'display-time-world)
-
+(def-package! keyfreq
+  :config
+  (setq keyfreq-excluded-commands '(evil-next-line
+                                    evil-previous-line
+                                    evil-next-visual-line
+                                    self-insert-command
+                                    evil-previous-visual-line
+                                    evil-forward-char
+                                    org-self-insert-command
+                                    ivy-next-line
+                                    evil-forward-word-end
+                                    doom/deflate-space-maybe
+                                    evil-backward-word-begin
+                                    ivy-previous-line
+                                    evil-backward-char
+                                    ivy-backward-delete-char
+                                    mwheel-scroll
+                                    company-ignore
+                                    evil-ex-search-next
+                                    evil-normal-state
+                                    evil-scroll-down
+                                    evil-scroll-up
+                                    ivy-done
+                                    right-char
+                                    keyboard-escape-quit
+                                    left-char
+                                    doom/inflate-space-maybe
+                                    evil-visual-char
+                                    term-send-raw
+                                    save-buffer
+                                    company-select-next-or-abort
+                                    term-send-left
+                                    +org/toggle-fold
+                                    evil-delete
+                                    neotree-next-line
+                                    neotree-previous-line
+                                    term-send-backspace
+                                    undo-tree-undo
+                                    xwidget-webkit-scroll-down-line
+                                    evil-force-normal-state
+                                    xwidget-webkit-scroll-up-line))
+  (keyfreq-mode 1)
+  (keyfreq-autosave-mode 1))
 ;; maximize emacs upon startup
 (toggle-frame-maximized)
 
@@ -131,9 +213,49 @@
   (setq atomic-chrome-buffer-open-style 'frame)
   )
 
-;; use daemon
-(require 'server)
-(add-hook 'after-init-hook (lambda ()
-                             (unless (or (daemonp) (server-running-p))
-                               (server-start)
-                               (setq server-raise-frame t))))
+;; lang python
+;;
+;; TODO: add fully lsp-mode
+;; (def-package! lsp-python
+;;   :commands (lsp-python-enable)
+;;   :config
+;;   (setq python-indent-guess-indent-offset-verbose nil)
+;;   (set! :company-backend '(python-mode) '(company-lsp company-files company-yasnippet))
+;;   (set! :lookup 'python-mode
+;;     :definition #'lsp-ui-peek-find-definitions
+;;     :references #'lsp-ui-peek-find-references))
+
+(def-package! py-isort
+  :after python
+  :config
+  (map! :map python-mode-map
+        :localleader
+        :n "s" #'py-isort-buffer
+        :v "s" #'py-isort-region))
+
+(def-package! yapfify
+  :after python
+  :hook (python-mode . yapf-mode)
+  :config
+  (map! :map python-mode-map
+        :localleader
+        :nv "=" #'yapfify-buffer))
+
+(def-package! pipenv
+  :hook (python-mode . pipenv-mode)
+  :init
+  (setq
+   pipenv-projectile-after-switch-function
+   #'pipenv-projectile-after-switch-extended)
+  :config
+  (map! :map python-mode-map
+        :localleader
+        :prefix "p" :desc "pipenv"
+        :n "a" #'pipenv-activate
+        :n "d" #'pipenv-deativate
+        :n "s" #'pipenv-shell
+        :n "o" #'pipenv-open
+        :n "i" #'pipenv-install
+        :n "u" #'pipenv-uninstall
+        ))
+

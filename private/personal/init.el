@@ -15,11 +15,14 @@
 (setq user-mail-address "driftcrow@gmail.com"
       user-full-name    "driftcrow"
 
-      doom-font (font-spec :family "Input Mono Narrow" :size 14 :weight 'semi-light)
+      doom-localleader-key ","
+
+      doom-font (font-spec :family "Source Code Pro" :size 14 )
       doom-variable-pitch-font (font-spec :family "Fira Sans")
-      doom-unicode-font (font-spec :family "Input Mono Narrow" :size 14)
+      doom-unicode-font (font-spec :family "Source Code Pro" :size 14)
       doom-big-font (font-spec :family "Fira Mono" :size 18)
 
+      frame-resize-pixelwise t
       )
 
 (add-hook! doom-big-font-mode
@@ -30,8 +33,6 @@
       ;; auth-sources (list (expand-file-name ".authinfo.gpg" "~")))
 
 
-(setq-default explicit-shell-file-name "/bin/bash")
-(setq-default shell-file-name "/bin/bash")
+(setq-default explicit-shell-file-name (executable-find "bash"))
+(setq-default shell-file-name (executable-find "bash"))
 
-;; for maximize in MACOS
-(setq frame-resize-pixelwise t)

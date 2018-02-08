@@ -1,4 +1,7 @@
 ;;; private/default/+bindings.el -*- lexical-binding: t; -*-
+;; expand-region's prompt can't tell what key contract-region is bound to, so we
+;; tell it explicitly.
+(setq expand-region-contract-fast-key "V")
 
 ;; This files defines a Spacemacs-esque keybinding scheme
 
@@ -82,7 +85,7 @@
       :ne "M-b"   #'+eval/build
       :ne "M-a"   #'mark-whole-buffer
       :ne "M-c"   #'evil-yank
-      :ne "M-q"   (if (daemonp) #'delete-frame #'save-buffers-kill-emacs)
+      :ne "s-q"   (if (daemonp) #'delete-frame #'save-buffers-kill-emacs)
       ;; :ne "M-f"   #'swiper
       :n  "M-s"   #'save-buffer
       :m  "A-j"   #'+default:multi-next-line
@@ -786,7 +789,9 @@
         (:map org-mode-map
           :i [remap doom/inflate-space-maybe] #'org-self-insert-command
           :i "C-e" #'org-end-of-line
-          :i "C-a" #'org-beginning-of-line))
+          :i "C-a" #'org-beginning-of-line
+          :i "<"  (λ! (if (bolp) (hydra-org-template/body) (self-insert-command 1)))
+          ))
 
       ;; Restore common editing keys (and ESC) in minibuffer
       (:map (minibuffer-local-map

@@ -59,16 +59,6 @@ _d_: subtree
 
 ;; (global-set-key (kbd "C-c #") 'hydra-outline/body) ; by example
 
-(define-key Info-mode-map (kbd "h") 'Info-backward-node) ;; h was Info-help, Info-backward-node was [
-(define-key Info-mode-map (kbd "l") 'Info-forward-node)	;; l was Info-history-back, Info-forward-node was ]
-(define-key Info-mode-map (kbd "y") 'Info-help)	;; y wasn't bound, Info-help was h
-(define-key Info-mode-map (kbd "K") 'Info-history) ;; K wasn't bound, Info-history was L
-(define-key Info-mode-map (kbd "H") 'Info-history-back)	;; H was describe-mode, Info-history-back was l
-(define-key Info-mode-map (kbd "L") 'Info-history-forward) ;; L was Info-history, Info-history-forward was r
-(define-key Info-mode-map (kbd "k") 'Info-up) ;; k wasn't bound, Info-up was ^ and u
-(define-key Info-mode-map (kbd "j") 'Info-menu)	;; j was bmkp-info-jump, Info-menu was m
-(define-key Info-mode-map (kbd "b") 'bmkp-info-jump) ;; b was beginning-of-buffer, bmkp-info-jump was j
-
 (defhydra hydra-info (:color pink
                              :hint nil)
   "

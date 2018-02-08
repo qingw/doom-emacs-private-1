@@ -4,7 +4,9 @@
   (setq org-default-journal-file
         (expand-file-name "journal.org.gpg" org-directory)
         ledger-journal-file
-        (expand-file-name "ledger.gpg" org-directory))
+        (expand-file-name "ledger.gpg" org-directory)
+        org-modules (quote (org-bibtex org-habit org-info org-protocol org-mac-link org-notmuch))
+        )
 
   (setq org-capture-templates
         '(("t" "Todo" entry (file+headline  org-default-notes-file "Daily Tasks")

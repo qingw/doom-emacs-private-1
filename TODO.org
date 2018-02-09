@@ -12,13 +12,27 @@
 ** lilypond mode
 ** vlf mode
 ** integrate evil-collection
+** paste hydra
+  (spacemacs|define-transient-state paste
+    :title "Pasting Transient State"
+    :doc "\n[%s(length kill-ring-yank-pointer)/%s(length kill-ring)] \
+ [_C-j_/_C-k_] cycles through yanked text, [_p_/_P_] pastes the same text \
+ above or below. Anything else exits."
+    :bindings
+    ("C-j" evil-paste-pop)
+    ("C-k" evil-paste-pop-next)
+    ("p" evil-paste-after)
+    ("P" evil-paste-before)
+    ("0" spacemacs//transient-state-0))
 
+  (when dotspacemacs-enable-paste-transient-state
+    (define-key evil-normal-state-map
+      "p" 'spacemacs/paste-transient-state/evil-paste-after)
+    (define-key evil-normal-state-map
+      "P" 'spacemacs/paste-transient-state/evil-paste-before))
 * Question
 ** Ctrl-Meta key seem not sent in ubuntu
 ** lead-local not working
-** toggle-frame-maximized not work in MACOS
-** how to involve lisp variable,keybriefly quick in echo area
-** key binding not work in *doom:scrath* buffer, ex: M-n
-seems popup window mode
+** doom/window-zoom need adjust for popup
+
 * Issues
-** describe-module error at dashboard

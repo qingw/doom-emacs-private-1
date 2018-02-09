@@ -19,6 +19,13 @@
  ;; tramp-remote-process-environment (quote ("TMOUT=0" "LC_CTYPE=''" "TRAMP='yes'" "CDPATH=" "HISTORY=" "MAIL=" "MAILCHECK=" "MAILPATH=" "PAGER=cat" "autocorrect=" "correct=" "http_proxy=http://proxy.cse.cuhk.edu.hk:8000" "https_proxy=http://proxy.cse.cuhk.edu.hk:8000" "ftp_proxy=http://proxy.cse.cuhk.edu.hk:8000"))
  )
 
+;; TODO: add some replace
+(after! which-key
+
+  (push '((nil . "Switch to 1st workspace") .
+          ("1..9" . "Switch to 1..9 workspace")) which-key-replacement-alist)
+  )
+
 ;; ** Tramp
 (after! tramp-sh
   (add-to-list 'tramp-remote-path "")
@@ -213,6 +220,13 @@ Enable completion of info from magithub in the current buffer.
   (setq atomic-chrome-buffer-open-style 'frame)
   )
 
+;; Prog
+;;
+(def-package! prog-fill
+  :commands prog-fill
+  :hook
+  (prog-mode . (lambda()(map! :map prog-mode-map
+                          :nv "M-q" #'prog-fill))))
 ;; lang python
 ;;
 ;; TODO: add fully lsp-mode
@@ -250,7 +264,7 @@ Enable completion of info from magithub in the current buffer.
   :config
   (map! :map python-mode-map
         :localleader
-        :prefix "p" :desc "pipenv"
+        :desc "pipenv" :prefix "p"
         :n "a" #'pipenv-activate
         :n "d" #'pipenv-deativate
         :n "s" #'pipenv-shell

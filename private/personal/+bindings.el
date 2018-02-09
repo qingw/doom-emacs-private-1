@@ -248,6 +248,9 @@
           :desc "Describe function"     :n  "f" #'describe-function
           :desc "Find function"         :n  "j" #'find-function
           :desc "Describe key"          :n  "k" #'describe-key
+          :desc "Which key top level"   :n  "b" #'which-key-show-top-level
+          :desc "Which key major mode"  :n  "B" #'which-key-show-major-mode
+          :desc "Which key mino mode"   :n  "C-b" #'which-key-show-minor-mode-keymap
           :desc "Describe keybriefly"   :n  "c" #'describe-key-briefly
           :desc "Describe char"         :n  "C" #'describe-char
           :desc "Describe mode"         :n  "M" #'describe-mode
@@ -790,6 +793,7 @@
           :i [remap doom/inflate-space-maybe] #'org-self-insert-command
           :i "C-e" #'org-end-of-line
           :i "C-a" #'org-beginning-of-line
+          ;; TODO: when < not in first char
           :i "<"  (λ! (if (bolp) (hydra-org-template/body) (self-insert-command 1)))
           ))
 

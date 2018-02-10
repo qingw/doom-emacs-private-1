@@ -225,7 +225,7 @@ _B_uffers (3-way)   _F_iles (3-way)                          _w_ordwise
   ("q" nil "Quit" :exit t))
 
 ;; (spacemacs/set-leader-keys "mm" 'multiple-cursors-hydra/body)
-
+;;;###autoload(autoload 'hydra-org-template/body "private/personal/autoload/+hydras" nil t)
 (defhydra hydra-org-template (:color blue :hint nil)
   "
 _C_enter  _q_uote    plant_u_ml    _L_aTeX:

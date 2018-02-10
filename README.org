@@ -30,6 +30,7 @@ make compile
 #+BEGIN_SRC shell
 brew install ag
 brew install grep
+brew install pipenv
 #+END_SRC
 *** Ubuntu
 ** For Python
@@ -37,7 +38,8 @@ brew install grep
 # 基本的代码补全
 pip install -i https://pypi.doubanio.com/simple --upgrade "jedi>=0.9.0" "json-rpc>=1.8.1" "service_factory>=0.1.5" flake8 pytest autoflake hy
 
-pip install isort ipython python-language-server
+pip install isort ipython hy
+# pip install python-language-server
 #+END_SRC
 
 ** nvm及常用npm包

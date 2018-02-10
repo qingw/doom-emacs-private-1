@@ -1,18 +1,16 @@
 #+TITLE: TODO
 
-* features
-
-  - use hydra/ivy/evil for main kernal
-  - key map convinience
-  - after!
-
 * TODO
-** multiedit
-** chinese module
-** lilypond mode
-** vlf mode
-** integrate evil-collection
-** paste hydra
+** TODO multiedit
+** TODO chinese module
+** TODO lilypond mode
+** TODO vlf mode
+** TODO integrate evil-collection
+** TODO ref spacevim keybinding habit
+** TODO IVY action
+*** find file switch for counsel-project-file or counsel-file
+** TODO paste hydra
+#+BEGIN_SRC emacs-lisp
   (spacemacs|define-transient-state paste
     :title "Pasting Transient State"
     :doc "\n[%s(length kill-ring-yank-pointer)/%s(length kill-ring)] \
@@ -30,9 +28,22 @@
       "p" 'spacemacs/paste-transient-state/evil-paste-after)
     (define-key evil-normal-state-map
       "P" 'spacemacs/paste-transient-state/evil-paste-before))
+
+#+END_SRC
+** quick insert TODO/FIXME/...
 * Question
 ** Ctrl-Meta key seem not sent in ubuntu
 ** lead-local not working
-** doom/window-zoom need adjust for popup
 
 * Issues
+
+**  FIXME: switch-project in current perp not change project name
+
+** FIXME: doom/window-zoom works not dumb
+
+- can't work in pop window, alawys close all popup window
+- *doom:scratch/magit ... buffer not effect
+
+** FIXME: switch workspace may cause switch buffer same with other workspace sometimes
+
+** FIXME: many prefix key without desc

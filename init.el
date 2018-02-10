@@ -30,6 +30,8 @@
 (require 'core (concat user-emacs-directory "core/core"))
 
 (doom! :feature
+- Note taken on [2018-02-10 Sat 22:07] \\
+  just for test note
        (popup            ; tame sudden yet inevitable temporary windows
         +all             ; catch all popups that start with an asterix
         +defaults)       ; default popup rules
@@ -77,6 +79,7 @@
        make              ; run make tasks from Emacs
        neotree           ; a project drawer, like NERDTree for vim
        ;; password-store    ; password manager for nerds
+       ;; pdf               ; pdf enhancements
        rotate-text       ; cycle region at point between text candidates
        term              ; terminals in Emacs
        tmux              ; an API for interacting with tmux
@@ -94,7 +97,7 @@
        emacs-lisp        ; drown in parentheses
        go                ; the hipster dialect
        ;(haskell +intero) ; a language that's lazier than I am
-       ;hy                ; readability of scheme w/ speed of python
+       hy                ; readability of scheme w/ speed of python
        ;(java +meghanada) ; the poster child for carpal tunnel syndrome
        javascript        ; all(hope(abandon(ye(who(enter(here))))))
        ;julia             ; a better, faster MATLAB

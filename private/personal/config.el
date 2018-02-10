@@ -1,9 +1,6 @@
 ;;; config.el -*- lexical-binding: t; -*-
 
-(load! +functions)
-(load! +hydras)
 (load! +bindings)
-
 
 (setq
  which-key-idle-delay 0.3
@@ -12,7 +9,7 @@
 
  projectile-ignored-projects '("~/"
                                "/tmp")
-
+ ivy-extra-directories '("./")
  ;; tramp
  tramp-default-method "ssh"
  tramp-ssh-controlmaster-options "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=600"
@@ -36,6 +33,18 @@
   (add-to-list 'recentf-exclude ".*\\.gif")
   (add-to-list 'recentf-exclude ".*\\.pdf")
   (add-to-list 'recentf-exclude ".*\\.svg")
+  (add-to-list 'recentf-exclude "/sudo:")
+  (add-to-list 'recentf-exclude "/GTAGS$")
+  (add-to-list 'recentf-exclude "/GRAGS$")
+  (add-to-list 'recentf-exclude "/GPATH$")
+  (add-to-list 'recentf-exclude "\\.mkv$")
+  (add-to-list 'recentf-exclude "\\.mp[34]$")
+  (add-to-list 'recentf-exclude "\\.avi$")
+  (add-to-list 'recentf-exclude "\\.sub$")
+  (add-to-list 'recentf-exclude "\\.srt$")
+  (add-to-list 'recentf-exclude "\\.ass$")
+  (add-to-list 'recentf-exclude "COMMIT_MSG")
+  (add-to-list 'recentf-exclude "COMMIT_EDITMSG")
   (add-to-list 'recentf-exclude ".*Cellar.*"))
 
 (add-hook 'minibuffer-setup-hook #'smartparens-mode)

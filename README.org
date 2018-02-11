@@ -8,6 +8,12 @@
 brew tap d12frosted/emacs-plus
 brew install emacs-plus
 #+END_SRC
+
+*** Ubuntu
+#+BEGIN_SRC shell
+
+apt install emacs25-el
+#+END_SRC
 ** Doom
 #+BEGIN_SRC shell
 git clone https://github.com/hlissner/doom-emacs.git ~/.emacs.d

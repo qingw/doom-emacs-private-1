@@ -7,14 +7,17 @@
  minibuffer-message-timeout 3
  counsel-projectile-ag-initial-input '(projectile-symbol-or-selection-at-point)
 
- projectile-ignored-projects '("~/"
-                               "/tmp")
+ projectile-ignored-projects '("~/" "/tmp")
  ivy-extra-directories '("./")
  ;; tramp
  tramp-default-method "ssh"
  tramp-ssh-controlmaster-options "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=600"
  ;; tramp-remote-process-environment (quote ("TMOUT=0" "LC_CTYPE=''" "TRAMP='yes'" "CDPATH=" "HISTORY=" "MAIL=" "MAILCHECK=" "MAILPATH=" "PAGER=cat" "autocorrect=" "correct=" "http_proxy=http://proxy.cse.cuhk.edu.hk:8000" "https_proxy=http://proxy.cse.cuhk.edu.hk:8000" "ftp_proxy=http://proxy.cse.cuhk.edu.hk:8000"))
  )
+
+(after! projectile
+  (add-to-list 'projectile-globally-ignored-directories
+               "/dev"))
 
 ;; TODO: add some replace
 (after! which-key

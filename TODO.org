@@ -3,6 +3,13 @@
 * TODO
 ** TODO multiedit
 ** TODO chinese module
+- [ ] cnfonts
+- [ ] ivy pingyin
+- [ ] avy pingyin
+- [ ] dict
+- [ ] input method switch auto
+  - [ ] support in org-caputure and yasippet
+- [ ]
 ** TODO lilypond mode
 ** TODO vlf mode
 ** TODO integrate evil-collection
@@ -31,9 +38,13 @@
 
 #+END_SRC
 ** quick insert TODO/FIXME/...
+** change fonts family
+
 * Question
 ** Ctrl-Meta key seem not sent in ubuntu
 ** lead-local not working
+
+** SPC f /  counsel-projectile-find-file not binding workspace's project when buffer to other directory
 
 * Issues
 

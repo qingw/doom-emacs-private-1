@@ -30,8 +30,6 @@
 (require 'core (concat user-emacs-directory "core/core"))
 
 (doom! :feature
-- Note taken on [2018-02-10 Sat 22:07] \\
-  just for test note
        (popup            ; tame sudden yet inevitable temporary windows
         +all             ; catch all popups that start with an asterix
         +defaults)       ; default popup rules

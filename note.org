@@ -158,3 +158,26 @@ gpg: Good signature from "jixiuf (jixiuf rsa keys) <jixiuf@qq.com>" [ultimate]
 　　所以先加密后签名的缺陷不是C能知道秘密，而是B可能被欺骗。
 　　因此签名都用在义务宣言上，表明自己说过的负责，不会不认帐。大家不会没事去冒名。（比如欠条）
 　　如果对于别人会冒名的宣言，比如（出售机密，勒索等）如果签名没有被加密，B就可能向不知道秘密的人买秘密。
+* gpg setting
+
+Ref to [[https://wiki.archlinux.org/index.php/GnuPG#pinentry][archwiki]]:
+- edit the gpg-agent configuration to allow loopback pinentry mode:
+#+BEGIN_SRC shell
+# ~/.gnupg/gpg-agent.conf
+allow-loopback-pinentry
+#+END_SRC
+
+ if this is not possible, add the option to the configuration:
+#+BEGIN_SRC shell
+# ~/.gnupg/gpg.conf
+pinentry-mode loopback
+#+END_SRC
+
+- Restart the gpg-agent process if it is running to let the change take effect.
+-  include a commandline parameter to use loopback mode like so:
+#+BEGIN_SRC shell
+gpg --pinentry-mode loopback ...
+#+END_SRC
+
+
+

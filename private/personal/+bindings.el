@@ -1,7 +1,9 @@
 ;;; private/default/+bindings.el -*- lexical-binding: t; -*-
+
 ;; expand-region's prompt can't tell what key contract-region is bound to, so we
 ;; tell it explicitly.
 (setq expand-region-contract-fast-key "V")
+
 
 ;; This files defines a Spacemacs-esque keybinding scheme
 
@@ -108,7 +110,7 @@
         :desc "Ex command"              :nv ";"  #'evil-ex
         :desc "M-x"                     :nv ":"  #'execute-extended-command
         :desc "Pop up scratch buffer"   :nv "x"  #'doom/open-scratch-buffer
-        :desc "Org Capture"             :nv "X"  #'+org-capture/open
+        :desc "Org Capture"             :nv "X"  #'org-capture
 
         ;; Most commonly used
         :desc "extended command"        :n "SPC" #'execute-extended-command
@@ -283,7 +285,8 @@
           :desc "Debugger"              :n  "d" #'+debug/open
           :desc "REPL"                  :n  "r" #'+eval/open-repl
                                         :v  "r" #'+eval:repl
-          :desc "Neotree"               :n  "n" #'+neotree/toggle
+          :desc "Neotree"               :n  "n" #'+neotree/open
+          :desc "Neotree: on this file" :n  "N" #'+neotree/find-this-file
           :desc "Imenu sidebar"         :nv "i" #'imenu-list-minor-mode
           :desc "Terminal"              :n  "t" #'+term/open-popup
           :desc "Terminal in project"   :n  "T" #'+term/open-popup-in-project
@@ -306,7 +309,7 @@
         (:desc "project" :prefix "p"
           :desc "Browse project"          :n  "." #'+default/browse-project
           :desc "Search project with ag"  :n  "/" #'counsel-projectile-ag
-          :desc "Find file in project"    :n  "f" #'counsel-projectile-find-file
+          :desc "Find file in project"    :n  "f" #'projectile-find-file
           :desc "Projectile kill buffers" :n  "k" #'projectile-kill-buffers
           :desc "Run cmd in project root" :nv "!" #'projectile-run-shell-command-in-root
           :desc "Switch project"          :n  "p" #'projectile-switch-project

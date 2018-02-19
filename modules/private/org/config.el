@@ -113,7 +113,7 @@
 ;; create local brain lib
 (def-package! org-brain
   :commands org-brain-visualize
-  :after org
+  :after (:all org evil)
   :init
   (setq org-brain-path "~/org/brain")
   (push 'org-agenda-mode evil-snipe-disabled-modes)

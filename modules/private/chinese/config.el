@@ -1,4 +1,4 @@
-;;; config.el -*- lexical-binding: t; -*-
+;; ;;; config.el -*- lexical-binding: t; -*-
 
 (def-package! fcitx
   :config
@@ -15,7 +15,9 @@
 
 
 (def-package! youdao-dictionary
-  :config
+  :commands youdao-dictionary-search-at-point+
+  :bind ("s-y" . youdao-dictionary-search-at-point+)
+  :init
   (progn
     ;; Enable Cache
     (setq url-automatic-caching t
@@ -26,9 +28,3 @@
           youdao-dictionary-use-chinese-word-segmentation t))
   )
 
-(map!
- "s-y"           #'youdao-dictionary-search-at-point+
-
- (:leader
-   (:prefix "a"
-     (:desc "Youdao"  :nv "y"   #'youdao-dictionary-search-at-point+))))

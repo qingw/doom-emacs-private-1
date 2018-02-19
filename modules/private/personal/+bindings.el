@@ -9,6 +9,7 @@
 
 (map! [remap evil-jump-to-tag] #'projectile-find-tag
       [remap find-tag]         #'projectile-find-tag
+      [remap newline]          #'newline-and-indent
 
       ;; Ensure there are no conflicts
       :nmvo doom-leader-key nil
@@ -87,7 +88,7 @@
       :ne "M-b"   #'+eval/build
       :ne "M-a"   #'mark-whole-buffer
       :ne "M-c"   #'evil-yank
-      :ne "s-q"   (if (daemonp) #'delete-frame #'save-buffers-kill-emacs)
+      :ne "s-q"   (if (daemonp) #'delete-frame #'evil-quit-all)
       ;; :ne "M-f"   #'swiper
       :n  "M-s"   #'save-buffer
       :m  "A-j"   #'+default:multi-next-line
@@ -151,8 +152,8 @@
         (:desc "search" :prefix "s"
           :desc "counsel-rg"            :nv "s" #'counsel-rg
           :desc "Swiper"                :nv "/" #'swiper
-          :desc "Imenu"                 :nv "j" #'imenu
-          :desc "Imenu across buffers"  :nv "J" #'imenu-anywhere
+          :desc "Imenu"                 :nv "i" #'imenu
+          :desc "Imenu across buffers"  :nv "I" #'imenu-anywhere
           :desc "jump back"             :nv "b" #'avy-pop-mark
           :desc "show marks"            :nv "m" #'evil-show-marks
           :desc "show registers"        :nv "r" #'evil-show-registers
@@ -219,14 +220,15 @@
           :desc "Find file from here"       :n "?" #'counsel-file-jump
           :desc "Find other file"           :n "a" #'projectile-find-other-file
           :desc "Open project editorconfig" :n "c" #'editorconfig-find-current-editorconfig
-          :desc "Find file in dotfiles"     :n "d" #'+default/find-in-dotfiles
-          :desc "Browse dotfiles"           :n "D" #'+default/browse-dotfiles
           :desc "Find file in emacs.d"      :n "e" #'+default/find-in-emacsd
           :desc "Browse emacs.d"            :n "E" #'+default/browse-emacsd
           :desc "Browse Org"                :n "O" #'+xfu/browse-notes
           :desc "Recent files"              :n "r" #'recentf-open-files
           :desc "Recent project files"      :n "R" #'projectile-recentf
-          :desc "Yank filename"             :n "y" #'+default/yank-buffer-filename)
+          :desc "Yank filename"             :n "y" #'+default/yank-buffer-filename
+          (:when (featurep! :config private)
+            :desc "Find file in private config" :n "p" #'+private/find-in-config
+            :desc "Browse private config"       :n "P" #'+private/browse-config))
 
         (:desc "git" :prefix "g"
           :desc "Git status"            :n  "g" #'magit-status
@@ -259,10 +261,11 @@
           :desc "Describe variable"     :n  "v" #'describe-variable
           :desc "Describe face"         :n  "F" #'describe-face
           :desc "Describe DOOM setting" :n  "s" #'doom/describe-setting
-          :desc "Describe DOOM module"  :n  "D" #'doom/describe-module
+          :desc "Describe DOOM module"  :n  "d" #'doom/describe-module
+          :desc "Open Doom manual"      :n  "D" #'doom/help
           :desc "Find definition"       :n  "." #'+lookup/definition
           :desc "Find references"       :n  "/" #'+lookup/references
-          :desc "Find documentation"    :n  "d" #'+lookup/documentation
+          :desc "Find documentation"    :n  "," #'+lookup/documentation
           :desc "Describe at point"     :n  "." #'helpful-at-point
           :desc "What face"             :n  "'" #'doom/what-face
           :desc "What minor modes"      :n  ";" #'doom/what-minor-mode
@@ -270,7 +273,7 @@
           :desc "Toggle profiler"       :n  "p" #'doom/toggle-profiler)
 
         (:desc "insert" :prefix "i"
-          :desc "From kill-ring"        :nv "y" #'counsel-yank-pop
+          :desc "From kill-ring"        :nv "y" #'yank-pop
           :desc "From snippet"          :nv "s" #'yas-insert-snippet)
 
         (:desc "notes" :prefix "n"
@@ -319,7 +322,7 @@
           :desc "Invalidate cache"        :n  "x" #'projectile-invalidate-cache)
 
         (:desc "quit" :prefix "q"
-          :desc "Quit"                   :n "q" #'evil-save-and-quit
+          :desc "Save and quit"          :n "q" #'evil-save-and-quit
           :desc "Quit (forget session)"  :n "Q" #'+workspace/kill-session-and-quit)
 
         (:desc "remote" :prefix "r"
@@ -704,7 +707,7 @@
           [backspace]     #'+snippets/delete-backward-char
           [delete]        #'+snippets/delete-forward-char-or-field)
         (:map yas-minor-mode-map
-          :i "<tab>" yas-maybe-expand
+          :ig "<tab>" yas-maybe-expand
           :v "<tab>" #'+snippets/expand-on-region))
 
 
@@ -773,9 +776,7 @@
       :i [M-return]     #'evil-open-below
       :i [S-M-return]   #'evil-open-above
       ;; textmate-esque deletion
-      [M-backspace]     #'doom/backward-kill-to-bol-and-indent
-      :i [backspace]    #'delete-backward-char
-      :i [M-backspace]  #'doom/backward-kill-to-bol-and-indent
+      :ig [M-backspace] #'doom/backward-kill-to-bol-and-indent
       ;; Emacsien motions for insert mode TODO: complete motions list
       :i "C-b" #'backward-char
       :i "C-f" #'forward-char
@@ -783,13 +784,6 @@
       :i "C-p" #'previous-line
       :i "C-d" #'delete-char
 
-      ;; Highjacks space/backspace to:
-      ;;   a) balance spaces inside brackets/parentheses ( | ) -> (|)
-      ;;   b) delete space-indented blocks intelligently
-      ;;   c) do none of this when inside a string
-      :i "SPC"                          #'doom/inflate-space-maybe
-      :i [remap delete-backward-char]   #'doom/deflate-space-maybe
-      :i [remap newline]                #'doom/newline-and-indent
 
       (:after org
         (:map org-mode-map

@@ -15,7 +15,8 @@
 ** TODO integrate evil-collection
 ** TODO ref spacevim keybinding habit
 ** TODO IVY action
-*** find file switch for counsel-project-file or counsel-file
+- find file switch for counsel-project-file or counsel-file
+
 ** TODO paste hydra
 #+BEGIN_SRC emacs-lisp
   (spacemacs|define-transient-state paste
@@ -39,7 +40,9 @@
 #+END_SRC
 ** quick insert TODO/FIXME/...
 ** change fonts family
-
+can ref to xah's config
+** workflow optimize
+*** note capture
 * Question
 ** Ctrl-Meta key seem not sent in ubuntu
 ** lead-local not working

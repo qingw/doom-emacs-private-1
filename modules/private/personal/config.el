@@ -1,6 +1,8 @@
 ;;; config.el -*- lexical-binding: t; -*-
 
-(load! +bindings)
+(after! evil
+  (load! +bindings)
+  )
 
 (setq
  which-key-idle-delay 0.3
@@ -61,6 +63,7 @@
 ;; ** Magit
 (def-package! orgit :after magit)
 (def-package! magithub
+  :disabled
   :commands (magithub-clone
              magithub-feature-autoinject)
   ;; :ensure t
@@ -103,10 +106,11 @@ Enable completion of info from magithub in the current buffer.
    magithub-dir (concat doom-etc-dir "magithub/")
    magithub-preferred-remote-method 'clone_url))
 (def-package! evil-magit :after magit
+  :disabled
   :init
   (setq evil-magit-state 'normal))
 (after! magit
-  (magithub-feature-autoinject t)
+  ;; (magithub-feature-autoinject t)
   (setq magit-repository-directories '("/Users/xfu/Source/"))
   (set! :evil-state 'magit-repolist-mode 'normal)
   (push 'magit-repolist-mode evil-snipe-disabled-modes)

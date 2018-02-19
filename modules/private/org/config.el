@@ -1,16 +1,20 @@
 ;;; config.el -*- lexical-binding: t; -*-
 ;; (require 'org)
 (after! org
-  (setq org-default-journal-file
-        (expand-file-name "journal.org.gpg" org-directory)
-        ledger-journal-file
-        (expand-file-name "ledger.gpg" org-directory)
-        org-modules (quote (org-bibtex org-habit org-info org-protocol org-mac-link org-notmuch))
-        )
+  (setq
+   org-default-journal-file (expand-file-name "journal.org.gpg" org-directory)
+   org-default-notes-file (expand-file-name "inbox.org" org-directory)
+   ledger-journal-file (expand-file-name "ledger.gpg" org-directory)
+   org-default-works-file (expand-file-name "works.org" org-directory)
+   org-modules (quote (org-bibtex org-habit org-info org-protocol org-mac-link org-notmuch))
+   )
 
   (setq org-capture-templates
-        '(("t" "Todo" entry (file+headline  org-default-notes-file "Daily Tasks")
+        `(("t" "Todo" entry (file+headline  org-default-notes-file "Daily Tasks")
            "* TODO %?\n  %i\n"
+           :empty-lines 1)
+          ("pt" "Porject Tasks" entry (file ,(expand-file-name "TODO.org" (projectile-project-root)))
+           "*  %^{TASKS|TODO|FIXME} %?\n%U\n%a\n"
            :empty-lines 1)
           ("n" "Note" entry (file+headline  org-default-notes-file "Quick notes")
            "*  %? :NOTE:\n%U\n%a\n"
@@ -19,7 +23,7 @@
            "* TODO %?\n  %i\n %U"
            :empty-lines 1)
           ("s" "Code Snippet" entry
-           (file (expand-file-name  "snippets.org" org-directory))
+           (file ,(expand-file-name  "snippets.org" org-directory))
            "* %?\t%^g\n#+BEGIN_SRC %^{language}\n\n#+END_SRC")
 
           ("w" "Works Entry")
@@ -108,6 +112,12 @@
                   )
                 org-capture-templates))
   )
+
+(setq counsel-projectile-org-capture-templates
+      '(("t" "TODO" entry (file+headline "${root}/TODO.org" "Tasks") "* TODO %?\n%u\n%a\n")
+        ("f" "FIXME" entry (file+headline "${root}/TODO.org" "Tasks") "* FIXME %?\n%u\n%a\n")
+        ("n" "NOTE" entry (file "${root}/note.org" ) "* %? :NOTE:\n%u\n%a\n")
+        ))
 
 ;; TODO: create org-brain workspace for all brain files
 ;; create local brain lib

@@ -187,13 +187,16 @@ Enable completion of info from magithub in the current buffer.
                                     self-insert-command
                                     evil-previous-visual-line
                                     evil-forward-char
+                                    forward-char
                                     org-self-insert-command
                                     ivy-next-line
                                     evil-forward-word-end
                                     doom/deflate-space-maybe
+                                    doom/escape
                                     evil-backward-word-begin
                                     ivy-previous-line
                                     evil-backward-char
+                                    backward-char
                                     ivy-backward-delete-char
                                     mwheel-scroll
                                     company-ignore

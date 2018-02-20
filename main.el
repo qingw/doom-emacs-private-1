@@ -1,7 +1,7 @@
 ;;; init.el -*- lexical-binding: t; -*-
 ;;
 ;; Author:  Henrik Lissner <henrik@lissner.net>
-;; URL:     https://github.com/hlissner/.emacs.d
+;; URL:     https://github.com/hlissner/doom-emacs
 ;;
 ;;   =================     ===============     ===============   ========  ========
 ;;   \\ . . . . . . .\\   //. . . . . . .\\   //. . . . . . .\\  \\. . .\\// . . //
@@ -132,7 +132,7 @@
        :app
       ;(email +gmail)    ; emacs as an email client
       ;irc               ; how neckbeards socialize
-      ;rss               ; emacs as an RSS reader
+      ;(rss +org)        ; emacs as an RSS reader
       ;twitter           ; twitter client https://twitter.com/vnought
        (write            ; emacs as a word processor (latex + org + markdown)
         +wordnut         ; wordnet (wn) search

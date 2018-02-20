@@ -1,12 +1,12 @@
-;;; private/default/+bindings.el -*- lexical-binding: t; -*-
+;;; config/default/+bindings.el -*- lexical-binding: t; -*-
+
+;; This file defines a Spacemacs-esque keybinding scheme
 
 ;; expand-region's prompt can't tell what key contract-region is bound to, so we
 ;; tell it explicitly.
 (setq expand-region-contract-fast-key "V")
 
-
-;; This files defines a Spacemacs-esque keybinding scheme
-
+;;
 (map! [remap evil-jump-to-tag] #'projectile-find-tag
       [remap find-tag]         #'projectile-find-tag
       [remap newline]          #'newline-and-indent
@@ -52,6 +52,7 @@
       :nvime  "C-y" #'yank
 
       :gnvime "s-r" #'counsel-org-capture
+      :gnvime "s-R" #'counsel-projectile-org-capture
       :gnvime "s-g" #'org-agenda-show-daily
 
       ;; Text-scaling
@@ -220,6 +221,7 @@
           :desc "Find file from here"       :n "?" #'counsel-file-jump
           :desc "Find other file"           :n "a" #'projectile-find-other-file
           :desc "Open project editorconfig" :n "c" #'editorconfig-find-current-editorconfig
+          :desc "Find directory"            :n "d" #'dired
           :desc "Find file in emacs.d"      :n "e" #'+default/find-in-emacsd
           :desc "Browse emacs.d"            :n "E" #'+default/browse-emacsd
           :desc "Browse Org"                :n "O" #'+xfu/browse-notes
@@ -315,6 +317,8 @@
           :desc "Find file in project"    :n  "f" #'projectile-find-file
           :desc "Projectile kill buffers" :n  "k" #'projectile-kill-buffers
           :desc "Run cmd in project root" :nv "!" #'projectile-run-shell-command-in-root
+          :desc "Compile project"         :n  "c" #'projectile-compile-project
+          :desc "Find other file"         :n  "o" #'projectile-find-other-file
           :desc "Switch project"          :n  "p" #'projectile-switch-project
           :desc "Recent project files"    :n  "r" #'projectile-recentf
           :desc "List project tasks"      :n  "t" #'+ivy/tasks

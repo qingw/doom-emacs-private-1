@@ -10,6 +10,7 @@
  counsel-projectile-ag-initial-input '(projectile-symbol-or-selection-at-point)
 
  projectile-ignored-projects '("~/" "/tmp")
+ counsel-find-file-at-point t
  ivy-extra-directories '("./")
  ;; tramp
  tramp-default-method "ssh"
@@ -30,6 +31,7 @@
   (add-to-list 'tramp-remote-path ""))
 
 (after! recentf
+  (add-to-list 'recentf-exclude 'file-remote-p)
   (add-to-list 'recentf-exclude ".*\\.gz")
   (add-to-list 'recentf-exclude ".*\\.gif")
   (add-to-list 'recentf-exclude ".*\\.pdf")
@@ -105,13 +107,13 @@ Enable completion of info from magithub in the current buffer.
    magithub-clone-default-directory "/Users/xfu/Source/playground/"
    magithub-dir (concat doom-etc-dir "magithub/")
    magithub-preferred-remote-method 'clone_url))
+
 (def-package! evil-magit :after magit
-  :disabled
   :init
   (setq evil-magit-state 'normal))
 (after! magit
   ;; (magithub-feature-autoinject t)
-  (setq magit-repository-directories '("/Users/xfu/Source/"))
+  (setq magit-repository-directories '("~/workspace/"))
   (set! :evil-state 'magit-repolist-mode 'normal)
   (push 'magit-repolist-mode evil-snipe-disabled-modes)
   (map! :map magit-repolist-mode-map
@@ -225,6 +227,7 @@ Enable completion of info from magithub in the current buffer.
                                     xwidget-webkit-scroll-up-line))
   (keyfreq-mode 1)
   (keyfreq-autosave-mode 1))
+
 ;; maximize emacs upon startup
 (toggle-frame-maximized)
 

@@ -43,11 +43,8 @@
       "s-j"           #'avy-goto-line
       "s-h"           #'avy-goto-word-1
 
-      "C-S"           #'swiper
       "C-s"           #'doom/swiper-region-or-symbol
-      "C-s-s"         #'doom/counsel-region-or-symbol
-      "s-S"           #'swiper-all
-      "s-s"           #'doom/swiper-all-region-or-symbol
+      "C-S-s"         #'doom/swiper-all-region-or-symbol
 
       :nvime  "C-y" #'yank
 
@@ -831,4 +828,8 @@
           [remap evil-record-macro] #'quit-window))
 
       (:after view
-        (:map view-mode-map "<escape>" #'View-quit-all)))
+        (:map view-mode-map "<escape>" #'View-quit-all))
+
+      (:map ediff-mode-map
+        "d"   #'ediff-copy-both-to-C)
+      )

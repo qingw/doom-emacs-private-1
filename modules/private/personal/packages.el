@@ -12,6 +12,7 @@
 (package! whitespace-cleanup-mode)
 
 (package! atomic-chrome)
+(package! engine-mode)
 
 (package! prog-fill)
 

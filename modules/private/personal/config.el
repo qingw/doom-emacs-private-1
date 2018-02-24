@@ -1,7 +1,7 @@
 ;;; config.el -*- lexical-binding: t; -*-
 
 (after! evil
-  (load! +bindings)
+;;  (load! +bindings)
   )
 
 (setq
@@ -65,7 +65,6 @@
 ;; ** Magit
 (def-package! orgit :after magit)
 (def-package! magithub
-  :disabled
   :commands (magithub-clone
              magithub-feature-autoinject)
   ;; :ensure t
@@ -80,50 +79,55 @@ Enable completion of info from magithub in the current buffer.
     `(time-to-number-of-days
       (time-since
        (parse-iso8601-time-string
-	(concat ,iso8601 "+00:00")))))
+        (concat ,iso8601 "+00:00")))))
 
   (defun issue-filter-to-days (days type)
     `(lambda (issue)
        (let ((created_at (magithub--time-number-of-days-since-string
-			  (alist-get 'created_at issue)))
-	     (updated_at (magithub--time-number-of-days-since-string
-			  (alist-get 'updated_at issue))))
-	 (or (< created_at ,days) (< updated_at ,days)))))
+                          (alist-get 'created_at issue)))
+             (updated_at (magithub--time-number-of-days-since-string
+                          (alist-get 'updated_at issue))))
+         (or (< created_at ,days) (< updated_at ,days)))))
 
   (defun magithub-filter-maybe (&optional limit)
     "Add filters to magithub only if number of issues is greter than LIMIT."
     (let ((max-issues (length (ignore-errors (magithub-issues))))
-	  (max-pull-requests (length (ignore-errors (magithub-pull-requests))))
-	  (limit (or limit 1)))
+          (max-pull-requests (length (ignore-errors (magithub-pull-requests))))
+          (limit (or limit 1)))
       (when (> max-issues limit)
-	(add-to-list (make-local-variable 'magithub-issue-issue-filter-functions)
-		     (issue-filter-to-days limit "issues")))
+        (add-to-list (make-local-variable 'magithub-issue-issue-filter-functions)
+                     (issue-filter-to-days limit "issues")))
       (when (> max-pull-requests limit)
-	(add-to-list (make-local-variable 'magithub-issue-pull-request-filter-functions)
-		     (issue-filter-to-days limit "pull-requests")))))
+        (add-to-list (make-local-variable 'magithub-issue-pull-request-filter-functions)
+                     (issue-filter-to-days limit "pull-requests")))))
 
   (add-to-list 'magit-status-mode-hook #'magithub-filter-maybe)
   (setq
-   magithub-clone-default-directory "/Users/xfu/Source/playground/"
+   magithub-clone-default-directory "~/workspace/source/"
    magithub-dir (concat doom-etc-dir "magithub/")
    magithub-preferred-remote-method 'clone_url))
-
 (def-package! evil-magit :after magit
   :init
   (setq evil-magit-state 'normal))
 (after! magit
-  ;; (magithub-feature-autoinject t)
-  (setq magit-repository-directories '("~/workspace/"))
+  (magithub-feature-autoinject t)
+  (setq magit-repository-directories '("~/workspace/source/"))
   (set! :evil-state 'magit-repolist-mode 'normal)
   (push 'magit-repolist-mode evil-snipe-disabled-modes)
-  (map! :map magit-repolist-mode-map
-        :n "j" #'next-line
-        :n "k" #'previous-line
-        :n "s" #'magit-repolist-status)
-  (set! :popup "^\\*Magit" '((slot . -1) (side . right) (size . 80)) '((modeline . nil) (select . t)))
-  (set! :popup "^\\*magit.*popup\\*" '((slot . 0) (side . right)) '((modeline . nil) (select . t)))
-  (set! :popup "^\\*magit-revision:.*" '((vslot . -1) (side . right) (window-height . 0.6)) '((modeline . nil) (select . t)))
-  (set! :popup "^\\*magit-diff:.*" '((vslot . -1) (side . right) (window-height . 0.6)) '((modeline . nil) (select . nil)))
+
+  (map!
+   (:map with-editor-mode-map
+     (:localleader
+       :desc "Finish" :n "," #'with-editor-finish
+       :desc "Abort"  :n "k" #'with-editor-cancel))
+   (:map magit-repolist-mode-map
+     :n "j" #'next-line
+     :n "k" #'previous-line
+     :n "s" #'magit-repolist-status ))
+  (set! :popup "^.*magit" '((slot . -1) (side . right) (size . 80)) '((modeline . nil) (select . t)))
+  (set! :popup "^.*magit.*popup\\*" '((slot . 0) (side . right)) '((modeline . nil) (select . t)))
+  (set! :popup "^.*magit-revision:.*" '((slot . 2) (side . right) (window-height . 0.6)) '((modeline . nil) (select . t)))
+  (set! :popup "^.*magit-diff:.*" '((slot . 2) (side . right) (window-height . 0.6)) '((modeline . nil) (select . nil)))
   (add-hook! 'magit-popup-mode-hook #'doom-hide-modeline-mode))
 
 ;; ** Helpful

@@ -830,6 +830,7 @@
       (:after view
         (:map view-mode-map "<escape>" #'View-quit-all))
 
-      (:map ediff-mode-map
-        "d"   #'ediff-copy-both-to-C)
+      (:after ediff
+        (:map ediff-mode-map
+          "d"   #'ediff-copy-both-to-C))
       )

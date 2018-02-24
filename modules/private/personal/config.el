@@ -103,7 +103,7 @@ Enable completion of info from magithub in the current buffer.
 
   (add-to-list 'magit-status-mode-hook #'magithub-filter-maybe)
   (setq
-   magithub-clone-default-directory "~/workspace/source/"
+   magithub-clone-default-directory "~/workspace/sources/"
    magithub-dir (concat doom-etc-dir "magithub/")
    magithub-preferred-remote-method 'clone_url))
 (def-package! evil-magit :after magit
@@ -111,7 +111,7 @@ Enable completion of info from magithub in the current buffer.
   (setq evil-magit-state 'normal))
 (after! magit
   (magithub-feature-autoinject t)
-  (setq magit-repository-directories '("~/workspace/source/"))
+  (setq magit-repository-directories '("~/workspace/sources/"))
   (set! :evil-state 'magit-repolist-mode 'normal)
   (push 'magit-repolist-mode evil-snipe-disabled-modes)
 

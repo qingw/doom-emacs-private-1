@@ -32,8 +32,8 @@
       "C-j"           #'evil-window-down
       "C-k"           #'evil-window-up
       "C-l"           #'evil-window-right
-      "C-s-h"         #'previous-multiframe-window
-      "C-s-l"         #'next-multiframe-window
+      "C-M-h"         #'previous-multiframe-window
+      "C-"         #'next-multiframe-window
 
       "s-i"           #'ivy-resume
       "s-m"           #'doom/window-zoom

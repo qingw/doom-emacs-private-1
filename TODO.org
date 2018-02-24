@@ -45,6 +45,8 @@ can ref to xah's config
 *** note capture
 * Question
 ** Ctrl-Meta key seem not sent in ubuntu
+conflic with *clipit* shortcut
+
 ** lead-local not working
 
 ** SPC f /  counsel-projectile-find-file not binding workspace's project when buffer to other directory

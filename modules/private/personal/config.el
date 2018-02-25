@@ -1,8 +1,6 @@
 ;;; config.el -*- lexical-binding: t; -*-
 
-(after! evil
-;;  (load! +bindings)
-  )
+(load! +bindings)
 
 (setq
  which-key-idle-delay 0.3

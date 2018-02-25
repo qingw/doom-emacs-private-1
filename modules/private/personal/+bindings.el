@@ -811,9 +811,9 @@
         (:map tabulated-list-mode-map
           [remap evil-record-macro] #'quit-window))
 
-      (:after ediff
-        (:map ediff-mode-map
-          "d"   #'ediff-copy-both-to-C))
+      ;; (:after ediff
+      ;;   (:map ediff-mode-map
+      ;;     "d"   #'ediff-copy-both-to-C))
 
       (:after view
         (:map view-mode-map "<escape>" #'View-quit-all)))

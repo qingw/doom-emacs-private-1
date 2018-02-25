@@ -236,11 +236,14 @@ Enable completion of info from magithub in the current buffer.
 (toggle-frame-maximized)
 
 (def-package! atomic-chrome
+  :hook (doom-post-init . atomic-chrome-start-server)
   :config
-  (atomic-chrome-start-server)
   (setq atomic-chrome-default-major-mode 'markdown-mode)
+  (setq atomic-chrome-url-major-mode-alist
+        '(("github" . gfm-mode)
+          ("gitlab" . gfm-mode)))
   (setq atomic-chrome-buffer-open-style 'frame)
-  )
+  (add-hook 'atomic-chrome-edit-done-hook 'delete-frame))
 
 ;; Prog
 ;;

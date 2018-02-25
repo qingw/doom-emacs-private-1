@@ -15,16 +15,20 @@
 
 
 (def-package! youdao-dictionary
+  ;; :disabled
   :commands youdao-dictionary-search-at-point+
   :bind ("s-y" . youdao-dictionary-search-at-point+)
   :init
   (progn
     ;; Enable Cache
-    (setq url-automatic-caching t
-          ;; Set file path for saving search history
-          youdao-dictionary-search-history-file
-          (concat doom-cache-dir ".youdao")
-          ;; Enable Chinese word segmentation support
-          youdao-dictionary-use-chinese-word-segmentation t))
+    (setq
+     ;; conflic with magithub
+     ;; url-automatic-caching t
+
+     ;; Set file path for saving search history
+     youdao-dictionary-search-history-file
+     (concat doom-cache-dir ".youdao")
+     ;; Enable Chinese word segmentation support
+     youdao-dictionary-use-chinese-word-segmentation t))
   )
 

@@ -1,6 +1,6 @@
 ;;; config.el -*- lexical-binding: t; -*-
 
-(load! +bindings)
+(after! evil (load! +bindings))
 
 (setq
  which-key-idle-delay 0.3
@@ -10,6 +10,9 @@
  projectile-ignored-projects '("~/" "/tmp")
  counsel-find-file-at-point t
  ivy-extra-directories '("./")
+
+ company-show-numbers t
+
  ;; tramp
  tramp-default-method "ssh"
  tramp-ssh-controlmaster-options "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=600"
@@ -57,8 +60,6 @@
   (setq aw-scope 'visible
         aw-background nil)
   nil)
-
-(setq company-show-numbers t)
 
 ;; ** Magit
 (def-package! orgit :after magit)
@@ -183,6 +184,7 @@ Enable completion of info from magithub in the current buffer.
 
 ;; quick way to dispaly world time clock
 (defalias 'wc 'display-time-world)
+
 (def-package! keyfreq
   :config
   (setq keyfreq-excluded-commands '(evil-next-line

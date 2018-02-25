@@ -2,7 +2,8 @@
 
 (doom! :private
        personal
-       ;;org
-       ;; chinese
+       org
+
+       chinese
        ;; test
        )

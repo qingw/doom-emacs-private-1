@@ -219,6 +219,7 @@
           :desc "Browse emacs.d"            :n "E" #'+default/browse-emacsd
           :desc "Recent files"              :n "r" #'recentf-open-files
           :desc "Recent project files"      :n "R" #'projectile-recentf
+          :desc "Tramp"                     :n "t" #'counsel-tramp
           :desc "Yank filename"             :n "y" #'+default/yank-buffer-filename
           (:when (featurep! :config private)
             :desc "Find file in private config" :n "p" #'+private/find-in-config

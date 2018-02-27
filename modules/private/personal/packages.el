@@ -20,3 +20,6 @@
 (package! py-isort)
 (package! pipenv)
 (package! yapfify :recipe (:fetcher github :repo "JorisE/yapfify"))
+
+(package! counsel-tramp)
+(package! docker-tramp)

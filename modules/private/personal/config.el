@@ -1,6 +1,7 @@
 ;;; config.el -*- lexical-binding: t; -*-
 
-(after! evil (load! +bindings))
+;; (after! evil (load! +bindings))
+(load! +bindings)
 
 (setq
  which-key-idle-delay 0.3
@@ -321,3 +322,9 @@ Enable completion of info from magithub in the current buffer.
         ("Weibo"              . "http://s.weibo.com/weibo/%s")
         ("RFC"                . "http://pretty-rfc.herokuapp.com/search?q=%s")
         ))
+
+(after! undo-tree
+  (setq undo-tree-auto-save-history t)
+  (setq undo-tree-visualizer-timestamps t)
+  (setq undo-tree-visualizer-diff t)
+  (set! :popup "^ ?\\*undo-tree\*" :ignore))

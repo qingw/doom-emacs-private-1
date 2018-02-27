@@ -68,3 +68,7 @@ conflic with *clipit* shortcut
 password-store async not accept input right
 
 seems [[https://emacs.stackexchange.com/questions/32881/enabling-minibuffer-pinentry-with-emacs-25-and-gnupg-2-1-on-ubuntu-xenial][here]] can work
+* Tasks
+** FIXME why (load! +bindings) not work
+[2018-02-25 Sun]
+[[file:~/workspace/doom-emacs-private/modules/private/personal/config.el::(after!%20evil%20(load!%20+bindings))]]

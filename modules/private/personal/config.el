@@ -335,5 +335,6 @@ Enable completion of info from magithub in the current buffer.
 (after! undo-tree
   (setq undo-tree-auto-save-history t)
   (setq undo-tree-visualizer-timestamps t)
-  (setq undo-tree-visualizer-diff t)
+  ;; FIXME windows not display stable
+  ;; (setq undo-tree-visualizer-diff t)
   (set! :popup "^ ?\\*undo-tree\*" :ignore))

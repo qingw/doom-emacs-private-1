@@ -29,6 +29,7 @@ make compile
 * Others
 
 ** Fonts
+*FontAwesome* ::
 
 ** utils
 
@@ -39,6 +40,7 @@ brew install grep
 brew install pipenv
 #+END_SRC
 *** Ubuntu
+
 ** For Python
 #+BEGIN_SRC shell
 # 基本的代码补全
@@ -46,6 +48,9 @@ pip install -i https://pypi.doubanio.com/simple --upgrade "jedi>=0.9.0" "json-rp
 
 pip install isort ipython hy
 # pip install python-language-server
+
+# for youdao-diction chinese word
+pip install jieba
 #+END_SRC
 
 ** nvm及常用npm包

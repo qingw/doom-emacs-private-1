@@ -96,6 +96,7 @@ Enable completion of info from magithub in the current buffer.
                           (alist-get 'created_at issue)))
              (updated_at (magithub--time-number-of-days-since-string
                           (alist-get 'updated_at issue))))
+         ;; FIXME keep first issue always show
          (or (< created_at ,days) (< updated_at ,days)))))
 
   (defun magithub-filter-maybe (&optional limit)

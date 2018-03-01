@@ -39,6 +39,7 @@
       "s-m"           #'doom/window-zoom
 
       "s-/"           #'counsel-imenu
+      "C-M-/"         #'undo-tree-visualize
       "s-?"           #'ivy-imenu-anywhere
       "s-j"           #'avy-goto-line
       "s-h"           #'avy-goto-word-1

@@ -123,7 +123,6 @@
 ;; create local brain lib
 (def-package! org-brain
   :commands org-brain-visualize
-  :after org
   :init
   (setq org-brain-path "~/org/brain")
   (push 'org-agenda-mode evil-snipe-disabled-modes)
@@ -133,6 +132,7 @@
   (map! "s-b"      #'org-brain-visualize)
 
   :config
+  (require 'org)
   (defun org-brain-set-tags (entry)
     "Use `org-set-tags' on headline ENTRY.
 If run interactively, get ENTRY from context."
@@ -164,7 +164,7 @@ If run interactively, get ENTRY from context."
      :n "f"   #'org-brain-add-friendship
      :n "F"   #'org-brain-remove-friendship
      :n "d"   #'org-brain-delete-entry
-     :n "g"   #'revert-buffer
+     :n "^"   #'revert-buffer
      :n "_"   #'org-brain-new-child
      :n ";"   #'org-brain-set-tags
      :n "j"   #'forward-button
@@ -177,8 +177,8 @@ If run interactively, get ENTRY from context."
      :n "q"   #'org-brain-visualize-quit
      :n "r"   #'org-brain-visualize-random
      :n "R"   #'org-brain-visualize-wander
-     :n "s"   #'org-brain-visualize
-     :n "S"   #'org-brain-goto
+     :n "g"   #'org-brain-visualize
+     :n "G"   #'org-brain-goto
      :n [tab] #'org-brain-goto-current
      :n "m"   #'org-brain-visualize-mind-map
      :n "["   #'org-brain-visualize-add-grandchild

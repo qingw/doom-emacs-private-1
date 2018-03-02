@@ -103,7 +103,7 @@ Enable completion of info from magithub in the current buffer.
     "Add filters to magithub only if number of issues is greter than LIMIT."
     (let ((max-issues (length (ignore-errors (magithub-issues))))
           (max-pull-requests (length (ignore-errors (magithub-pull-requests))))
-          (limit (or limit 1)))
+          (limit (or limit 15)))
       (when (> max-issues limit)
         (add-to-list (make-local-variable 'magithub-issue-issue-filter-functions)
                      (issue-filter-to-days limit "issues")))

@@ -138,7 +138,7 @@ Enable completion of info from magithub in the current buffer.
   (set! :popup "^.*magit.*popup\\*" '((slot . 0) (side . right)) '((modeline . nil) (select . t)))
   (set! :popup "^.*magit-revision:.*" '((slot . 2) (side . right) (window-height . 0.6)) '((modeline . nil) (select . t)))
   (set! :popup "^.*magit-diff:.*" '((slot . 2) (side . right) (window-height . 0.6)) '((modeline . nil) (select . nil)))
-  (add-hook! 'magit-popup-mode-hook #'doom-hide-modeline-mode))
+  (add-hook! 'magit-popup-mode-hook #'hide-mode-line-mode))
 
 ;; ** Helpful
 (after! helpful

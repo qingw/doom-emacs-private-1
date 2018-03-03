@@ -133,7 +133,15 @@ Enable completion of info from magithub in the current buffer.
    (:map magit-repolist-mode-map
      :n "j" #'next-line
      :n "k" #'previous-line
-     :n "s" #'magit-repolist-status ))
+     :n "s" #'magit-repolist-status )
+   (:map magithub-issue-view-mode-map
+     :n "j" #'next-line
+     :n "k" #'previous-line
+     :n "l" #'forward-char
+     :n "h" #'backward-char
+     ))
+  (add-hook 'magithub-edit-mode-hook #'evil-insert-state)
+
   (set! :popup "^.*magit" '((slot . -1) (side . right) (size . 80)) '((modeline . nil) (select . t)))
   (set! :popup "^.*magit.*popup\\*" '((slot . 0) (side . right)) '((modeline . nil) (select . t)))
   (set! :popup "^.*magit-revision:.*" '((slot . 2) (side . right) (window-height . 0.6)) '((modeline . nil) (select . t)))

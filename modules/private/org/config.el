@@ -202,8 +202,8 @@ If run interactively, get ENTRY from context."
  (:after org
    (:map org-mode-map
      :i [remap doom/inflate-space-maybe] #'org-self-insert-command
-     :i  "C-e"   #'org-end-of-line
-     :i  "C-a"   #'org-beginning-of-line
+     ;; :i  "C-e"   #'org-end-of-line
+     ;; :i  "C-a"   #'org-beginning-of-line
      :ni "C-c l" #'org-cliplink
      ;; TODO: when < not in first char
      :i "<"  (λ! (if (bolp) (hydra-org-template/body) (self-insert-command 1)))

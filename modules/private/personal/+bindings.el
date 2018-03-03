@@ -44,8 +44,10 @@
       "s-j"           #'avy-goto-line
       "s-h"           #'avy-goto-word-1
 
-      "C-s"           #'doom/swiper-region-or-symbol
-      "C-S-s"         #'doom/swiper-all-region-or-symbol
+      "C-s"           #'counsel-grep-or-swiper
+      "C-S-s"         #'doom/swiper-region-or-symbol
+      "C-M-s"         #'swiper-all
+      "C-M-S-s"       #'doom/swiper-all-region-or-symbol
 
       :nvime  "C-y" #'yank
 
@@ -211,7 +213,7 @@
         (:desc "file" :prefix "f"
           :desc "Find file"                 :n "." #'find-file
           :desc "Sudo find file"            :n ">" #'doom/sudo-find-file
-          :desc "Find file in project"      :n "/" #'projectile-find-file
+          :desc "Find file in project"      :n "f" #'projectile-find-file
           :desc "Find file from here"       :n "?" #'counsel-file-jump
           :desc "Find other file"           :n "a" #'projectile-find-other-file
           :desc "Open project editorconfig" :n "c" #'editorconfig-find-current-editorconfig
@@ -307,7 +309,7 @@
 
         (:desc "project" :prefix "p"
           :desc "Browse project"          :n  "." #'+default/browse-project
-          :desc "Search project with ag"  :n  "/" #'counsel-projectile-ag
+          :desc "Search project with ag"  :n  "s" #'counsel-projectile-ag
           :desc "Find file in project"    :n  "f" #'projectile-find-file
           :desc "Projectile kill buffers" :n  "k" #'projectile-kill-buffers
           :desc "Run cmd in project root" :nv "!" #'projectile-run-shell-command-in-root
@@ -663,6 +665,8 @@
         :n "gg"        #'evil-goto-first-line
         :n "v"         #'neotree-enter-vertical-split
         :n "s"         #'neotree-enter-horizontal-split
+        :n "C-M-v"     #'scroll-other-window
+        :n "C-M-S-v"   #'scroll-other-window-down
         :n "q"         #'neotree-hide
         :n "R"         #'neotree-refresh)
 

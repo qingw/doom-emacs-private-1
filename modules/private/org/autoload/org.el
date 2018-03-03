@@ -1,13 +1,15 @@
 ;;; org.el -*- lexical-binding: t; -*-
 
 ;;;###autoload
-(defun org-brain-cliplink-resource ()
-  "Add a URL from the clipboard as an org-brain resource.
-Suggest the URL title as a description for resource."
-  (interactive)
-  (let ((url (org-cliplink-clipboard-content)))
-    (org-brain-add-resource
-     url
-     (org-cliplink-retrieve-title-synchronously url)
-     t)))
+ (defun doom/org-brain-add-resource ()
+   "Add a URL from the clipboard as an org-brain resource.
+ Suggest the URL title as a description for resource."
+   (interactive)
+   (let* ((url (org-web-tools--get-first-url))
+          (html (org-web-tools--get-url url))
+          (title (org-web-tools--html-title html)))
+     (org-brain-add-resource
+      url
+      title
+      t)))
 

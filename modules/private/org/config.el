@@ -170,7 +170,7 @@ If run interactively, get ENTRY from context."
      :n "j"   #'forward-button
      :n "k"   #'backward-button
      :n "l"   #'org-brain-add-resource
-     :n "L"   #'org-brain-cliplink-resource
+     :n "L"   #'doom/org-brain-add-resource
      :n "t"   #'org-brain-set-title
      :n "$"   #'org-brain-pin
      :n "o"   #'ace-link-woman
@@ -187,9 +187,8 @@ If run interactively, get ENTRY from context."
      :n "}"   #'org-brain-visualize-remove-grandparent
      )))
 
-(def-package! org-cliplink
-  :commands (org-cliplink
-             org-cliplink-clipboard-content))
+(def-package! org-web-tools
+  :after org)
 
 (after! org-bullets
   ;; The standard unicode characters are usually misaligned depending on the
@@ -204,7 +203,9 @@ If run interactively, get ENTRY from context."
      :i [remap doom/inflate-space-maybe] #'org-self-insert-command
      ;; :i  "C-e"   #'org-end-of-line
      ;; :i  "C-a"   #'org-beginning-of-line
-     :ni "C-c l" #'org-cliplink
+     :ni "C-c l" #'org-web-tools-insert-link-for-url
+     :ni "C-c i" #'org-web-tools-insert-web-page-as-entry
+     :ni "C-c I" #'org-web-tools-convert-links-to-page-entrys
      ;; TODO: when < not in first char
      :i "<"  (λ! (if (bolp) (hydra-org-template/body) (self-insert-command 1)))
      )))

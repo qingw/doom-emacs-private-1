@@ -1,5 +1,7 @@
 ;;; config.el -*- lexical-binding: t; -*-
-;; (require 'org)
+
+(load! +todo)
+
 (after! org
   (setq
    org-default-journal-file (expand-file-name "journal.org.gpg" org-directory)
@@ -11,6 +13,9 @@
   ;; from https://emacs.stackexchange.com/questions/30520/org-mode-c-c-c-c-to-display-inline-image
   ;; TODO only redisplay affect source block
   (add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
+
+  (set! :popup "^CAPTURE.*\\.org$" '((side . bottom) (size . 0.4)) '((select . t)))
+  (set! :popup "^\\*Org Src" '((size . 0.6) (side . right)) '((quit) (select . t)))
 
   (setq org-capture-templates
         `(("t" "Todo" entry (file+headline  org-default-notes-file "Daily Tasks")
@@ -208,4 +213,19 @@ If run interactively, get ENTRY from context."
      :ni "C-c I" #'org-web-tools-convert-links-to-page-entrys
      ;; TODO: when < not in first char
      :i "<"  (λ! (if (bolp) (hydra-org-template/body) (self-insert-command 1)))
-     )))
+     ))
+ (:after org-agenda
+   (:map org-agenda-mode-map
+    "C-c r" #'my-org-agenda-clockreport
+    "R"     #'org-clock-budget-report
+    "C-n"   #'org-agenda-next-item
+    "C-p"   #'org-agenda-previous-item
+    "P"     #'my-org-narrow-to-project
+    "U"     #'my-org-narrow-to-parent
+    "N"     #'my-org-narrow-to-subtree
+    "W"     #'my-org-widen
+    "/"     #'my-org-agenda-filter-by-tag
+    "\\"    #'my-org-agenda-filter-by-tag-refine
+    "o"     #'my-org-agenda-open-at-point))
+ )
+

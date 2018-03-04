@@ -13,3 +13,9 @@
       title
       t)))
 
+;;;###autoload
+(defun org-agenda-show-daily (&optional arg)
+  (interactive "P")
+  (org-agenda arg "a"))
+
+

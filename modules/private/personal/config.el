@@ -134,7 +134,8 @@ Enable completion of info from magithub in the current buffer.
      :n "j" #'next-line
      :n "k" #'previous-line
      :n "s" #'magit-repolist-status )
-   (:map magithub-issue-view-mode-map
+   (:after magithub-edit-mode
+    :map magithub-issue-view-mode-map
      :n "j" #'next-line
      :n "k" #'previous-line
      :n "l" #'forward-char
@@ -347,3 +348,33 @@ Enable completion of info from magithub in the current buffer.
   ;; FIXME windows not display stable
   ;; (setq undo-tree-visualizer-diff t)
   (set! :popup "^ ?\\*undo-tree\*" :ignore))
+
+
+;; for workspace problem
+;; https://github.com/hlissner/doom-emacs/issues/447
+(defun +my-workspace/goto-main-window (pname frame)
+  (let ((window (car (+my-workspace/doom-visible-windows))))
+    (if (window-live-p window)
+        (select-window window))))
+(add-hook 'persp-before-switch-functions '+my-workspace/goto-main-window)
+
+
+(defun +my-workspace/doom-visible-windows (&optional window-list)
+  "Return a list of the visible, non-popup windows."
+  (cl-loop for window in (or window-list (window-list))
+           unless (window-dedicated-p window)
+           collect window))
+
+(defun +my-workspace/close-window-or-workspace ()
+  "Close the selected window. If it's the last window in the workspace, close
+the workspace and move to the next."
+  (interactive)
+  (let ((delete-window-fn (if (featurep 'evil) #'evil-window-delete #'delete-window)))
+    (if (window-dedicated-p)
+        (funcall delete-window-fn)
+      (let ((current-persp-name (+workspace-current-name)))
+        (cond ((or (+workspace--protected-p current-persp-name)
+                   (cdr (+my-workspace/doom-visible-windows)))
+               (funcall delete-window-fn))
+              ((cdr (+workspace-list-names))
+               (+workspace/delete current-persp-name)))))))

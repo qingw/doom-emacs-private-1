@@ -33,12 +33,13 @@
 
 ;; ** Tramp
 (after! tramp-sh
-  (add-to-list 'tramp-remote-path "")
   (add-to-list 'tramp-remote-path ""))
 (def-package! counsel-tramp
-  :commands (counsel-tramp))
-(def-package! docker-tramp
-  :after tramp)
+  :commands (counsel-tramp)
+  :init
+  (package-initialize))
+;; (def-package! docker-tramp
+;;   :after tramp)
 
 (after! recentf
   (add-to-list 'recentf-exclude 'file-remote-p)

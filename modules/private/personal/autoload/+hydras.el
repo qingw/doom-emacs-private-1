@@ -224,17 +224,20 @@ _B_uffers (3-way)   _F_iles (3-way)                          _w_ordwise
   ("M-p" mc/unmark-previous-like-this "Unmark previous like this")
   ("q" nil "Quit" :exit t))
 
+(after! org
+  (add-to-list 'org-structure-template-alist
+               '("C" "#+BEGIN_COMMENT\n?\n#+END_COMMENT" "")))
 ;; (spacemacs/set-leader-keys "mm" 'multiple-cursors-hydra/body)
 ;;;###autoload(autoload 'hydra-org-template/body "private/personal/autoload/+hydras" nil t)
 (defhydra hydra-org-template (:color blue :hint nil)
   "
-_C_enter  _q_uote    plant_u_ml    _L_aTeX:
+_c_enter  _q_uote    plant_u_ml    _L_aTeX:
 _l_atex   _e_xample  _s_hell       _i_ndex:
 _a_scii   _v_erse    _E_macs-lisp  _I_NCLUDE:
-s_r_c     ^ ^        _p_ython      _H_TML:
+s_r_c     _C_omment  _p_ython      _H_TML:
 _h_tml    ^ ^        Lil_y_pond    _A_SCII:
 "
-  ("c" (hot-expand-and-edit "clojure"))
+  ("c" (hot-expand-and-edit "comment"))
   ("s" (hot-expand-and-edit "shell"))
   ("E" (hot-expand-and-edit "emacs-lisp"))
   ("p" (hot-expand-and-edit "python"))
@@ -242,10 +245,11 @@ _h_tml    ^ ^        Lil_y_pond    _A_SCII:
   ("u" (hot-expand-and-edit "plantuml :file CHANGE.png"))
   ;; ("r" (hot-expand "<s"))
   ("r" (call-interactively 'src-expand-and-edit))
+  ("C" (hot-expand "<C"))
   ("e" (hot-expand "<e"))
   ("q" (hot-expand "<q"))
   ("v" (hot-expand "<v"))
-  ("C" (hot-expand "<c"))
+  ("c" (hot-expand "<c"))
   ("l" (hot-expand "<l"))
   ("h" (hot-expand "<h"))
   ("a" (hot-expand "<a"))

@@ -202,6 +202,12 @@ If run interactively, get ENTRY from context."
 
   (setq org-bullets-bullet-list '("⊢" "⋮" "⋱" " ")))
 
+(def-package! org-fancy-priorities
+  :hook
+  (org-mode . org-fancy-priorities-mode)
+  :config
+  (setq org-fancy-priorities-list '("⚡" "⬆" "⬇" "☕")))
+
 (map!
  (:after org
    (:map org-mode-map

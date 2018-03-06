@@ -134,13 +134,14 @@ Enable completion of info from magithub in the current buffer.
      :n "j" #'next-line
      :n "k" #'previous-line
      :n "s" #'magit-repolist-status )
-   (:after magithub-edit-mode
-    :map magithub-issue-view-mode-map
-     :n "j" #'next-line
-     :n "k" #'previous-line
-     :n "l" #'forward-char
-     :n "h" #'backward-char
-     ))
+   ;; (:after magithub-edit-mode
+   ;;  :map magithub-issue-view-mode-map
+   ;;   :n "j" #'next-line
+   ;;   :n "k" #'previous-line
+   ;;   :n "l" #'forward-char
+   ;;   :n "h" #'backward-char
+   ;;   )
+   )
   (add-hook 'magithub-edit-mode-hook #'evil-insert-state)
 
   (set! :popup "^.*magit" '((slot . -1) (side . right) (size . 80)) '((modeline . nil) (select . t)))

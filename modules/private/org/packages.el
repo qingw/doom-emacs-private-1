@@ -8,3 +8,5 @@
 (package! org-wild-notifier)
 
 (package! org-web-tools)
+
+(package! org-fancy-priorities)

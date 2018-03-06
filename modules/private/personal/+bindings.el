@@ -27,6 +27,9 @@
       :gnvime "s-:" #'doom/open-scratch-buffer
       :gnvime "s-;" #'evil-ex
 
+      :gnvime "M-J" #'move-text-down
+      :gnvime "M-K" #'move-text-up
+
       ;; Window Movements
       "C-h"           #'evil-window-left
       "C-j"           #'evil-window-down
@@ -34,7 +37,6 @@
       "C-l"           #'evil-window-right
       "C-M-h"         #'previous-multiframe-window
       "C-M-l"         #'next-multiframe-window
-
       "s-i"           #'ivy-resume
       "s-m"           #'doom/window-zoom
 
@@ -323,6 +325,7 @@
 
         (:desc "quit" :prefix "q"
           :desc "Save and quit"          :n "q" #'evil-save-and-quit
+          :desc "Restart Emacs"          :n "r" #'restart-emacs
           :desc "Quit (forget session)"  :n "Q" #'+workspace/kill-session-and-quit)
 
         (:when (featurep! :tools upload)

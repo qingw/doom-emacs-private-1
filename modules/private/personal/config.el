@@ -380,3 +380,13 @@ the workspace and move to the next."
                (funcall delete-window-fn))
               ((cdr (+workspace-list-names))
                (+workspace/delete current-persp-name)))))))
+
+;; FIXME move-text not works fine in region
+(def-package! move-text
+  :commands (move-text-up
+             move-text-down)
+  )
+
+(def-package! restart-emacs
+  :commands restart-emacs)
+

@@ -16,6 +16,10 @@
 ** TODO ref spacevim keybinding habit
 ** TODO IVY action
 - find file switch for counsel-project-file or counsel-file
+** agenda binding
+[[https://github.com/alphapapa/org-super-agenda][GitHub - alphapapa/org-super-agenda: Supercharge your Org daily/weekly agenda by grouping items]]
+
+[[https://gist.github.com/amirrajan/301e74dc844a4c9ffc3830dc4268f177][evil-agenda]]
 
 ** TODO paste hydra
 #+BEGIN_SRC emacs-lisp

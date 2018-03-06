@@ -38,6 +38,7 @@ make compile
 brew install ag
 brew install grep
 brew install pipenv
+brew install pandoc
 #+END_SRC
 *** Ubuntu
 

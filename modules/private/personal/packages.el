@@ -23,3 +23,6 @@
 
 (package! counsel-tramp)
 (package! docker-tramp)
+
+(package! move-text)
+(package! restart-emacs)

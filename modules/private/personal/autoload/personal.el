@@ -132,3 +132,15 @@ around point as the initial input."
   "Convert the current buffer to DOS file format."
   (interactive)
   (set-buffer-file-coding-system 'undecided-dos nil))
+
+
+;;;###autoload
+(defun insert-key-then-command (key)
+  "Ask for a key then insert its description.
+Will work on both org-mode and any mode that accepts plain html."
+  (interactive "kType key sequence: ")
+  (let* ((orgp (derived-mode-p 'org-mode))
+         (tag (if orgp "~%s~" "<kbd>%s</kbd>")))
+    (insert (format tag (help-key-description key nil)))
+    (kill-new  (symbol-name (cadr (help--analyze-key key nil))))
+    (forward-char (if orgp -1 -6))))

@@ -95,3 +95,10 @@
              org-clock-convenience-timestamp-down
              org-clock-convenience-fill-gap
              org-clock-convenience-fill-gap-both))
+
+(def-package! org-mru-clock
+  :commands (org-mru-clock-in
+             org-mru-clock-select-recent-task)
+  :init
+  (setq org-mru-clock-how-many 100
+        org-mru-clock-completing-read #'ivy-completing-read))

@@ -1,6 +1,7 @@
 ;;; config.el -*- lexical-binding: t; -*-
 
 (load! +todo)
+(load! +bindings)
 
 (after! org
   (setq
@@ -134,8 +135,6 @@
   ;; (add-hook 'org-agenda-mode-hook #'(lambda () (evil-vimish-fold-mode -1)))
   (set! :evil-state 'org-brain-visualize-mode 'normal)
 
-  (map! "s-b"      #'org-brain-visualize)
-
   :config
   (require 'org)
   (defun org-brain-set-tags (entry)
@@ -207,31 +206,3 @@ If run interactively, get ENTRY from context."
   (org-mode . org-fancy-priorities-mode)
   :config
   (setq org-fancy-priorities-list '("⚡" "⬆" "⬇" "☕")))
-
-(map!
- (:after org
-   (:map org-mode-map
-     :i [remap doom/inflate-space-maybe] #'org-self-insert-command
-     ;; :i  "C-e"   #'org-end-of-line
-     ;; :i  "C-a"   #'org-beginning-of-line
-     :ni "C-c l" #'org-web-tools-insert-link-for-url
-     :ni "C-c i" #'org-web-tools-insert-web-page-as-entry
-     :ni "C-c I" #'org-web-tools-convert-links-to-page-entrys
-     ;; TODO: when < not in first char
-     :i "<"  (λ! (if (bolp) (hydra-org-template/body) (self-insert-command 1)))
-     ))
- (:after org-agenda
-   (:map org-agenda-mode-map
-    "C-c r" #'my-org-agenda-clockreport
-    "R"     #'org-clock-budget-report
-    "C-n"   #'org-agenda-next-item
-    "C-p"   #'org-agenda-previous-item
-    "P"     #'my-org-narrow-to-project
-    "U"     #'my-org-narrow-to-parent
-    "N"     #'my-org-narrow-to-subtree
-    "W"     #'my-org-widen
-    "/"     #'my-org-agenda-filter-by-tag
-    "\\"    #'my-org-agenda-filter-by-tag-refine
-    "o"     #'my-org-agenda-open-at-point))
- )
-

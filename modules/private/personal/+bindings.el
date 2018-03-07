@@ -53,10 +53,6 @@
 
       :nvime  "C-y" #'yank
 
-      :gnvime "s-r" #'counsel-org-capture
-      :gnvime "s-R" #'counsel-projectile-org-capture
-      :gnvime "s-g" #'org-agenda-show-daily
-
       ;; Text-scaling
       :ne "M-+"       (λ! (text-scale-set 0))
       :ne "M-="       #'text-scale-increase
@@ -110,7 +106,7 @@
         :desc "Ex command"              :nv ";"  #'evil-ex
         :desc "M-x"                     :nv ":"  #'execute-extended-command
         :desc "Pop up scratch buffer"   :nv "x"  #'doom/open-scratch-buffer
-        :desc "Org Capture"             :nv "X"  #'org-capture
+        ;; :desc "Org Capture"             :nv "X"  #'org-capture
 
         ;; Most commonly used
         :desc "extended command"        :n "SPC" #'execute-extended-command

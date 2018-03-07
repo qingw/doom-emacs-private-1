@@ -77,3 +77,8 @@ seems [[https://emacs.stackexchange.com/questions/32881/enabling-minibuffer-pine
 [2018-02-25 Sun]
 [[file:~/workspace/doom-emacs-private/modules/private/personal/config.el::(after!%20evil%20(load!%20+bindings))]]
 ** FIXME ediff org file should unfold
+** TODO find file in other project
+
+or counsel-find-file in directory
+[2018-03-07 Wed]
+[[file:~/workspace/doom-emacs-private/modules/private/org/config.el::;;;%20config.el%20-*-%20lexical-binding:%20t;%20-*-]]

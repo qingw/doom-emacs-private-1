@@ -43,7 +43,7 @@
       "s-/"           #'counsel-imenu
       "C-M-/"         #'undo-tree-visualize
       "s-?"           #'ivy-imenu-anywhere
-      "s-j"           #'avy-goto-line
+      "s-l"           #'avy-goto-line
       "s-h"           #'avy-goto-word-1
 
       "C-s"           #'counsel-grep-or-swiper
@@ -51,7 +51,9 @@
       "C-M-s"         #'swiper-all
       "C-M-S-s"       #'doom/swiper-all-region-or-symbol
 
-      :nvime  "C-y" #'yank
+      ;; :nvime  "C-y" #'yank
+      :nvime  "C-y" #'hydra-yank-pop/yank
+      :nvime  "M-y" #'hydra-yank-pop/yank-pop
 
       ;; Text-scaling
       :ne "M-+"       (λ! (text-scale-set 0))

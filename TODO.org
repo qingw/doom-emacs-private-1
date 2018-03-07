@@ -82,3 +82,6 @@ seems [[https://emacs.stackexchange.com/questions/32881/enabling-minibuffer-pine
 or counsel-find-file in directory
 [2018-03-07 Wed]
 [[file:~/workspace/doom-emacs-private/modules/private/org/config.el::;;;%20config.el%20-*-%20lexical-binding:%20t;%20-*-]]
+** FIXME yank-pop-hydra and move-text-up works error maybe cause mark changed
+[2018-03-07 Wed]
+[[file:~/workspace/doom-emacs-private/modules/private/personal/autoload/+hydras.el::(defhydra%20hydra-yank-pop%20()]]

@@ -6,6 +6,9 @@
  :gnvime "s-R" #'counsel-projectile-org-capture
 
  :gnvime "s-g" #'org-agenda-show-daily
+ :gnvime "s-j" #'org-mru-clock-in
+ :gnvime "s-J" #'org-mru-clock-select-recent-task
+
 
  :gnvime "s-b" #'org-brain-visualize
 
@@ -44,6 +47,9 @@
      "/"     #'my-org-agenda-filter-by-tag
      "\\"    #'my-org-agenda-filter-by-tag-refine
      "o"     #'my-org-agenda-open-at-point
+
+     ;; :nv "cR"    #'org-resolve-clocks
+     "C-."   #'hydra-org-agenda/body
 
      "<s-up>"    #'org-clock-convenience-timestamp-up
      "<s-down>"  #'org-clock-convenience-timestamp-down

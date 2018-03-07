@@ -27,8 +27,8 @@
       :gnvime "s-:" #'doom/open-scratch-buffer
       :gnvime "s-;" #'evil-ex
 
-      :gnvime "M-J" #'move-text-down
-      :gnvime "M-K" #'move-text-up
+      :gnvime "M-J" #'drag-stuff-down
+      :gnvime "M-K" #'drag-stuff-up
 
       ;; Window Movements
       "C-h"           #'evil-window-left

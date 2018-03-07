@@ -24,5 +24,5 @@
 (package! counsel-tramp)
 (package! docker-tramp)
 
-(package! move-text)
+(package! drag-stuff)
 (package! restart-emacs)

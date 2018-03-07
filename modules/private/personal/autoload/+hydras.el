@@ -490,7 +490,7 @@ _n_: Navigate           _._: mark position _/_: jump to mark
   ("M-y" yank-pop nil)
   ("y" (yank-pop 1) "next")
   ("u" (yank-pop -1) "prev")
-  ("l" helm-show-kill-ring "list" :color blue))   ; or browse-kill-ring
+  ("l" counsel-yank-pop "list" :color blue))   ; or browse-kill-ring
 
 ;; (global-set-key (kbd "M-y") #'hydra-yank-pop/yank-pop)
 ;; (global-set-key (kbd "C-y") #'hydra-yank-pop/yank)

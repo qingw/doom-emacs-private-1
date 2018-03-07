@@ -51,9 +51,9 @@
       "C-M-s"         #'swiper-all
       "C-M-S-s"       #'doom/swiper-all-region-or-symbol
 
-      ;; :nvime  "C-y" #'yank
-      :nvime  "C-y" #'hydra-yank-pop/yank
-      :nvime  "M-y" #'hydra-yank-pop/yank-pop
+      :nvime  "C-y" #'evil-paste-after
+      :nvime  "M-y" #'evil-paste-pop
+      :nvime  "M-Y" #'evil-paste-pop-next
 
       ;; Text-scaling
       :ne "M-+"       (λ! (text-scale-set 0))

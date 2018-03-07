@@ -42,7 +42,6 @@
       "P" 'spacemacs/paste-transient-state/evil-paste-before))
 
 #+END_SRC
-** quick insert TODO/FIXME/...
 ** change fonts family
 can ref to xah's config
 ** workflow optimize
@@ -50,8 +49,6 @@ can ref to xah's config
 * Question
 ** Ctrl-Meta key seem not sent in ubuntu
 conflic with *clipit* shortcut
-
-** lead-local not working
 
 ** SPC f /  counsel-projectile-find-file not binding workspace's project when buffer to other directory
 
@@ -73,9 +70,6 @@ password-store async not accept input right
 
 seems [[https://emacs.stackexchange.com/questions/32881/enabling-minibuffer-pinentry-with-emacs-25-and-gnupg-2-1-on-ubuntu-xenial][here]] can work
 * Tasks
-** FIXME why (load! +bindings) not work
-[2018-02-25 Sun]
-[[file:~/workspace/doom-emacs-private/modules/private/personal/config.el::(after!%20evil%20(load!%20+bindings))]]
 ** FIXME ediff org file should unfold
 ** TODO find file in other project
 
@@ -83,5 +77,4 @@ or counsel-find-file in directory
 [2018-03-07 Wed]
 [[file:~/workspace/doom-emacs-private/modules/private/org/config.el::;;;%20config.el%20-*-%20lexical-binding:%20t;%20-*-]]
 ** FIXME yank-pop-hydra and move-text-up works error maybe cause mark changed
-[2018-03-07 Wed]
-[[file:~/workspace/doom-emacs-private/modules/private/personal/autoload/+hydras.el::(defhydra%20hydra-yank-pop%20()]]
+evil state , use evil-paster instead

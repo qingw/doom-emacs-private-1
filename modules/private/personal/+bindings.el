@@ -55,6 +55,9 @@
       :nvime  "M-y" #'evil-paste-pop
       :nvime  "M-Y" #'evil-paste-pop-next
 
+      :nv  "p"      #'hydra-yank-pop/evil-paste-after
+      :nv  "P"      #'hydra-yank-pop/evil-paste-befor
+
       ;; Text-scaling
       :ne "M-+"       (λ! (text-scale-set 0))
       :ne "M-="       #'text-scale-increase

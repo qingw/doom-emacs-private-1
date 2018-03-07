@@ -486,10 +486,10 @@ _n_: Navigate           _._: mark position _/_: jump to mark
 ;;;###autoload(autoload 'hydra-yank-pop/yank-pop"private/personal/autoload/+hydras" nil t)
 (defhydra hydra-yank-pop ()
   "yank"
-  ("C-y" yank nil)
-  ("M-y" yank-pop nil)
-  ("y" (yank-pop 1) "next")
-  ("u" (yank-pop -1) "prev")
+  ("C-j" evil-paste-pop "next")
+  ("C-k" evil-paste-pop-next "prev")
+  ("p" evil-paste-after nil)
+  ("P" evil-paste-before nil)
   ("l" counsel-yank-pop "list" :color blue))   ; or browse-kill-ring
 
 ;; (global-set-key (kbd "M-y") #'hydra-yank-pop/yank-pop)

@@ -27,6 +27,8 @@
       :gnvime "s-:" #'doom/open-scratch-buffer
       :gnvime "s-;" #'evil-ex
 
+      :gnvime "<f2>" #'+lookup/documentation
+
       :gnvime "M-J" #'drag-stuff-down
       :gnvime "M-K" #'drag-stuff-up
 
@@ -43,8 +45,12 @@
       "s-/"           #'counsel-imenu
       "C-M-/"         #'undo-tree-visualize
       "s-?"           #'ivy-imenu-anywhere
-      "s-l"           #'avy-goto-line
-      "s-h"           #'avy-goto-word-1
+
+      :gnvime "M-g"   #'goto/body
+
+      :gnvime "s-j"   #'dwim-jump
+      ;; "s-l"           #'avy-goto-line
+      ;; "s-h"           #'avy-goto-word-1
 
       "C-s"           #'counsel-grep-or-swiper
       "C-S-s"         #'doom/swiper-region-or-symbol
@@ -56,7 +62,7 @@
       :nvime  "M-Y" #'evil-paste-pop-next
 
       :nv  "p"      #'hydra-yank-pop/evil-paste-after
-      :nv  "P"      #'hydra-yank-pop/evil-paste-befor
+      :nv  "P"      #'hydra-yank-pop/evil-paste-before
 
       ;; Text-scaling
       :ne "M-+"       (λ! (text-scale-set 0))
@@ -215,7 +221,7 @@
 
         (:desc "file" :prefix "f"
           :desc "Find file"                 :n "." #'find-file
-          :desc "Sudo find file"            :n ">" #'doom/sudo-find-file
+          :desc "Sudo find file"            :n "s" #'doom/sudo-find-file
           :desc "Find file in project"      :n "f" #'projectile-find-file
           :desc "Find file from here"       :n "?" #'counsel-file-jump
           :desc "Find other file"           :n "a" #'projectile-find-other-file
@@ -225,7 +231,7 @@
           :desc "Browse emacs.d"            :n "E" #'+default/browse-emacsd
           :desc "Recent files"              :n "r" #'recentf-open-files
           :desc "Recent project files"      :n "R" #'projectile-recentf
-          :desc "Tramp"                     :n "t" #'counsel-tramp
+          :desc "Find file on TRAMP"        :n "t" #'counsel-tramp
           :desc "Yank filename"             :n "y" #'+default/yank-buffer-filename
           (:when (featurep! :config private)
             :desc "Find file in private config" :n "p" #'+private/find-in-config
@@ -301,6 +307,9 @@
           :desc "APP: twitter"          :n "T" #'=twitter
           :desc "APP: regex"            :n "X" #'=regex
 
+          :desc "Eshell"               :n "s" #'+eshell/open-popup
+          :desc "Calendar"             :n "c" #'=calendar
+
           ;; macos
           (:when IS-MAC
             :desc "Reveal in Finder"          :n "o" #'+macos/reveal-in-finder
@@ -356,11 +365,13 @@
           :desc "Frame maximized"        :n "m" #'toggle-frame-maximized
           :desc "Indent guides"          :n "i" #'highlight-indentation-mode
           :desc "Indent guides (column)" :n "I" #'highlight-indentation-current-column-mode
-          :desc "Impatient mode"         :n "p" #'+impatient-mode/toggle
+          :desc "Impatient mode"         :n "P" #'+impatient-mode/toggle
           :desc "Big mode"               :n "b" #'doom-big-font-mode
           :desc "Flycheck mode global"   :n "Y" #'global-flycheck-mode
           :desc "Flycheck mode"          :n "y" #'flycheck-mode
-          :desc "Evil goggles"           :n "g" #'+evil-goggles/toggle))
+           :desc "Theme"                  :n "t" #'counsel-load-theme
+           :desc "Evil goggles"           :n "g" #'+evil-goggles/toggle
+          :desc "org-tree-slide mode"    :n "p" #'+org-present/start))
 
 
       ;; --- Personal vim-esque bindings ------------------
@@ -629,7 +640,8 @@
         :map ivy-minibuffer-map
         [escape] #'keyboard-escape-quit
         "C-TAB" #'ivy-call-and-recenter
-        ;; "C-y" #'yank
+        "TAB"  #'ivy-alt-done
+        "C-y" #'evil-paste-after
         "C-/" #'undo
         "C-r" #'evil-paste-from-register
         "C-k" #'ivy-previous-line
@@ -776,8 +788,8 @@
       ;; jumping to eol.
       :i "C-a" #'doom/backward-to-bol-or-indent
       :i "C-e" #'doom/forward-to-last-non-comment-or-eol
-      :ni "C-S-u" #'doom/backward-kill-to-bol-and-indent
-      :ni "C-u" #'kill-line
+      :nie "C-S-u" #'doom/backward-kill-to-bol-and-indent
+      :nie "C-u" #'kill-line
 
       ;; textmate-esque newline insertion
       :i  [M-return]    #'evil-open-below

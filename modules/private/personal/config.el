@@ -15,6 +15,12 @@
 
  company-show-numbers t
 
+ alert-default-style 'notifier
+
+ ;; ace-window
+ aw-scope 'visible
+ aw-background nil
+
  ;; tramp
  tramp-default-method "ssh"
  tramp-ssh-controlmaster-options "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=600"
@@ -66,11 +72,11 @@
 (add-hook 'minibuffer-setup-hook #'doom|no-fringes-in-minibuffer)
 (set-window-fringes (minibuffer-window) 0 0 nil)
 
-(def-package-hook! ace-window
-  :post-config
-  (setq aw-scope 'visible
-        aw-background nil)
-  nil)
+;; (def-package-hook! ace-window
+;;   :post-config
+;;   (setq aw-scope 'visible
+;;         aw-background nil)
+;;   nil)
 
 ;; ** Magit
 (def-package! orgit :after magit)
@@ -145,8 +151,9 @@ Enable completion of info from magithub in the current buffer.
    )
   (add-hook 'magithub-edit-mode-hook #'evil-insert-state)
 
+
   (set! :popup "^.*magit" '((slot . -1) (side . right) (size . 80)) '((modeline . nil) (select . t)))
-  (set! :popup "^.*magit.*popup\\*" '((slot . 0) (side . right)) '((modeline . nil) (select . t)))
+  (set! :popup "^\\*magit.*popup\\*" '((slot . 0) (side . right)) '((modeline . nil) (select . t)))
   (set! :popup "^.*magit-revision:.*" '((slot . 2) (side . right) (window-height . 0.6)) '((modeline . nil) (select . t)))
   (set! :popup "^.*magit-diff:.*" '((slot . 2) (side . right) (window-height . 0.6)) '((modeline . nil) (select . nil)))
   (add-hook! 'magit-popup-mode-hook #'hide-mode-line-mode))
@@ -159,7 +166,11 @@ Enable completion of info from magithub in the current buffer.
 
 ;; * Ivy Actions
 (after! counsel
-;; ** counsel-find-file
+  (defun +ivy-recentf-transformer (str)
+    "Dim recentf entries that are not in the current project of the buffer you
+started `counsel-recentf' from. Also uses `abbreviate-file-name'."
+    (abbreviate-file-name str))
+  ;; ** counsel-find-file
   (defun +ivy/reloading (cmd)
     (lambda (x)
       (funcall cmd x)
@@ -177,9 +188,16 @@ Enable completion of info from magithub in the current buffer.
    'counsel-find-file
    `(("c" ,(+ivy/given-file #'copy-file "Copy file") "copy file")
      ("d" ,(+ivy/reloading #'+ivy/confirm-delete-file) "delete")
+     ("r" (lambda (path) (rename-file path (read-string "New name: "))) "Rename")
      ("m" ,(+ivy/reloading (+ivy/given-file #'rename-file "Move")) "move")
-     ("f" find-file-other-window "other window")))
-;; ** counsel-M-x
+     ("f" find-file-other-window "other window")
+     ("p" (lambda (path) (with-ivy-window (insert (f-relative path)))) "Insert relative path")
+     ("P" (lambda (path) (with-ivy-window (insert path))) "Insert absolute path")
+     ("l" (lambda (path) "Insert org-link with relative path"
+            (with-ivy-window (insert (format "[[./%s]]" (f-relative path))))) "Insert org-link (rel. path)")
+     ("L" (lambda (path) "Insert org-link with absolute path"
+            (with-ivy-window (insert (format "[[%s]]" path)))) "Insert org-link (abs. path)")))
+  ;; ** counsel-M-x
   (defun +ivy/helpful-function (prompt)
     (helpful-function (intern prompt)))
   (defun +ivy/find-function (prompt)
@@ -187,10 +205,7 @@ Enable completion of info from magithub in the current buffer.
   (ivy-add-actions
    'counsel-M-x
    `(("h" +ivy/helpful-function "Helpful")
-     ("f" +ivy/find-function "Find")))
-
-  )
-
+     ("f" +ivy/find-function "Find"))))
 
 ;; https://en.wikipedia.org/wiki/list_of_tz_database_time_zones
 (setq display-time-world-list
@@ -320,6 +335,34 @@ Enable completion of info from magithub in the current buffer.
         :n "u" #'pipenv-uninstall
         ))
 
+
+(def-package! electric-operator
+  :commands (electric-operator-mode)
+  :init
+  (add-hook 'sh-mode-hook #'electric-operator-mode)
+  (add-hook 'python-mode-hook #'electric-operator-mode)
+  (add-hook 'inferior-python-mode-hook #'electric-operator-mode)
+  :config
+  (apply #'electric-operator-add-rules-for-mode 'inferior-python-mode
+         electric-operator-prog-mode-rules)
+  (apply #'electric-operator-add-rules-for-mode 'sh-mode
+         electric-operator-prog-mode-rules)
+  (electric-operator-add-rules-for-mode 'inferior-python-mode
+                                        (cons "**" #'electric-operator-python-mode-**)
+                                        (cons "*" #'electric-operator-python-mode-*)
+                                        (cons ":" #'electric-operator-python-mode-:)
+                                        (cons "//" " // ") ; integer division
+                                        (cons "=" #'electric-operator-python-mode-kwargs-=)
+                                        (cons "-" #'electric-operator-python-mode-negative-slices)
+                                        (cons "->" " -> ") ; function return types
+                                        )
+  (electric-operator-add-rules-for-mode 'sh-mode
+                                        (cons "=" " = ")
+                                        (cons "<=" " <= ")
+                                        (cons ">=" " >= ")
+                                        (cons ">" " > ")
+                                        (cons "," ", ")
+                                        (cons "|" " | ")))
 ;; search online , has no efficient instrument change variable in autoload module
 (setq +lookup-provider-url-alist
       '(("Google"             . "https://google.com/search?q=%s")
@@ -354,32 +397,32 @@ Enable completion of info from magithub in the current buffer.
 
 ;; for workspace problem
 ;; https://github.com/hlissner/doom-emacs/issues/447
-(defun +my-workspace/goto-main-window (pname frame)
-  (let ((window (car (+my-workspace/doom-visible-windows))))
-    (if (window-live-p window)
-        (select-window window))))
-(add-hook 'persp-before-switch-functions '+my-workspace/goto-main-window)
+(after! persp
+  (defun +my-workspace/goto-main-window (pname frame)
+    (let ((window (car (+my-doom-visible-windows))))
+      (if (window-live-p window)
+          (select-window window))))
+  (add-hook 'persp-before-switch-functions '+my-workspace/goto-main-window)
 
-
-(defun +my-workspace/doom-visible-windows (&optional window-list)
-  "Return a list of the visible, non-popup windows."
-  (cl-loop for window in (or window-list (window-list))
-           unless (window-dedicated-p window)
-           collect window))
-
-(defun +my-workspace/close-window-or-workspace ()
-  "Close the selected window. If it's the last window in the workspace, close
+  (defun +my-doom-visible-windows (&optional window-list)
+    "Return a list of the visible, non-popup windows."
+    (cl-loop for window in (or window-list (window-list))
+             unless (window-dedicated-p window)
+             collect window))
+  (defun +my-workspace/close-window-or-workspace ()
+    "Close the selected window. If it's the last window in the workspace, close
 the workspace and move to the next."
-  (interactive)
-  (let ((delete-window-fn (if (featurep 'evil) #'evil-window-delete #'delete-window)))
-    (if (window-dedicated-p)
-        (funcall delete-window-fn)
-      (let ((current-persp-name (+workspace-current-name)))
-        (cond ((or (+workspace--protected-p current-persp-name)
-                   (cdr (+my-workspace/doom-visible-windows)))
-               (funcall delete-window-fn))
-              ((cdr (+workspace-list-names))
-               (+workspace/delete current-persp-name)))))))
+    (interactive)
+    (let ((delete-window-fn (if (featurep 'evil) #'evil-window-delete #'delete-window)))
+      (if (window-dedicated-p)
+          (funcall delete-window-fn)
+        (let ((current-persp-name (+workspace-current-name)))
+          (cond ((or (+workspace--protected-p current-persp-name)
+                     (cdr (+my-doom-visible-windows)))
+                 (funcall delete-window-fn))
+                ((cdr (+workspace-list-names))
+                 (+workspace/delete current-persp-name))))))))
+
 
 (def-package! drag-stuff
   :commands (drag-stuff-up

@@ -21,6 +21,8 @@
 (package! pipenv)
 (package! yapfify :recipe (:fetcher github :repo "JorisE/yapfify"))
 
+(package! electric-operator)
+
 (package! counsel-tramp)
 (package! docker-tramp)
 

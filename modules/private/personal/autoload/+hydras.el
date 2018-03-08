@@ -432,7 +432,7 @@ T - tag prefix
   ("hw" hi-lock-write-interactive-patterns "Write interactive patterns")
   ("M-w" eww-search-words "Search the web for the text")
   )
-
+;; from http://kitchingroup.cheme.cmu.edu/blog/category/hydra/
 ;;;###autoload(autoload 'goto/body "private/personal/autoload/+hydras" nil t)
 (defhydra goto (:color blue :hint nil)
   "
@@ -480,6 +480,56 @@ _n_: Navigate           _._: mark position _/_: jump to mark
   ("m" helm-mini)
   ("R" helm-recentf)
   ("n" hydra-navigate/body))
+
+;;;###autoload(autoload 'hydra-navigate/body "private/personal/autoload/+hydras" nil t)
+(defhydra hydra-navigate (:color red
+                          :hint nil)
+  "
+_f_: forward-char       _w_: forward-word       _n_: next-line
+_b_: backward-char      _W_: backward-word      _p_: previous-line
+^ ^                     _o_: subword-right      _,_: beginning-of-line
+^ ^                     _O_: subword-left       _._: end-of-line
+
+_s_: forward sentence   _a_: forward paragraph  _g_: forward page
+_S_: backward sentence  _A_: backward paragraph _G_: backward page
+
+_h_: helm mini _B_: buffer list _i_: window
+_<left>_: previous buffer   _<right>_: next buffer
+_<up>_: scroll-up           _<down>_: scroll-down
+
+_[_: backward-sexp _]_: forward-sexp
+_<_ beginning of buffer _>_ end of buffer _m_: set mark _/_: jump to mark
+"
+  ("f" forward-char)
+  ("b" backward-char)
+  ("w" forward-word)
+  ("W" backward-word)
+  ("n" next-line)
+  ("p" previous-line)
+  ("o" subword-right)
+  ("O" subword-left)
+  ("s" forward-sentence)
+  ("S" backward-sentence)
+  ("a" forward-paragraph)
+  ("A" backward-paragraph)
+  ("g" forward-page)
+  ("G" backward-page)
+  ("<right>" next-buffer)
+  ("<left>" previous-buffer)
+  ("h" helm-mini :color blue)
+  ("i" ace-window :color blue)
+  ("m" org-mark-ring-push)
+  ("/" org-mark-ring-goto :color blue)
+  ("B" helm-buffers-list)
+  ("<up>" scroll-up)
+  ("<down>" scroll-down)
+  ("<" beginning-of-buffer)
+  (">" end-of-buffer)
+  ("." end-of-line)
+  ("[" backward-sexp)
+  ("]" forward-sexp)
+  ("," beginning-of-line)
+  ("q" nil "quit" :color blue))
 
 ;;;###autoload(autoload 'hydra-yank-pop/body "private/personal/autoload/+hydras" nil t)
 ;;;###autoload(autoload 'hydra-yank-pop/yank"private/personal/autoload/+hydras" nil t)

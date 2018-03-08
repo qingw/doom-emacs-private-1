@@ -129,9 +129,10 @@
          :nv  "j"     #'org-move-subtree-down
          :nv  "k"     #'org-move-subtree-up
          :nv  "l"     #'org-demote-subtree
-         :nv  "n"     #'org-narrow-to-subtree
-         :nv  "N"     #'widen
+         :nv  "N"     #'org-narrow-to-subtree
+         :nv  "W"     #'widen
          :nv  "r"     #'org-refile
+         :nv  "K"     #'org-cut-subtree
          :nv  "s"     #'org-sparse-tree
          :nv  "S"     #'org-sort)
 

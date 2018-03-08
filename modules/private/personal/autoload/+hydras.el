@@ -532,8 +532,8 @@ _<_ beginning of buffer _>_ end of buffer _m_: set mark _/_: jump to mark
   ("q" nil "quit" :color blue))
 
 ;;;###autoload(autoload 'hydra-yank-pop/body "private/personal/autoload/+hydras" nil t)
-;;;###autoload(autoload 'hydra-yank-pop/yank"private/personal/autoload/+hydras" nil t)
-;;;###autoload(autoload 'hydra-yank-pop/yank-pop"private/personal/autoload/+hydras" nil t)
+;;;###autoload(autoload 'hydra-yank-pop/evil-paste-after"private/personal/autoload/+hydras" nil t)
+;;;###autoload(autoload 'hydra-yank-pop/evil-paste-before"private/personal/autoload/+hydras" nil t)
 (defhydra hydra-yank-pop ()
   "yank"
   ("C-j" evil-paste-pop "next")

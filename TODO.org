@@ -78,3 +78,5 @@ or counsel-find-file in directory
 [[file:~/workspace/doom-emacs-private/modules/private/org/config.el::;;;%20config.el%20-*-%20lexical-binding:%20t;%20-*-]]
 ** FIXME yank-pop-hydra and move-text-up works error maybe cause mark changed
 evil state , use evil-paster instead
+** TODO smartparent with evil and hydra
+[[https://github.com/expez/evil-smartparens][GitHub - expez/evil-smartparens: Evil integration for Smartparens]]

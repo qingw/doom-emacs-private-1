@@ -144,3 +144,46 @@ Will work on both org-mode and any mode that accepts plain html."
     (insert (format tag (help-key-description key nil)))
     (kill-new  (symbol-name (cadr (help--analyze-key key nil))))
     (forward-char (if orgp -1 -6))))
+
+
+;;;###autoload
+(defun my-find-url (url)
+  "Download URL and insert into current buffer at point."
+  (interactive "sULR: ")
+  (insert (my-url-retrieve url)))
+
+(defun my-url-retrieve (url &optional no-headers)
+  "Retrieve and return as string the content of URL.
+
+If NO-HEADERS is non-nil, remove the HTTP headers first."
+  (with-current-buffer (url-retrieve-synchronously url)
+    (when no-headers
+      (goto-char (point-min))
+      (search-forward "\n\n")
+      (delete-region (point-min) (point)))
+    (prog1 (buffer-string)
+      (kill-buffer))))
+
+;;;###autoload
+(defun my-insert-date-iso (date)
+  "Insert timestamp."
+  (interactive (list (org-read-date)))
+  (insert date))
+
+;;;###autoload
+(defun my-md5-file (filename)
+  "Open FILENAME, load it into a buffer and generate the md5 of its contents"
+  (interactive "f")
+  (with-temp-buffer
+    (insert-file-contents filename)
+    (let ((hash (md5 (current-buffer))))
+      (when (called-interactively-p 'interactive)
+        (message hash))
+      hash)))
+
+
+;;;###autoload
+(defun create-scratch-buffer-current-mode ()
+  "Create a new scratch buffer to work in and set its mode to current `major-mode'."
+  (interactive)
+  (create-scratch-buffer major-mode))

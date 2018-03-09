@@ -13,6 +13,10 @@
  counsel-find-file-at-point t
  ivy-extra-directories '("./")
 
+ ;; plantuml and dot
+ plantuml-jar-path (concat "~/.doom.d/local/" "plantuml.jar")
+ org-plantuml-jar-path plantuml-jar-path
+
  company-show-numbers t
 
  alert-default-style 'notifier

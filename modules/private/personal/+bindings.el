@@ -70,25 +70,25 @@
       :ne "M--"       #'text-scale-decrease
 
       ;; Simple window/frame navigation/manipulation
-      :ne "C-`"       #'+popup/toggle
-      :ne "C-~"       #'+popup/raise
-      :ne "M-t"       #'+workspace/new
-      :ne "M-T"       #'+workspace/display
-      :ne "M-w"       #'delete-window
-      :ne "M-W"       #'delete-frame
-      :ne "C-M-f"     #'toggle-frame-fullscreen
-      :ne "M-n"       #'evil-buffer-new
-      :ne "M-N"       #'make-frame
-      :ne "M-1"       (λ! (+workspace/switch-to 0))
-      :ne "M-2"       (λ! (+workspace/switch-to 1))
-      :ne "M-3"       (λ! (+workspace/switch-to 2))
-      :ne "M-4"       (λ! (+workspace/switch-to 3))
-      :ne "M-5"       (λ! (+workspace/switch-to 4))
-      :ne "M-6"       (λ! (+workspace/switch-to 5))
-      :ne "M-7"       (λ! (+workspace/switch-to 6))
-      :ne "M-8"       (λ! (+workspace/switch-to 7))
-      :ne "M-9"       (λ! (+workspace/switch-to 8))
-      :ne "M-0"       #'+workspace/switch-to-last
+      :nvime "C-`"       #'+popup/toggle
+      :nvime "C-~"       #'+popup/raise
+      :neime "M-t"       #'+workspace/new
+      :neime "M-T"       #'+workspace/display
+      :neime "M-w"       #'delete-window
+      :neime "M-W"       #'delete-frame
+      :neime "C-M-f"     #'toggle-frame-fullscreen
+      :neime "M-n"       #'evil-buffer-new
+      :neime "M-N"       #'make-frame
+      :neime "M-1"       (λ! (+workspace/switch-to 0))
+      :neime "M-2"       (λ! (+workspace/switch-to 1))
+      :neime "M-3"       (λ! (+workspace/switch-to 2))
+      :neime "M-4"       (λ! (+workspace/switch-to 3))
+      :neime "M-5"       (λ! (+workspace/switch-to 4))
+      :neime "M-6"       (λ! (+workspace/switch-to 5))
+      :neime "M-7"       (λ! (+workspace/switch-to 6))
+      :neime "M-8"       (λ! (+workspace/switch-to 7))
+      :neime "M-9"       (λ! (+workspace/switch-to 8))
+      :neime "M-0"       #'+workspace/switch-to-last
 
       ;; Other sensible, textmate-esque global bindings
       :ne "M-r"   #'+eval/buffer
@@ -369,8 +369,8 @@
           :desc "Big mode"               :n "b" #'doom-big-font-mode
           :desc "Flycheck mode global"   :n "Y" #'global-flycheck-mode
           :desc "Flycheck mode"          :n "y" #'flycheck-mode
-           :desc "Theme"                  :n "t" #'counsel-load-theme
-           :desc "Evil goggles"           :n "g" #'+evil-goggles/toggle
+          :desc "Theme"                  :n "t" #'counsel-load-theme
+          :desc "Evil goggles"           :n "g" #'+evil-goggles/toggle
           :desc "org-tree-slide mode"    :n "p" #'+org-present/start))
 
 
@@ -786,10 +786,10 @@
       ;; indentation. Pressing it again will send you to the true bol. Same goes
       ;; for C-e, except it will ignore comments and trailing whitespace before
       ;; jumping to eol.
-      :i "C-a" #'doom/backward-to-bol-or-indent
-      :i "C-e" #'doom/forward-to-last-non-comment-or-eol
+      :i   "C-a"   #'doom/backward-to-bol-or-indent
+      :i   "C-e"   #'doom/forward-to-last-non-comment-or-eol
       :nie "C-S-u" #'doom/backward-kill-to-bol-and-indent
-      :nie "C-u" #'kill-line
+      :nie "C-u"   #'kill-line
 
       ;; textmate-esque newline insertion
       :i  [M-return]    #'evil-open-below
@@ -811,15 +811,15 @@
              minibuffer-local-isearch-map
              read-expression-map)
         [escape] #'abort-recursive-edit
-        "C-r" #'evil-paste-from-register
-        "C-a" #'move-beginning-of-line
-        "C-w" #'doom/minibuffer-kill-word
-        "C-u" #'doom/minibuffer-kill-line
-        "C-b" #'backward-char
-        "M-b" #'backward-word
-        "C-f" #'forward-char
-        "M-f" #'forward-word
-        "M-z" #'doom/minibuffer-undo)
+        "C-r"    #'evil-paste-from-register
+        "C-a"    #'move-beginning-of-line
+        "C-w"    #'doom/minibuffer-kill-word
+        "C-u"    #'doom/minibuffer-kill-line
+        "C-b"    #'backward-char
+        "M-b"    #'backward-word
+        "C-f"    #'forward-char
+        "M-f"    #'forward-word
+        "M-z"    #'doom/minibuffer-undo)
 
       (:after evil
         (:map evil-ex-completion-map

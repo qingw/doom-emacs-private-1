@@ -14,6 +14,7 @@ brew install emacs-plus
 
 apt install emacs25-el
 #+END_SRC
+
 ** Doom
 #+BEGIN_SRC shell
 git clone https://github.com/hlissner/doom-emacs.git ~/.emacs.d
@@ -27,6 +28,22 @@ make compile
 #+END_SRC
 
 * Others
+| resource | mac | Linux | windows | type |
+|----------+-----+-------+---------+------|
+|          |     |       |         |      |
+|          |     |       |         |      |
+| ag       |     |       |         |      |
+| rigrep   |     |       |         |      |
+|          |     |       |         |      |
+| pipenv   |     |       |         |      |
+|          |     |       |         |      |
+|          |     |       |         |      |
+| pandoc   |     |       |         |      |
+| graphviz |     |       |         |      |
+|          |     |       |         |      |
+|          |     |       |         |      |
+|          |     |       |         |      |
+
 
 ** Fonts
 *FontAwesome* ::

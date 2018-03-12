@@ -41,6 +41,7 @@
      "C-n"   #'org-agenda-next-item
      "C-p"   #'org-agenda-previous-item
      "P"     #'my-org-narrow-to-project
+     "T"     #'+org-agend-todo-done
      "U"     #'my-org-narrow-to-parent
      "N"     #'my-org-narrow-to-subtree
      "W"     #'my-org-widen

@@ -34,28 +34,22 @@
      ;; SPC C- capture/colors
      :nv   "c"    #'org-capture))
 
- (:after org-agenda
+ (:after evil-org-agenda
    (:map org-agenda-mode-map
-     "C-c r" #'my-org-agenda-clockreport
-     "R"     #'org-clock-budget-report
-     "C-n"   #'org-agenda-next-item
-     "C-p"   #'org-agenda-previous-item
-     "P"     #'my-org-narrow-to-project
-     "T"     #'+org-agend-todo-done
-     "U"     #'my-org-narrow-to-parent
-     "N"     #'my-org-narrow-to-subtree
-     "W"     #'my-org-widen
-     "/"     #'my-org-agenda-filter-by-tag
-     "\\"    #'my-org-agenda-filter-by-tag-refine
-     "o"     #'my-org-agenda-open-at-point
+     :m  "cR"    #'org-clock-budget-report
+     :m  "C-n"   #'org-agenda-next-item
+     :m  "C-p"   #'org-agenda-previous-item
+     :m  "T"     #'+org-agend-todo-done
+     :m  "C-t"   #'org-agenda-todo-yesterday
+     :m  "C-S-t" #'org-agenda-todo-yesterday-done
 
      ;; :nv "cR"    #'org-resolve-clocks
-     "C-."   #'hydra-org-agenda/body
+     :m  "C-."   #'hydra-org-agenda/body
 
-     "<s-up>"    #'org-clock-convenience-timestamp-up
-     "<s-down>"  #'org-clock-convenience-timestamp-down
-     "g"         #'org-clock-convenience-fill-gap
-     "G"         #'org-clock-convenience-fill-gap-both
+     :m  "<s-up>"     #'org-clock-convenience-timestamp-up
+     :m  "<s-down>"   #'org-clock-convenience-timestamp-down
+     :m  "cp"         #'org-clock-convenience-fill-gap
+     :m  "cP"         #'org-clock-convenience-fill-gap-both
      ))
 
  (:after org

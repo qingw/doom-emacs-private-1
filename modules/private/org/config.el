@@ -205,4 +205,4 @@ If run interactively, get ENTRY from context."
   :hook
   (org-mode . org-fancy-priorities-mode)
   :config
-  (setq org-fancy-priorities-list '("⚡" "⬆" "⬇" "☕")))
+  (setq org-fancy-priorities-list '("⚡" "⬆" "☕")))

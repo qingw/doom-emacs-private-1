@@ -57,7 +57,7 @@
       "C-M-s"         #'swiper-all
       "C-M-S-s"       #'doom/swiper-all-region-or-symbol
 
-      :nvime  "C-y" #'evil-paste-after
+      :nvime  "C-y" #'evil-paste-before
       :nvime  "M-y" #'evil-paste-pop
       :nvime  "M-Y" #'evil-paste-pop-next
 

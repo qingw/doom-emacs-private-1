@@ -284,6 +284,38 @@ _h_tml    ^ ^        Lil_y_pond    _A_SCII:
             :action (lambda (x) (hot-expand-and-edit x ))
             ))
 
+(defhydra sk/hydra-org-agenda-view (:color red
+                                    :hint nil)
+  "
+ _d_: day        _g_: time grid    _a_: arch-trees    _L_: log closed clock
+ _w_: week       _i_: inactive     _A_: arch-files    _c_: log clock check
+ _t_: fortnight  _f_: follow       _r_: report        _l_: log mode toggle
+ _m_: month      _e_: entry        _D_: diary         _q_: quit
+ _y_: year       _!_: deadlines    _R_: reset
+"
+  ("R" org-agenda-reset-view)
+  ("d" org-agenda-day-view)
+  ("w" org-agenda-week-view)
+  ("t" org-agenda-fortnight-view)
+  ("m" org-agenda-month-view)
+  ("y" org-agenda-year-view)
+  ("l" org-agenda-log-mode)
+  ("L" (org-agenda-log-mode '(4)))
+  ("c" (org-agenda-log-mode 'clockcheck))
+  ("f" org-agenda-follow-mode)
+  ("a" org-agenda-archives-mode)
+  ("A" (org-agenda-archives-mode 'files))
+  ("r" org-agenda-clockreport-mode)
+  ("e" org-agenda-entry-text-mode)
+  ("g" org-agenda-toggle-time-grid)
+  ("D" org-agenda-toggle-diary)
+  ("!" org-agenda-toggle-deadlines)
+  ("i"
+   (let ((org-agenda-include-inactive-timestamps t))
+     (org-agenda-check-type t 'timeline 'agenda)
+     (org-agenda-redo)))
+  ("q" nil :color blue))
+
 ;;;###autoload(autoload 'hydra-org-agenda/body "private/personal/autoload/+hydras" nil t)
 ;; Hydra for org agenda (graciously taken from Spacemacs)
 (defhydra hydra-org-agenda (:pre (setq which-key-inhibit t)
@@ -544,3 +576,149 @@ _<_ beginning of buffer _>_ end of buffer _m_: set mark _/_: jump to mark
 
 ;; (global-set-key (kbd "M-y") #'hydra-yank-pop/yank-pop)
 ;; (global-set-key (kbd "C-y") #'hydra-yank-pop/yank)
+
+(defhydra sk/hydra-of-windows (:color red
+                               :hint nil)
+  "
+ ^Move^    ^Size^    ^Change^                    ^Split^           ^Text^
+ ^^^^^^^^^^^------------------------------------------------------------------
+ ^ ^ _k_ ^ ^   ^ ^ _K_ ^ ^   _u_: winner-undo _o_: rotate  _v_: vertical     _+_: zoom in
+ _h_ ^+^ _l_   _H_ ^+^ _L_   _r_: winner-redo            _s_: horizontal   _-_: zoom out
+ ^ ^ _j_ ^ ^   ^ ^ _J_ ^ ^   _c_: close                  _z_: zoom         _q_: quit
+"
+  ("h" windmove-left)
+  ("j" windmove-down)
+  ("k" windmove-up)
+  ("l" windmove-right)
+  ("H" shrink-window-horizontally)
+  ("K" shrink-window)
+  ("J" enlarge-window)
+  ("L" enlarge-window-horizontally)
+  ("v" evil-window-vsplit)
+  ("s" evil-window-split)
+  ("c" delete-window)
+  ("f" toggle-win :color blue)
+  ("o" evil-window-rotate-downwards)
+  ("z" doom/window-zoom)
+  ("u" (progn
+         (winner-undo)
+         (setq this-command 'winner-undo)))
+  ("r" winner-redo)
+  ("+" text-scale-increase)
+  ("-" text-scale-decrease)
+  ("q" nil :color blue))
+
+(defhydra sk/hydra-multiple-cursors (:color red
+                                     :hint nil)
+  "
+  _k_: prev         _j_: next         _a_: all     _b_: beg of lines   _q_: quit
+  _K_: skip prev    _J_: skip next    _d_: defun   _e_: end of lines
+  _p_: unmark prev  _n_: unmark next  _r_: regexp  _l_: lines
+"
+  ("j" mc/mark-next-like-this)
+  ("J" mc/skip-to-next-like-this)
+  ("n" mc/unmark-next-like-this)
+  ("k" mc/mark-previous-like-this)
+  ("K" mc/skip-to-previous-like-this)
+  ("p" mc/unmark-previous-like-this)
+  ("a" mc/mark-all-like-this :color blue)
+  ("d" mc/mark-all-like-this-in-defun :color blue)
+  ("r" mc/mark-all-in-region-regexp :color blue)
+  ("b" mc/edit-beginnings-of-lines)
+  ("e" mc/edit-ends-of-lines)
+  ("l" mc/edit-lines :color blue)
+  ("q" nil :color blue))
+
+(defhydra sk/hydra-rectangle (:pre (rectangle-mark-mode 1)
+                              :color pink
+                              :hint nil)
+  "
+ _p_: paste   _r_: replace  _I_: insert
+ _y_: copy    _o_: open     _V_: reset
+ _d_: kill    _n_: number   _q_: quit
+"
+  ("h" backward-char nil)
+  ("l" forward-char nil)
+  ("k" previous-line nil)
+  ("j" next-line nil)
+  ("y" copy-rectangle-as-kill)
+  ("d" kill-rectangle)
+  ("x" clear-rectangle)
+  ("o" open-rectangle)
+  ("p" yank-rectangle)
+  ("r" string-rectangle)
+  ("n" rectangle-number-lines)
+  ("I" string-insert-rectangle)
+  ("V" (if (region-active-p)
+           (deactivate-mark)
+         (rectangle-mark-mode 1)) nil)
+  ("q" keyboard-quit :color blue))
+
+(defhydra sk/hydra-registers (:color blue
+                              :hint nil)
+  "
+ _a_: append     _c_: copy-to    _j_: jump       _r_: rectangle-copy   _q_: quit
+ _i_: insert     _n_: number-to  _f_: frameset   _w_: window-config
+ _+_: increment  _p_: point-to
+  "
+  ("a" append-to-register)
+  ("c" copy-to-register)
+  ("i" insert-register)
+  ("f" frameset-to-register)
+  ("j" jump-to-register)
+  ("n" number-to-register)
+  ("r" copy-rectangle-to-register)
+  ("w" window-configuration-to-register)
+  ("+" increment-register)
+  ("p" point-to-register)
+  ("q" nil :color blue))
+
+(defhydra sk/hydra-of-activate (:color blue
+                                :hint nil)
+  "
+ _b_: battery   _n_: number       _v_: wrap        _c_: column    _i_: indent        _k_: which-key   _l_: talk       _q_: quit
+ _t_: time      _w_: weather      _y_: yasnippet   _m_: margin    _s_: smartparens   _o_: org extras  _j_: jabber
+ _f_: flyspell  _a_: auto-comp    _d_: fold        _g_: ggtags    _p_: paradox       _e_: error       _h_: html emmet
+"
+  ("b" fancy-battery-mode :color red)
+  ("t" display-time-mode :color red)
+  ("n" linum-mode :color red)
+  ("w" wttrin)
+  ("f" flyspell-mode)
+  ("v" visual-line-mode)
+  ("p" list-packages)
+  ("c" column-enforce-mode)
+  ("y" yas-global-mode)
+  ("a" company-mode)
+  ("i" highlight-indentation-mode)
+  ("m" fci-mode :color red)
+  ("j" jabber-connect :color red)
+  ("l" jabber-chat-with)
+  ("o" sk/org-custom-load :color blue)
+  ("g" ggtags-mode)
+  ("d" global-origami-mode)
+  ("k" which-key-mode)
+  ("s" smartparens-strict-mode)
+  ("h" emmet-mode)
+  ("e" global-flycheck-mode)
+  ("q" nil :color blue))
+
+
+(defhydra sk/hydra-vimish-fold (:color red
+                                :hint nil)
+  "
+ _f_: fold  _u_: unfold  _r_: refold  _t_: toggle  _d_: delete    _n_: next      _q_: quit
+          _U_: Unfold  _R_: Refold  _T_: Toggle  _D_: Delete    _p_: previous
+  "
+  ("f" vimish-fold)
+  ("u" vimish-fold-unfold)
+  ("r" vimish-fold-refold)
+  ("t" vimish-fold-toggle)
+  ("d" vimish-fold-delete)
+  ("U" vimish-fold-unfold-all)
+  ("R" vimish-fold-refold-all)
+  ("T" vimish-fold-toggle-all)
+  ("D" vimish-fold-delete-all)
+  ("n" vimish-fold-next-fold)
+  ("p" vimish-fold-previous-fold)
+  ("q" nil :color blue))

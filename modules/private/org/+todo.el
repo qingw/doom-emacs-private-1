@@ -4,16 +4,18 @@
   :commands (org-super-agenda-mode)
   :config
   (setq org-super-agenda-groups
-        '((:name "Log\n"
-                 :log t)  ; Automatically named "Log"
-          (:name "Schedule\n"
-                 :time-grid t)
-          (:name "Today\n"
-                 :scheduled today)
-          (:name "Habits\n"
-                 :habit t)
-          (:name "Due today\n"
-                 :deadline today)
+        '(
+          (:name "Today"  ; Optionally specify section name
+                 :time-grid t  ; Items that appear on the time grid
+                 )
+          (:name "Important" :priority "A")
+          (:priority<= "B"
+                       ;; Show this section after "Today" and "Important", because
+                       ;; their order is unspecified, defaulting to 0. Sections
+                       ;; are displayed lowest-number-first.
+                       :order 1)
+          (:name "Habits" :habit t :order 2)
+
           (:name "Overdue\n"
                  :deadline past)
           (:name "Due soon\n"
@@ -21,8 +23,7 @@
           (:name "Waiting\n"
                  :todo "WAIT"
                  :order 98)
-          (:name "Scheduled earlier\n"
-                 :scheduled past))))
+          )))
 
 
 (after! org-agenda

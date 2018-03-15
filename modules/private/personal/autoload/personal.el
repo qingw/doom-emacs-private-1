@@ -275,3 +275,49 @@ Including indent-buffer, which should not be called automatically on save."
             (setq header-line-format mode-line-format)
             hlf)))
   (redraw-display))
+
+
+(defun sk/toggle-letter-case ()
+  "Toggle the letter case of current word or text selection.
+Toggles from 3 cases: UPPER CASE, lower case, Title Case,
+in that cyclic order."
+  (interactive)
+  (let (pos1 pos2 (deactivate-mark nil) (case-fold-search nil))
+    (if (and transient-mark-mode mark-active)
+        (setq pos1 (region-beginning)
+              pos2 (region-end))
+      (setq pos1 (car (bounds-of-thing-at-point 'word))
+            pos2 (cdr (bounds-of-thing-at-point 'word))))
+
+    (when (not (eq last-command this-command))
+      (save-excursion
+        (goto-char pos1)
+        (cond
+         ((looking-at "[[:lower:]][[:lower:]]") (put this-command 'state
+                                                     "all lower"))
+         ((looking-at "[[:upper:]][[:upper:]]") (put this-command 'state
+                                                     "all caps") )
+         ((looking-at "[[:upper:]][[:lower:]]") (put this-command 'state
+                                                     "init caps") )
+         (t (put this-command 'state "all lower") ))))
+
+    (cond
+     ((string= "all lower" (get this-command 'state))
+      (upcase-initials-region pos1 pos2) (put this-command 'state "init caps"))
+     ((string= "init caps" (get this-command 'state))
+      (upcase-region pos1 pos2) (put this-command 'state "all caps"))
+     ((string= "all caps" (get this-command 'state))
+      (downcase-region pos1 pos2) (put this-command 'state "all lower")))))
+
+
+(defun sk/replace-next-underscore-with-camel (arg)
+  (interactive "p")
+  (if (> arg 0)
+ (setq arg (1+ arg))) ; 1-based index to get eternal loop with 0
+  (let ((case-fold-search nil))
+    (while (not (= arg 1))
+      (search-forward-regexp "\\b_[a-z]")
+      (forward-char -2)
+      (delete-char 1)
+      (capitalize-word 1)
+      (setq arg (1- arg)))))

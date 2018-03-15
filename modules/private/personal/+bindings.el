@@ -76,7 +76,7 @@
       :neime "M-T"       #'+workspace/display
       :neime "M-w"       #'delete-window
       :neime "M-W"       #'delete-frame
-      :neime "C-M-f"     #'toggle-frame-fullscreen
+      :neime "C-M-f"     #'select-frame-by-name
       :neime "M-n"       #'evil-buffer-new
       :neime "M-N"       #'make-frame
       :neime "M-1"       (λ! (+workspace/switch-to 0))
@@ -93,7 +93,7 @@
       ;; Other sensible, textmate-esque global bindings
       :ne "M-r"   #'+eval/buffer
       :ne "M-R"   #'+eval/region-and-replace
-      :ne "M-b"   #'+eval/build
+      :ne "M-b"   #'projectile-compile-project
       :ne "M-a"   #'mark-whole-buffer
       :ne "M-c"   #'evil-yank
       :ne "s-q"   (if (daemonp) #'delete-frame #'evil-quit-all)
@@ -280,7 +280,7 @@
           :desc "Toggle profiler"       :n  "p" #'doom/toggle-profiler)
 
         (:desc "insert" :prefix "i"
-          :desc "From kill-ring"        :nv "y" #'yank-pop
+          :desc "From kill-ring"        :nv "y" #'counsel-yank-pop
           :desc "From snippet"          :nv "s" #'yas-insert-snippet)
 
         (:desc "notes" :prefix "n"
@@ -400,8 +400,8 @@
       ;; paste from recent yank register (which isn't overwritten)
       :v  "C-p" "\"0p"
 
-      :nv "C-=" #'evil-numbers/inc-at-pt
-      :nv "C-+" #'evil-numbers/dec-at-pt
+      :nv "C-a"   #'evil-numbers/inc-at-pt
+      :nv "C-S-a" #'evil-numbers/dec-at-pt
 
 
       ;; --- Plugin bindings ------------------------------
@@ -646,8 +646,10 @@
         "C-r" #'evil-paste-from-register
         "C-k" #'ivy-previous-line
         "C-j" #'ivy-next-line
+        "C-A-k"  #'ivy-scroll-down-command
+        "C-A-j"  #'ivy-scroll-up-command
         "s-j" #'ivy-avy
-        "C-l" #'ivy-alt-done
+       "C-l" #'ivy-alt-done
         "C-w" #'ivy-backward-kill-word
         "C-h" #'ivy-backward-kill-word
         "C-u" #'ivy-kill-line
@@ -727,7 +729,7 @@
           [delete]        #'+snippets/delete-forward-char-or-field)
         (:map yas-minor-mode-map
           :ig "<tab>" yas-maybe-expand
-          :v  "<tab>" #'+snippets/expand-on-region))
+          :v  "<tab>" #'yas-insert-snippet))
 
 
       ;; --- Major mode bindings --------------------------
@@ -836,6 +838,41 @@
       ;; (:after ediff
       ;;   (:map ediff-mode-map
       ;;     "d"   #'ediff-copy-both-to-C))
-
       (:after view
         (:map view-mode-map "<escape>" #'View-quit-all)))
+
+(map!
+ (:after smartparens
+   "C-c m j"   #'sp-down-sexp
+   "C-c m k"   #'sp-backward-up-sexp
+   "C-c m h"   #'sp-backward-down-sexp
+   "C-c m l"   #'sp-up-sexp
+   "C-c m f"   #'sp-forward-sexp
+   "C-c m b"   #'sp-backward-sexp
+   "C-c m a"   #'sp-beginning-of-sexp
+   "C-c m e"   #'sp-end-of-sexp
+   "C-c m n"   #'sp-next-sexp
+   "C-c m p"   #'sp-previous-sexp
+   "C-c m >"   #'sp-forward-barf-sexp
+   "C-c m <"   #'sp-backward-barf-sexp
+   "C-c m )"   #'sp-forward-slurp-sexp
+   "C-c m ("   #'sp-backward-slurp-sexp
+   "C-c m x"   #'sp-transpose-sexp
+   "C-c m d"   #'sp-kill-sexp
+   "C-c m y"   #'sp-copy-sexp
+   "C-c m u"   #'sp-unwrap-sexp
+   "C-c m U"   #'sp-backward-unwrap-sexp
+   "C-c m C"   #'sp-convolute-sexp
+   "C-c m r"   #'sp-raise-sexp
+   "C-c m s"   #'sp-split-sexp
+   "C-c m S"   #'sp-splice-sexp
+   "C-c m F"   #'sp-splice-sexp-killing-forward
+   "C-c m B"   #'sp-splice-sexp-killing-backward
+   "C-c m A"   #'sp-splice-sexp-killing-around
+   )
+ )
+
+(which-key-add-key-based-replacements
+  "o"     "org prefix"
+  "o k"   "org clock"
+  )

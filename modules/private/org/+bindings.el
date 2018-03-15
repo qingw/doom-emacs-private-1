@@ -62,7 +62,7 @@
      :ni "C-c I" #'org-web-tools-convert-links-to-page-entrys
 
      ;; TODO: when < not in first char
-     :i "<"  (λ! (if (bolp) (hydra-org-template/body) (self-insert-command 1)))
+     :i "<"  (λ! (if (looking-back "^\\ *")(hydra-org-template/body) (self-insert-command 1)))
 
      (:localleader
        :nv "'"    #'org-edit-special

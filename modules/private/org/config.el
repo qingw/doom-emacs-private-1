@@ -199,7 +199,7 @@ If run interactively, get ENTRY from context."
   ;; font. This bugs me. Personally, markdown #-marks for headlines are more
   ;; elegant, so we use those.
 
-  (setq org-bullets-bullet-list '("⊢" "⋮" "⋱" " ")))
+  (setq org-bullets-bullet-list '("⊢" "⋮" "⋱" "-")))
 
 (def-package! org-fancy-priorities
   :hook

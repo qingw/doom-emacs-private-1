@@ -1,4 +1,4 @@
-;;;; init.el -*- lexical-binding: t; -*-
+;;; init.el -*- lexical-binding: t; -*-
 ;;
 ;; Author:  Henrik Lissner <henrik@lissner.net>
 ;; URL:     https://github.com/hlissner/doom-emacs
@@ -65,6 +65,7 @@
       ;tabbar            ; FIXME an (incomplete) tab bar for Emacs
        vi-tilde-fringe   ; fringe tildes to mark beyond EOB
        window-select     ; visually switch windows
+       posframe          ; use child frames where possible (Emacs 26+ only)
 
        :tools
        dired             ; making dired pretty [functional]
@@ -75,6 +76,7 @@
        impatient-mode    ; show off code over HTTP
        macos             ; MacOS-specific commands
        make              ; run make tasks from Emacs
+       magit             ;
        neotree           ; a project drawer, like NERDTree for vim
        ;password-store    ; password manager for nerds
        pdf               ; pdf enhancements

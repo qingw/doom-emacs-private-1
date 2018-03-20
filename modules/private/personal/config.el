@@ -34,19 +34,6 @@
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . 'dark))
 
-;; TODO: add some replace
-(after! which-key
-
-  (push '(
-          ("SPC TAB 1" . nil) .
-          ("1..9" . "Switch to 1..9 workspace")) which-key-replacement-alist)
-
-  (which-key-add-key-based-replacements
-    "C-c m" "smartparent"
-    "SPC o k" "Clock")
-  )
-
-
 ;; ** Tramp
 (after! tramp-sh
   (add-to-list 'tramp-remote-path ""))

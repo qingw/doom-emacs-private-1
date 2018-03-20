@@ -93,11 +93,11 @@
       ;; Other sensible, textmate-esque global bindings
       :ne "M-r"   #'+eval/buffer
       :ne "M-R"   #'+eval/region-and-replace
-      :ne "M-b"   #'projectile-compile-project
+      :ne "M-b"   #'+default/compile
       :ne "M-a"   #'mark-whole-buffer
       :ne "M-c"   #'evil-yank
-      :ne "s-q"   (if (daemonp) #'delete-frame #'evil-quit-all)
-      ;; :ne "M-f"   #'swiper
+      :ne "M-q"   (if (daemonp) #'delete-frame #'evil-quit-all)
+      :ne "M-f"   #'swiper
       :n  "M-s"   #'save-buffer
       :m  "A-j"   #'+default:multi-next-line
       :m  "A-k"   #'+default:multi-previous-line
@@ -117,7 +117,7 @@
         :desc "Ex command"              :nv ";"  #'evil-ex
         :desc "M-x"                     :nv ":"  #'execute-extended-command
         :desc "Pop up scratch buffer"   :nv "x"  #'doom/open-scratch-buffer
-        ;; :desc "Org Capture"             :nv "X"  #'org-capture
+        :desc "Org Capture"             :nv "X"  #'org-capture
 
         ;; Most commonly used
         :desc "extended command"        :n "SPC" #'execute-extended-command
@@ -199,13 +199,13 @@
           :desc "Save buffer"             :n "s" #'save-buffer
           :desc "Revert buffer"           :n "r" #'revert-buffer
           :desc "VC Revert buffer"        :n "R" #'vc-revert-buffer
-          :desc "Pop scratch buffer"      :n "X" #'doom/open-scratch-buffer
+          :desc "Pop scratch buffer"      :n "x" #'doom/open-scratch-buffer
           :desc "Bury buffer"             :n "z" #'bury-buffer
           :desc "Next buffer"             :n "]" #'next-buffer
           :desc "Previous buffer"         :n "[" #'previous-buffer
           :desc "Doom dashboard"          :n "h" #'+doom-dashboard/open
           :desc "Switch to *Messages*"    :n "M" (λ! (switch-to-buffer "*Messages*"))
-          :desc "Switch to *scrach*"      :n "x" (λ! (switch-to-buffer "*scratch*"))
+          :desc "Switch to *scrach*"      :n "X" (λ! (switch-to-buffer "*scratch*"))
           :desc "Sudo edit this file"     :n "S" #'doom/sudo-this-file)
 
         (:desc "code" :prefix "c"
@@ -282,12 +282,13 @@
 
         (:desc "insert" :prefix "i"
           :desc "From kill-ring"        :nv "y" #'counsel-yank-pop
+          :desc "From evil registers"   :nv "r" #'counsel-evil-registers
           :desc "From snippet"          :nv "s" #'yas-insert-snippet)
 
         (:desc "notes" :prefix "n"
           :desc "Find file in notes"    :n  "n" #'+default/find-in-notes
           :desc "Browse notes"          :n  "N" #'+default/browse-notes
-          :desc "Org capture"           :n  "x" #'+org-capture/open
+          :desc "Org capture"           :n  "x" #'org-capture
           :desc "Browse mode notes"     :n  "m" #'+org/browse-notes-for-major-mode
           :desc "Browse project notes"  :n  "p" #'+org/browse-notes-for-project)
 
@@ -436,13 +437,14 @@
           "C-s"        #'company-filter-candidates
           "C-c"        #'company-complete-common
           "C-h"        #'company-quickhelp-manual-begin
+          "TAB"     #'company-complete-common-or-cycle
           [tab]        #'company-complete-common-or-cycle
-          [backtab]    #'company-select-previous
-          [escape]     (λ! (company-abort) (evil-normal-state 1)))
+          "S-TAB"   #'company-select-previous
+          [backtab] #'company-select-previous)
         ;; Automatically applies to `company-filter-map'
         (:map company-search-map
-          "C-n"        #'company-search-repeat-forward
-          "C-p"        #'company-search-repeat-backward
+          "C-n"     #'company-select-next-or-abort
+          "C-p"     #'company-select-previous-or-abort
           "C-s"        (λ! (company-search-abort) (company-filter-candidates))
           [escape]     #'company-search-abort))
 
@@ -705,7 +707,7 @@
       :n  "!"  #'rotate-text
 
       ;; smart-forward
-      :nv "K"  #'smart-up
+      :nv "K"  #'+lookup/documentation
       :m  "g]" #'smart-forward
       :m  "g[" #'smart-backward
 
@@ -873,7 +875,14 @@
    )
  )
 
-(which-key-add-key-based-replacements
-  "o"     "org prefix"
-  "o k"   "org clock"
+;; TODO: add some replace
+(after! which-key
+
+  (push '(
+          ("SPC TAB 1" . nil) .
+          ("1..9" . "Switch to 1..9 workspace")) which-key-replacement-alist)
+
+  (which-key-add-key-based-replacements
+    "C-c m" "smartparent"
+    "SPC o k" "Clock")
   )

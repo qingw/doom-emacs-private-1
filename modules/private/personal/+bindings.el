@@ -221,6 +221,7 @@
 
         (:desc "file" :prefix "f"
           :desc "Find file"                 :n "." #'find-file
+          :desc "Counsel file fzf"          :n "/" #'counsel-fzf
           :desc "Sudo find file"            :n "s" #'doom/sudo-find-file
           :desc "Find file in project"      :n "f" #'projectile-find-file
           :desc "Find file from here"       :n "?" #'counsel-file-jump

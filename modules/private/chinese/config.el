@@ -52,9 +52,12 @@
   :init (add-hook 'calendar-load-hook #'cal-china-x-setup)
   :config
   ;; `S' can show the time of sunrise and sunset on Calendar
-  (setq calendar-location-name "Chengdu"
-        calendar-latitude 30.67
-        calendar-longitude 104.06)
+  (setq calendar-latitude +39.9
+        calendar-longitude +116.4
+
+        calendar-location-name "Huai-hua"
+
+        )
 
   ;; Holidays
   (setq calendar-mark-holidays-flag t)

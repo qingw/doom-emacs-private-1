@@ -321,3 +321,17 @@ in that cyclic order."
       (delete-char 1)
       (capitalize-word 1)
       (setq arg (1- arg)))))
+
+
+;;;###autoload
+(defun +my-workspace/goto-main-window (pname frame)
+    (let ((window (car (+my-doom-visible-windows))))
+      (if (window-live-p window)
+          (select-window window))))
+
+;;;###autoload
+(defun +my-doom-visible-windows (&optional window-list)
+  "Return a list of the visible, non-popup windows."
+  (cl-loop for window in (or window-list (window-list))
+           unless (window-dedicated-p window)
+           collect window))

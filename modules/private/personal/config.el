@@ -17,7 +17,6 @@
  plantuml-jar-path (concat "~/.doom.d/local/" "plantuml.jar")
  org-plantuml-jar-path plantuml-jar-path
 
- company-show-numbers t
 
  alert-default-style 'notifier
 
@@ -30,6 +29,16 @@
  tramp-ssh-controlmaster-options "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=600"
  ;; tramp-remote-process-environment (quote ("TMOUT=0" "LC_CTYPE=''" "TRAMP='yes'" "CDPATH=" "HISTORY=" "MAIL=" "MAILCHECK=" "MAILPATH=" "PAGER=cat" "autocorrect=" "correct=" "http_proxy=http://proxy.cse.cuhk.edu.hk:8000" "https_proxy=http://proxy.cse.cuhk.edu.hk:8000" "ftp_proxy=http://proxy.cse.cuhk.edu.hk:8000"))
  )
+
+(after! company
+  (setq company-tooltip-limit 10
+        company-minimum-prefix-length 2
+        company-idle-delay 0.2
+        company-tooltip-minimum-width 60
+        company-tooltip-margin 0
+        company-tooltip-offset-display nil
+        company-show-numbers t
+        ))
 
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . 'dark))
@@ -78,17 +87,8 @@
 
 ;; ** Magit
 (def-package! orgit :after magit)
-(def-package! magithub
-  :commands (magithub-clone
-             magithub-feature-autoinject)
-  ;; :ensure t
-  :config
-  (autoload 'magithub-completion-enable "magithub-completion" "\
-Enable completion of info from magithub in the current buffer.
-
-\(fn)" nil nil)
+(after! magithub
   (require 'parse-time)
-
   (defmacro magithub--time-number-of-days-since-string (iso8601)
     `(time-to-number-of-days
       (time-since
@@ -101,14 +101,13 @@ Enable completion of info from magithub in the current buffer.
                           (alist-get 'created_at issue)))
              (updated_at (magithub--time-number-of-days-since-string
                           (alist-get 'updated_at issue))))
-         ;; FIXME keep first issue always show
          (or (< created_at ,days) (< updated_at ,days)))))
 
   (defun magithub-filter-maybe (&optional limit)
     "Add filters to magithub only if number of issues is greter than LIMIT."
     (let ((max-issues (length (ignore-errors (magithub-issues))))
           (max-pull-requests (length (ignore-errors (magithub-pull-requests))))
-          (limit (or limit 15)))
+          (limit (or limit 1)))
       (when (> max-issues limit)
         (add-to-list (make-local-variable 'magithub-issue-issue-filter-functions)
                      (issue-filter-to-days limit "issues")))
@@ -117,44 +116,21 @@ Enable completion of info from magithub in the current buffer.
                      (issue-filter-to-days limit "pull-requests")))))
 
   (add-to-list 'magit-status-mode-hook #'magithub-filter-maybe)
-  (setq
-   magithub-clone-default-directory "~/workspace/sources/"
-   magithub-dir (concat doom-etc-dir "magithub/")
-   magithub-preferred-remote-method 'clone_url))
-(def-package! evil-magit :after magit
-  :init
-  (setq evil-magit-state 'normal))
+  (setq magithub-clone-default-directory "/Users/xfu/Source/playground/"))
 (after! magit
+  (magit-wip-after-save-mode 1)
+  (magit-wip-after-apply-mode 1)
   (magithub-feature-autoinject t)
-  (setq magit-repository-directories '("~/workspace/sources/"))
+  (setq magit-repository-directories '("/Users/xfu/Source/"))
   (set! :evil-state 'magit-repolist-mode 'normal)
-  (push 'magit-repolist-mode evil-snipe-disabled-modes)
-
-  (map!
-   (:map with-editor-mode-map
-     (:localleader
-       :desc "Finish" :n "," #'with-editor-finish
-       :desc "Abort"  :n "k" #'with-editor-cancel))
-   (:map magit-repolist-mode-map
-     :n "j" #'next-line
-     :n "k" #'previous-line
-     :n "s" #'magit-repolist-status )
-   ;; (:after magithub-edit-mode
-   ;;  :map magithub-issue-view-mode-map
-   ;;   :n "j" #'next-line
-   ;;   :n "k" #'previous-line
-   ;;   :n "l" #'forward-char
-   ;;   :n "h" #'backward-char
-   ;;   )
-   )
-  (add-hook 'magithub-edit-mode-hook #'evil-insert-state)
-
-
+  (map! (:map with-editor-mode-map
+          (:localleader
+            :desc "Finish" :n "," #'with-editor-finish
+            :desc "Abort"  :n "k" #'with-editor-cancel)))
   (set! :popup "^.*magit" '((slot . -1) (side . right) (size . 80)) '((modeline . nil) (select . t)))
   (set! :popup "^\\*magit.*popup\\*" '((slot . 0) (side . right)) '((modeline . nil) (select . t)))
   (set! :popup "^.*magit-revision:.*" '((slot . 2) (side . right) (window-height . 0.6)) '((modeline . nil) (select . t)))
-  (set! :popup "^.*magit-diff:.*" '((slot . 2) (side . right) (window-height . 0.6)) '((modeline . nil) (select . nil)))
-  (add-hook! 'magit-popup-mode-hook #'hide-mode-line-mode))
+  (set! :popup "^.*magit-diff:.*" '((slot . 2) (side . right) (window-height . 0.6)) '((modeline . nil) (select . nil))))
 
 ;; ** Helpful
 (after! helpful
@@ -204,6 +180,41 @@ started `counsel-recentf' from. Also uses `abbreviate-file-name'."
    'counsel-M-x
    `(("h" +ivy/helpful-function "Helpful")
      ("f" +ivy/find-function "Find"))))
+(after! counsel-projectile
+  (ivy-add-actions
+   'counsel-projectile-switch-project
+   `(("f" counsel-projectile-switch-project-action-find-file
+      "jump to a project file")
+     ("d" counsel-projectile-switch-project-action-find-dir
+      "jump to a project directory")
+     ("b" counsel-projectile-switch-project-action-switch-to-buffer
+      "jump to a project buffer")
+     ("m" counsel-projectile-switch-project-action-find-file-manually
+      "find file manually from project root")
+     ("S" counsel-projectile-switch-project-action-save-all-buffers
+      "save all project buffers")
+     ("k" counsel-projectile-switch-project-action-kill-buffers
+      "kill all project buffers")
+     ("K" counsel-projectile-switch-project-action-remove-known-project
+      "remove project from known projects")
+     ("c" counsel-projectile-switch-project-action-compile
+      "run project compilation command")
+     ("C" counsel-projectile-switch-project-action-configure
+      "run project configure command")
+     ("E" counsel-projectile-switch-project-action-edit-dir-locals
+      "edit project dir-locals")
+     ("v" counsel-projectile-switch-project-action-vc
+      "open project in vc-dir / magit / monky")
+     ("sr" counsel-projectile-switch-project-action-rg
+      "search project with rg")
+     ("xs" counsel-projectile-switch-project-action-run-shell
+      "invoke shell from project root")
+     ("xe" counsel-projectile-switch-project-action-run-eshell
+      "invoke eshell from project root")
+     ("xt" counsel-projectile-switch-project-action-run-term
+      "invoke term from project root")
+     ("O" counsel-projectile-switch-project-action-org-capture
+      "org-capture into project"))))
 
 ;; https://en.wikipedia.org/wiki/list_of_tz_database_time_zones
 (setq display-time-world-list
@@ -395,32 +406,7 @@ started `counsel-recentf' from. Also uses `abbreviate-file-name'."
 
 ;; for workspace problem
 ;; https://github.com/hlissner/doom-emacs/issues/447
-(after! persp
-  (defun +my-workspace/goto-main-window (pname frame)
-    (let ((window (car (+my-doom-visible-windows))))
-      (if (window-live-p window)
-          (select-window window))))
-  (add-hook 'persp-before-switch-functions '+my-workspace/goto-main-window)
-
-  (defun +my-doom-visible-windows (&optional window-list)
-    "Return a list of the visible, non-popup windows."
-    (cl-loop for window in (or window-list (window-list))
-             unless (window-dedicated-p window)
-             collect window))
-  (defun +my-workspace/close-window-or-workspace ()
-    "Close the selected window. If it's the last window in the workspace, close
-the workspace and move to the next."
-    (interactive)
-    (let ((delete-window-fn (if (featurep 'evil) #'evil-window-delete #'delete-window)))
-      (if (window-dedicated-p)
-          (funcall delete-window-fn)
-        (let ((current-persp-name (+workspace-current-name)))
-          (cond ((or (+workspace--protected-p current-persp-name)
-                     (cdr (+my-doom-visible-windows)))
-                 (funcall delete-window-fn))
-                ((cdr (+workspace-list-names))
-                 (+workspace/delete current-persp-name))))))))
-
+(add-hook 'persp-before-switch-functions '+my-workspace/goto-main-window)
 
 (def-package! drag-stuff
   :commands (drag-stuff-up

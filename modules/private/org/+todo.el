@@ -75,7 +75,7 @@
   :commands (org-wild-notifier-mode
              org-wild-notifier-check)
   :config
-  (setq org-wild-notifier-keyword-whitelist '("TODO" "HABT")))
+  (setq org-wild-notifier-keyword-whitelist '("TODO" "HABIT")))
 
 (def-package! org-clock-budget
   :commands (org-clock-budget-report)
@@ -83,7 +83,7 @@
   (defun my-buffer-face-mode-org-clock-budget ()
     "Sets a fixed width (monospace) font in current buffer"
     (interactive)
-    (setq buffer-face-mode-face '(:family "input mono compressed" :height 1.0))
+    ;; (setq buffer-face-mode-face '(:family "input mono compressed" :height 1.0))
     (buffer-face-mode)
     (setq-local line-spacing nil))
   :config

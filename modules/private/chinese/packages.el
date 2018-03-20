@@ -1,6 +1,7 @@
 ;;; packages.el -*- lexical-binding: t; -*-
 
 (package! fcitx)
+(package! cnfonts)
 
 ;; (package! pyim)
 ;; (package! chinese-wbim)
@@ -10,3 +11,5 @@
 
 ;; pip install jieba for chinese translation
 (package! youdao-dictionary)
+(package! cal-china-x)
+(package! pinyinlib)

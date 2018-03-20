@@ -436,3 +436,14 @@ the workspace and move to the next."
 (def-package! restart-emacs
   :commands restart-emacs)
 
+
+;; Discover key bindings and their meaning for the current Emacs major mode
+(def-package! discover-my-major
+  :bind (("C-c M-m" . discover-my-major)
+         ("C-c M-M" . discover-my-mode)))
+
+
+(def-package! list-environment)
+(def-package! diffview)
+(def-package! try)
+(def-package! ztree)

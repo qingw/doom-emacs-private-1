@@ -28,3 +28,10 @@
 
 (package! drag-stuff)
 (package! restart-emacs)
+
+(package! discover-my-major)
+(package! list-environment)
+(package! diffview)
+(package! try)
+(package! ztree)
+

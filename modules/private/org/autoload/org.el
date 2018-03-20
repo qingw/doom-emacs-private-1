@@ -83,3 +83,46 @@ Use a prefix arg to get regular RET. "
      ;; fall-through case
      (t
       (org-return)))))
+
+;;;###autoload
+(defun export-diary-from-cal ()
+  (interactive)
+  (start-process-shell-command "export diary" nil "/Users/xfu/.emacs.d-backup/private/local/calendardiary 30 > /Users/xfu/Dropbox/org/cal.diary"))
+
+;;;###autoload
+(defun +org/open-brain-here ()
+    (interactive)
+    (let ((org-brain-path (projectile-project-root)))
+      (call-interactively 'org-brain-visualize)))
+
+;;;###autoload
+(defun reflash-indentation ()
+  "Fix org-indent issues, center line."
+  (interactive)
+  (org-indent-mode 1)
+  (recenter-top-bottom))
+
+
+;;;###autoload
+(defun +org/work-on-heading ()
+  (interactive)
+  (org-clock-in)
+  (org-tree-to-indirect-buffer)
+  (map! :map org-mode-map
+        :ni "<s-return>" #'+org/finish-work-on-heading))
+
+;;;###autoload
+(defun +org/finish-work-on-heading ()
+  (interactive)
+  (setq *org-git-notes (nth 4 (org-heading-components)))
+  (org-clock-out)
+  (save-buffer)
+  (let ((file (buffer-file-name)))
+    (magit-call-git "add" file)
+    (magit-call-git "commit" "-m" *org-git-notes)
+    (magit-refresh))
+  (widen)
+  (print "Work finished!")
+  (map! :map org-mode-map
+        :ni "<s-return>" #'+org/work-on-heading))
+

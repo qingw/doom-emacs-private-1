@@ -29,6 +29,8 @@
 (package! drag-stuff)
 (package! restart-emacs)
 
+(package! sx)
+
 (package! discover-my-major)
 (package! list-environment)
 (package! diffview)

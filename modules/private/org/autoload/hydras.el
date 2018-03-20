@@ -35,7 +35,7 @@
 (add-to-list 'org-structure-template-alist '("v" "#+BEGIN_VERBATIM\n?\n#+END_VERBATIM"))
 
 (defhydra sk/hydra-org-template (:color blue
-										:hint nil)
+                                  :hint nil)
   "
  ^One liners^                                        ^Blocks^                                      ^Properties^
 --------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -82,3 +82,12 @@
   ("b" (hot-expand "<b"))
   ("<" self-insert-command)
   ("q" nil :color blue))
+
+(defhydra hydra-org (:color blue :timeout 12 :columns 4)
+  "Org commands"
+  ("i" (lambda () (interactive) (org-clock-in '(4))) "Clock in")
+  ("o" org-clock-out "Clock out")
+  ("q" org-clock-cancel "Cancel a clock")
+  ("<f10>" org-clock-in-last "Clock in the last task")
+  ("j" (lambda () (interactive) (org-clock-goto '(4))) "Go to a clock")
+  ("m" make-this-message-into-an-org-todo-item "Flag and capture this message"))

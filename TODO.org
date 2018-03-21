@@ -1,8 +1,17 @@
 #+TITLE: TODO
 
 * TODO
+:PROPERTIES:
+:ID:       243284B2-626F-40B0-9B39-041867FDA2D1
+:END:
 ** TODO multiedit
+:PROPERTIES:
+:ID:       516F22F2-ACFA-41F2-AE60-C380B45A8274
+:END:
 ** TODO chinese module
+:PROPERTIES:
+:ID:       D3CE85D0-40FA-4D35-B0D4-B3277738182C
+:END:
 - [ ] cnfonts
 - [ ] ivy pingyin
 - [ ] avy pingyin
@@ -11,17 +20,38 @@
   - [ ] support in org-caputure and yasippet
 - [ ]
 ** TODO lilypond mode
+:PROPERTIES:
+:ID:       DFEC4AB0-03E2-4F93-A520-BAD3827AFE8E
+:END:
 ** TODO vlf mode
+:PROPERTIES:
+:ID:       A9FA22C2-A1CD-481C-BF64-EEAF34A9C6C3
+:END:
 ** TODO integrate evil-collection
+:PROPERTIES:
+:ID:       E85161F6-5C58-465D-9016-AFD5F813E1BA
+:END:
 ** TODO ref spacevim keybinding habit
+:PROPERTIES:
+:ID:       7D0EC503-0EF0-4BA8-A7C5-AC0AFC49152E
+:END:
 ** TODO IVY action
+:PROPERTIES:
+:ID:       B5AEEAAB-D924-4D40-B806-BDD5528DB004
+:END:
 - find file switch for counsel-project-file or counsel-file
 ** agenda binding
+:PROPERTIES:
+:ID:       10E709B2-859E-4481-ABB1-B3145098A170
+:END:
 [[https://github.com/alphapapa/org-super-agenda][GitHub - alphapapa/org-super-agenda: Supercharge your Org daily/weekly agenda by grouping items]]
 
 [[https://gist.github.com/amirrajan/301e74dc844a4c9ffc3830dc4268f177][evil-agenda]]
 
 ** TODO paste hydra
+:PROPERTIES:
+:ID:       40C6794C-5BA6-43FA-A52E-42984006D6A2
+:END:
 #+BEGIN_SRC emacs-lisp
   (spacemacs|define-transient-state paste
     :title "Pasting Transient State"
@@ -43,40 +73,97 @@
 
 #+END_SRC
 ** change fonts family
+:PROPERTIES:
+:ID:       3BE95992-3263-4801-919D-DF48C3EB4D90
+:END:
 can ref to xah's config
 ** workflow optimize
+:PROPERTIES:
+:ID:       DDA2ED33-3ABE-4F4F-B01A-C2A8BD94F134
+:END:
 *** note capture
+:PROPERTIES:
+:ID:       71D61CDC-E09B-4D53-8EBE-794AD05EF3E9
+:END:
 * Question
+:PROPERTIES:
+:ID:       8D72ADEB-22DA-470C-8221-417DE085A098
+:END:
 ** Ctrl-Meta key seem not sent in ubuntu
+:PROPERTIES:
+:ID:       825B363B-31C4-4B9E-8FD4-64C6C0A11615
+:END:
 conflic with *clipit* shortcut
 
 ** SPC f /  counsel-projectile-find-file not binding workspace's project when buffer to other directory
+:PROPERTIES:
+:ID:       49F9E5BE-E346-4F5B-BD37-973A0C167027
+:END:
 
 * Issues
+:PROPERTIES:
+:ID:       782B9C0B-0573-49A5-A8FE-BCD9C46FD6AD
+:END:
 
 **  FIXME: switch-project in current perp not change project name
+:PROPERTIES:
+:ID:       D93F4DCE-4872-4781-9E19-D853ED4CA212
+:END:
 
 ** FIXME: doom/window-zoom works not dumb
+:PROPERTIES:
+:ID:       19E54583-33C2-4986-A92E-76A452ADED71
+:END:
 
 - can't work in pop window, alawys close all popup window
 - *doom:scratch/magit ... buffer not effect
 
 ** FIXME: switch workspace may cause switch buffer same with other workspace sometimes
+:PROPERTIES:
+:ID:       A24A386D-2A01-42AD-B8A6-305B8907D61C
+:END:
 
 ** FIXME: many prefix key without desc
+:PROPERTIES:
+:ID:       D4C1B36E-312C-43A5-9485-BF6C19353D50
+:END:
 
 ** pass gpg2 input key not work in emacs
+:PROPERTIES:
+:ID:       4620CCB4-FC67-4E52-8BAF-26AA2D2B20B8
+:END:
 password-store async not accept input right
 
 seems [[https://emacs.stackexchange.com/questions/32881/enabling-minibuffer-pinentry-with-emacs-25-and-gnupg-2-1-on-ubuntu-xenial][here]] can work
 * Tasks
+:PROPERTIES:
+:ID:       5F8DEA05-30E2-4A24-89D1-7FC639BA1FF7
+:END:
 ** FIXME ediff org file should unfold
+:PROPERTIES:
+:ID:       79571FAC-A432-4018-AF13-E02A6C674CB9
+:END:
 ** TODO find file in other project
+:PROPERTIES:
+:ID:       D07E01D6-A877-4D44-82D4-9D3ACCD346CE
+:END:
 
 or counsel-find-file in directory
 [2018-03-07 Wed]
 [[file:~/workspace/doom-emacs-private/modules/private/org/config.el::;;;%20config.el%20-*-%20lexical-binding:%20t;%20-*-]]
 ** FIXME yank-pop-hydra and move-text-up works error maybe cause mark changed
+:PROPERTIES:
+:ID:       95A71132-41AD-44B0-AA4D-300C36850FF5
+:END:
 evil state , use evil-paster instead
 ** TODO smartparent with evil and hydra
+:PROPERTIES:
+:ID:       935CA83E-593C-46F7-896F-AED96AF62B1D
+:END:
 [[https://github.com/expez/evil-smartparens][GitHub - expez/evil-smartparens: Evil integration for Smartparens]]
+** FIXME org-mode in evil switch window binding not effect :PROJECT:
+:PROPERTIES:
+:ID:       87003974-0EA1-491A-BB9E-ECF7284AB51C
+:END:
+[2018-03-21 Wed]
+[[file:~/workspace/doom-emacs-private/modules/private/org/+bindings.el:::nm%20"H"%20#'org-habit-toggle-habits]]

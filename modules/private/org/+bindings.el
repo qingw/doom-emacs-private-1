@@ -238,17 +238,17 @@
             :nm "S"        #'org-save-all-org-buffers))
         (:after org-src
           (:map org-src-mode-map
-            "C-c C-c" nil
-            "C-c C-k" nil
+            ;; "C-c C-c" nil
+            ;; "C-c C-k" nil
             (:localleader
               :desc "Finish" :nm ","  #'org-edit-src-exit
               :desc "Abort"  :nm "k"  #'org-edit-src-abort
               )))
         (:after org-capture
           (:map org-capture-mode-map
-            "C-c C-c" nil
-            "C-c C-k" nil
-            "C-c C-w" nil
+            ;; "C-c C-c" nil
+            ;; "C-c C-k" nil
+            ;; "C-c C-w" nil
             (:localleader
               :desc "Finish" :nm "," #'org-capture-finalize
               :desc "Refile" :nm "r" #'org-capture-refile

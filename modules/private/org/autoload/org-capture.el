@@ -1,4 +1,4 @@
-;;; lang/org-private/autoload/org-capture.el -*- lexical-binding: t; -*-
+;;; org/autoload/org-capture.el -*- lexical-binding: t; -*-
 
 ;;;###autoload
 (defun +org-move-point-to-heading ()

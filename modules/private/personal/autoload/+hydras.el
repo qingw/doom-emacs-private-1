@@ -572,7 +572,7 @@ _<_ beginning of buffer _>_ end of buffer _m_: set mark _/_: jump to mark
   ("C-k" evil-paste-pop-next "prev")
   ("p" evil-paste-after nil)
   ("P" evil-paste-before nil)
-  ("l" counsel-yank-pop "list" :color blue))   ; or browse-kill-ring
+  ("C-l" counsel-yank-pop "list" :color blue))   ; or browse-kill-ring
 
 ;; (global-set-key (kbd "M-y") #'hydra-yank-pop/yank-pop)
 ;; (global-set-key (kbd "C-y") #'hydra-yank-pop/yank)

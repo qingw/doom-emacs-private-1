@@ -209,9 +209,30 @@ SCHEDULED: %(format-time-string \"%<<%Y-%m-%d %a .+5d/7d>>\")
           ,(if IS-LINUX '(display . ":0"))))
 
   (setq counsel-projectile-org-capture-templates
-        '(("t" "TODO" entry (file+headline "${root}/TODO.org" "Tasks") "* TODO %?\n%u\n%a\n")
-          ("f" "FIXME" entry (file+headline "${root}/TODO.org" "Tasks") "* FIXME %?\n%u\n%a\n")
-          ("n" "NOTE" entry (file "${root}/note.org" ) "* %? :NOTE:\n%u\n%a\n")
+        '(("t" "TODO" entry (file+headline "${root}/TODO.org" "Tasks")
+           "* TODO %^{Logging for...}
+:PROPERTIES:
+:Created: %U
+:Linked: %a
+:END:
+%i
+%?")
+          ("f" "FIXME" entry (file+headline "${root}/TODO.org" "Tasks")
+           "* FIXME %^{Logging for...}
+:PROPERTIES:
+:Created: %U
+:Linked: %a
+:END:
+%i
+%?")
+          ("n" "NOTE" entry (file "${root}/note.org" )
+           "* %^{Note for...}
+:PROPERTIES:
+:Created: %U
+:Linked: %a
+:END:
+%i
+%?")
           )))
 
 (defun +org-private|init-capture ()

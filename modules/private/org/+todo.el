@@ -1,30 +1,5 @@
 ;;; +todo.el ---  -*- lexical-binding: t; -*-
 
-;; (def-package! org-super-agenda
-;;   :commands (org-super-agenda-mode)
-;;   :config
-;;   (setq org-super-agenda-groups
-;;         '(
-;;           (:name "Today"  ; Optionally specify section name
-;;                  :time-grid t  ; Items that appear on the time grid
-;;                  )
-;;           (:name "Important" :priority "A")
-;;           (:priority<= "B"
-;;                        ;; Show this section after "Today" and "Important", because
-;;                        ;; their order is unspecified, defaulting to 0. Sections
-;;                        ;; are displayed lowest-number-first.
-;;                        :order 1)
-;;           (:name "Habits" :habit t :order 2)
-
-;;           (:name "Overdue\n"
-;;                  :deadline past)
-;;           (:name "Due soon\n"
-;;                  :deadline future)
-;;           (:name "Waiting\n"
-;;                  :todo "WAIT"
-;;                  :order 98)
-;;           )))
-
 ;;
 ;; Plugins
 ;;

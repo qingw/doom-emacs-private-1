@@ -111,7 +111,14 @@
 
           ("h" "Habit" entry
            (file ,(expand-file-name "habit.org" org-directory))
-           "* TODO %?\nSCHEDULED: %(format-time-string \"%<<%Y-%m-%d %a .+5d/7d>>\")\n:PROPERTIES:\n:STYLE: habit\n:END:\n\n%U\n%a\n")
+           "* %^{Habit for...}
+SCHEDULED: %(format-time-string \"%<<%Y-%m-%d %a .+5d/7d>>\")
+:PROPERTIES:
+:Created: %U
+:STYLE: habit
+:END:
+%i
+%?")
 
           ("j" "Journal" entry
            (file+datetree+prompt org-default-journal-file)

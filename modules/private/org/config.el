@@ -12,6 +12,7 @@
 (after! org
   (setq
    org-modules (quote (org-bibtex org-habit org-info org-protocol org-mac-link org-notmuch))
+   org-ellipsis " ▼ "
    )
   ;; from https://emacs.stackexchange.com/questions/30520/org-mode-c-c-c-c-to-display-inline-image
   ;; TODO only redisplay affect source block
@@ -131,13 +132,11 @@ If run interactively, get ENTRY from context."
         org-agenda-follow-indirect t
         org-agenda-ignore-properties '(effort appt category)
         org-agenda-inhibit-startup t
-        org-agenda-inhibit-startup t
         org-agenda-log-mode-items '(closed clock)
         org-agenda-overriding-header ""
         org-agenda-restore-windows-after-quit t
         org-agenda-skip-deadline-if-done t
         org-agenda-skip-deadline-prewarning-if-scheduled t
-        org-agenda-skip-scheduled-if-done t
         org-agenda-skip-unavailable-files t
         org-agenda-sorting-strategy '((agenda time-up priority-down category-keep)
                                       (todo   priority-down category-keep)
@@ -147,9 +146,9 @@ If run interactively, get ENTRY from context."
         org-agenda-start-with-log-mode t
         org-agenda-sticky nil
         org-agenda-tags-column 'auto
-        org-agenda-use-tag-inheritance nil
+        ;; org-agenda-use-tag-inheritance nil
         org-habit-following-days 0
-        org-habit-graph-column 1
+        ;; org-habit-graph-column 1
         org-habit-preceding-days 8
         org-habit-show-habits t
         ))

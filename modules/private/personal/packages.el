@@ -6,6 +6,7 @@
 (package! evil-magit)
 (package! magithub)
 
+(package! tldr)
 (package! keyfreq)
 
 (package! graphviz-dot-mode)

@@ -299,7 +299,7 @@ This holds only for inactive timestamps."
           ((headline inlinetask)
            (save-excursion (goto-char (org-element-property :begin context))
                            (call-interactively 'counsel-org-tag)) t)))))
-  (add-hook 'org-ctrl-c-ctrl-c-hook '+org-private/*org-ctrl-c-ctrl-c-counsel-org-tag)
+  (add-hook 'org-ctrl-c-ctrl-c-hook '+org-private/*org-ctrl-c-ctrl-c-counsel-org-tag))
 
 ;;
 ;; `org-mode' hooks

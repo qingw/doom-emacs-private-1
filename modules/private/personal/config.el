@@ -13,6 +13,38 @@
  counsel-find-file-at-point t
  ivy-extra-directories '("./")
 
+ delete-by-moving-to-trash t
+ avy-keys '(?a ?s ?d ?f ?j ?k ?l ?\;)
+ ivy-use-selectable-prompt t
+ ivy-auto-select-single-candidate t
+ ivy-rich-parse-remote-buffer nil
+ ivy-magic-slash-non-match-action 'ivy-magic-slash-non-match-cd-selected
+ ivy-height 20
+ ivy-rich-switch-buffer-name-max-length 50
+ counsel-evil-registers-height 20
+ counsel-yank-pop-height 20
+ visual-fill-column-center-text t
+ ;; evil-escape-key-sequence nil
+ line-spacing nil
+ frame-resize-pixelwise t
+ electric-pair-inhibit-predicate 'ignore
+
+ persp-interactive-init-frame-behaviour-override -1
+ projectile-ignored-project-function 'file-remote-p
+ +rss-elfeed-files '("elfeed.org")
+ ;; browse-url-browser-function 'xwidget-webkit-browse-url
+ mac-frame-tabbing nil
+ counsel-org-goto-face-style 'org
+ counsel-org-headline-display-style 'title
+ counsel-org-headline-display-tags t
+ counsel-org-headline-display-todo t
+ +ivy-buffer-icons nil
+ ivy-use-virtual-buffers t
+ ;; tramp
+ tramp-default-method "ssh"
+ tramp-ssh-controlmaster-options "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=600"
+ ;; tramp-remote-process-environment (quote ("TMOUT=0" "LC_CTYPE=''" "TRAMP='yes'" "CDPATH=" "HISTORY=" "MAIL=" "MAILCHECK=" "MAILPATH=" "PAGER=cat" "autocorrect=" "correct=" "http_proxy=http://proxy.cse.cuhk.edu.hk:8000" "https_proxy=http://proxy.cse.cuhk.edu.hk:8000" "ftp_proxy=http://proxy.cse.cuhk.edu.hk:8000"))
+
  ;; plantuml and dot
  plantuml-jar-path (concat "~/.doom.d/local/" "plantuml.jar")
  org-plantuml-jar-path plantuml-jar-path
@@ -24,21 +56,46 @@
  aw-scope 'visible
  aw-background nil
 
- ;; tramp
- tramp-default-method "ssh"
- tramp-ssh-controlmaster-options "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=600"
- ;; tramp-remote-process-environment (quote ("TMOUT=0" "LC_CTYPE=''" "TRAMP='yes'" "CDPATH=" "HISTORY=" "MAIL=" "MAILCHECK=" "MAILPATH=" "PAGER=cat" "autocorrect=" "correct=" "http_proxy=http://proxy.cse.cuhk.edu.hk:8000" "https_proxy=http://proxy.cse.cuhk.edu.hk:8000" "ftp_proxy=http://proxy.cse.cuhk.edu.hk:8000"))
  )
 
+;; *** Company
 (after! company
   (setq company-tooltip-limit 10
         company-minimum-prefix-length 2
         company-idle-delay 0.2
         company-tooltip-minimum-width 60
         company-tooltip-margin 0
-        company-tooltip-offset-display nil
         company-show-numbers t
-        ))
+        company-tooltip-offset-display nil
+        company-dabbrev-downcase nil
+        company-dabbrev-ignore-case nil
+        company-dabbrev-code-other-buffers t
+        company-tooltip-align-annotations t
+        company-require-match 'never
+        company-frontends '(company-childframe-frontend company-echo-metadata-frontend)
+        company-global-modes '(not comint-mode erc-mode message-mode help-mode gud-mode)
+        company-childframe-child-frame nil))
+(set! :company-backend '(emacs-lisp-mode) '(company-elisp company-files company-yasnippet company-dabbrev-code))
+(set! :company-backend '(python-mode) '(company-anaconda company-files company-yasnippet company-dabbrev-code))
+(set! :company-backend '(inferior-python-mode) '(company-capf company-files company-yasnippet company-dabbrev-code))
+(set! :company-backend '(inferior-ess-mode) '(company-capf company-files company-yasnippet company-dabbrev-code))
+(set! :company-backend '(org-mode) '(company-capf company-files company-yasnippet company-dabbrev))
+(set! :lookup 'emacs-lisp-mode :documentation #'helpful-at-point)
+
+;; ** Help
+(after! helpful
+  (set! :lookup 'helpful-mode :documentation #'helpful-at-point)
+  (set! :popup "^\\*helpful.*"
+    '((size . 80) (side . right))
+    '((select . t) (quit . t))))
+
+(def-package! tldr
+  :commands (tldr)
+  :config
+  (setq tldr-directory-path (concat doom-etc-dir "tldr/"))
+  (set! :popup "^\\*tldr\\*"
+    '((size . 80) (side . right))
+    '((transient . nil)  (modeline . nil) (select . t) (quit . t))))
 
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . 'dark))
@@ -132,11 +189,6 @@
   (set! :popup "^.*magit-revision:.*" '((slot . 2) (side . right) (window-height . 0.6)) '((modeline . nil) (select . t)))
   (set! :popup "^.*magit-diff:.*" '((slot . 2) (side . right) (window-height . 0.6)) '((modeline . nil) (select . nil))))
 
-;; ** Helpful
-(after! helpful
-  (set! :popup "^\\*helpful.*"
-    '((size . 80) (side . right))
-    '((transient . nil) (select . t) (quit . t))))
 
 ;; * Ivy Actions
 (after! counsel

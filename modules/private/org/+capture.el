@@ -215,6 +215,9 @@ SCHEDULED: %(format-time-string \"%<<%Y-%m-%d %a .+5d/7d>>\")
           )))
 
 (defun +org-private|init-capture ()
-  (add-hook 'org-capture-prepare-finalize-hook #'counsel-org-tag)
+  (add-hook 'org-capture-prepare-finalize-hook
+            #'(lambda()(if (or (equal "j" (org-capture-get :key))
+                          (equal "t" (org-capture-get :key)))
+                      (counsel-org-tag))))
   ;; (add-hook 'org-capture-after-finalize-hook #'org-gcal-sync)
   )

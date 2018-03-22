@@ -4,7 +4,6 @@
 (load! +capture)
 (load! +bindings)
 
-;; (load! +todo)
 ;; (load! +babel)
 ;; (load! +latex)
 ;; (load! +export)
@@ -231,20 +230,7 @@ INFO is a plist containing export options."
           (directory . emacs)
           (t . ,(cond (IS-MAC "open \"%s\"")
                       (IS-LINUX "xdg-open \"%s\"")))))
-  (defun +org-private/org-add-ids-to-headlines-in-file ()
-    "Add CUSTOM_ID properties to all headlines in the current file"
-    (interactive)
-    (unless
-        (or
-         (string-equal (buffer-name) "cal.org")
-         (string-equal default-directory "/Users/xfu/Source/playground/gatsby-orga/src/pages/")
-         (string-equal default-directory "/Users/xfu/Source/playground/fuxialexander.github.io/src/pages/")
-         (string-equal (buffer-name) "cal_kevin.org"))
-      (save-excursion
-        (widen)
-        (goto-char (point-min))
-        (org-map-entries 'org-id-get-create))))
-  (add-hook 'org-mode-hook (lambda () (add-hook 'before-save-hook '+org-private/org-add-ids-to-headlines-in-file nil 'local)))
+
   (defun +org/insert-item-with-ts ()
     "When on org timestamp item insert org timestamp item with current time.
 This holds only for inactive timestamps."
@@ -277,140 +263,10 @@ This holds only for inactive timestamps."
   (add-hook 'org-metareturn-hook '+org/insert-item-with-ts)
   (add-hook 'org-metareturn-hook '+org/insert-go-eol)
 
-  (after! org-capture
-    ;; (defadvice org-capture-finalize
-    ;;     (after org-capture-finalize-after activate)
-    ;;   "Advise capture-finalize to close the frame"
-    ;;   (if (or (equal "SA" (org-capture-get :key))
-    ;;           (equal "GSA" (org-capture-get :key)))
-    ;;       (do-applescript "tell application \"Skim\"\n    activate\nend tell")))
-    ;; (add-hook 'org-capture-prepare-finalize-hook
-    ;;           #'(lambda () (if (or (equal "SA" (org-capture-get :key))
-    ;;                           (equal "GSA" (org-capture-get :key)))
-    ;;                       (+reference/append-org-id-to-skim (org-id-get-create)))))
-    )
 
   (after! elfeed-show
     (map! (:map elfeed-show-mode-map
             :nm "b" #'org-ref-add-bibtex-entry-from-elfeed-entry)))
-  (after! org-mac-link
-    (org-link-set-parameters "skim"
-                             :face 'default
-                             :follow #'+reference/org-mac-skim-open
-                             :export (lambda (path desc backend)
-                                       (cond ((eq 'html backend)
-                                              (format "<a href=\"skim:%s\" >%s</a>"
-                                                      (org-html-encode-plain-text path)
-                                                      desc)))))
-    (defun +org-private/as-get-skim-page-link ()
-      (do-applescript
-       (concat
-        "tell application \"Skim\"\n"
-        "set theDoc to front document\n"
-        "set theTitle to (name of theDoc)\n"
-        "set thePath to (path of theDoc)\n"
-        "set thePage to (get index for current page of theDoc)\n"
-        "set theSelection to selection of theDoc\n"
-        "set theContent to contents of (get text for theSelection)\n"
-        "if theContent is missing value then\n"
-        "    set theContent to theTitle & \", p. \" & thePage\n"
-        (when org-mac-Skim-highlight-selection-p
-          (concat
-           "else\n"
-           "    tell theDoc\n"
-           "        set theNote to make note with data theSelection with properties {type:highlight note}\n"
-           "         set text of theNote to (get text for theSelection)\n"
-           "    end tell\n"))
-        "end if\n"
-        "set theLink to \"skim://\" & thePath & \"::\" & thePage & "
-        "\"::split::\" & theContent\n"
-        "end tell\n"
-        "return theLink as string\n")))
-
-    (advice-add 'as-get-skim-page-link :override #'+org-private/as-get-skim-page-link))
-  (defun org-refile-get-targets (&optional default-buffer)
-    "Produce a table with refile targets."
-    (let ((case-fold-search nil)
-          ;; otherwise org confuses "TODO" as a kw and "Todo" as a word
-          (entries (or org-refile-targets '((nil . (:level . 1)))))
-          targets tgs files desc descre)
-      (message "Getting targets...")
-      (with-current-buffer (or default-buffer (current-buffer))
-        (dolist (entry entries)
-          (setq files (car entry) desc (cdr entry))
-          (cond
-           ((null files) (setq files (list (current-buffer))))
-           ((eq files 'org-agenda-files)
-            (setq files (org-agenda-files 'unrestricted)))
-           ((and (symbolp files) (fboundp files))
-            (setq files (funcall files)))
-           ((and (symbolp files) (boundp files))
-            (setq files (symbol-value files))))
-          (when (stringp files) (setq files (list files)))
-          (cond
-           ((eq (car desc) :tag)
-            (setq descre (concat "^\\*+[ \t]+.*?:" (regexp-quote (cdr desc)) ":")))
-           ((eq (car desc) :todo)
-            (setq descre (concat "^\\*+[ \t]+" (regexp-quote (cdr desc)) "[ \t]")))
-           ((eq (car desc) :regexp)
-            (setq descre (cdr desc)))
-           ((eq (car desc) :level)
-            (setq descre (concat "^\\*\\{" (number-to-string
-                                            (if org-odd-levels-only
-                                                (1- (* 2 (cdr desc)))
-                                              (cdr desc)))
-                                 "\\}[ \t]")))
-           ((eq (car desc) :maxlevel)
-            (setq descre (concat "^\\*\\{1," (number-to-string
-                                              (if org-odd-levels-only
-                                                  (1- (* 2 (cdr desc)))
-                                                (cdr desc)))
-                                 "\\}[ \t]")))
-           (t (error "Bad refiling target description %s" desc)))
-          (dolist (f files)
-            (with-current-buffer (if (bufferp f) f (org-get-agenda-file-buffer f))
-              (or
-               (setq tgs (org-refile-cache-get (buffer-file-name) descre))
-               (progn
-                 (when (bufferp f)
-                   (setq f (buffer-file-name (buffer-base-buffer f))))
-                 (setq f (and f (expand-file-name f)))
-                 (when (eq org-refile-use-outline-path 'file)
-                   (push (list (file-name-nondirectory f) f nil nil) tgs))
-                 (org-with-wide-buffer
-                  (goto-char (point-min))
-                  (setq org-outline-path-cache nil)
-                  (while (re-search-forward descre nil t)
-                    (beginning-of-line)
-                    (let ((case-fold-search nil))
-                      (looking-at org-complex-heading-regexp))
-                    (let ((begin (point))
-                          (heading (match-string-no-properties 4)))
-                      (unless (or (and
-                                   org-refile-target-verify-function
-                                   (not
-                                    (funcall org-refile-target-verify-function)))
-                                  (not heading))
-                        (let ((re (format org-complex-heading-regexp-format
-                                          (regexp-quote heading)))
-                              (target
-                               (if (not org-refile-use-outline-path) heading
-                                 (concat
-                                  (file-name-nondirectory (buffer-file-name (buffer-base-buffer)))
-                                  " ✦ "
-                                  (org-format-outline-path (org-get-outline-path t t) 1000 nil " ➜ ")
-                                  ))))
-
-                          (push (list target f re (org-refile-marker (point)))
-                                tgs)))
-                      (when (= (point) begin)
-                        ;; Verification function has not moved point.
-                        (end-of-line)))))))
-              (when org-refile-use-cache
-                (org-refile-cache-put tgs (buffer-file-name) descre))
-              (setq targets (append tgs targets))))))
-      (message "Getting targets...done")
-      (delete-dups (nreverse targets))))
 
   (defun +org-private/*org-ctrl-c-ctrl-c-counsel-org-tag ()
     "Hook for `org-ctrl-c-ctrl-c-hook' to use `counsel-org-tag'."
@@ -444,106 +300,6 @@ This holds only for inactive timestamps."
            (save-excursion (goto-char (org-element-property :begin context))
                            (call-interactively 'counsel-org-tag)) t)))))
   (add-hook 'org-ctrl-c-ctrl-c-hook '+org-private/*org-ctrl-c-ctrl-c-counsel-org-tag)
-
-  (defvar *org-git-notes nil
-    "use log notes for git commit notes")
-  (defun *org-store-log-note ()
-    "Finish taking a log note, and insert it to where it belongs."
-    (let ((txt (prog1 (buffer-string)
-                 (kill-buffer)))
-          (note (cdr (assq org-log-note-purpose org-log-note-headings)))
-          lines)
-      (while (string-match "\\`# .*\n[ \t\n]*" txt)
-        (setq txt (replace-match "" t t txt)))
-      (when (string-match "\\s-+\\'" txt)
-        (setq txt (replace-match "" t t txt)))
-      (setq lines (and (not (equal "" txt)) (org-split-string txt "\n")))
-      (when (org-string-nw-p note)
-        (setq note
-              (org-replace-escapes
-               note
-               (list (cons "%u" (user-login-name))
-                     (cons "%U" user-full-name)
-                     (cons "%t" (format-time-string
-                                 (org-time-stamp-format 'long 'inactive)
-                                 org-log-note-effective-time))
-                     (cons "%T" (format-time-string
-                                 (org-time-stamp-format 'long nil)
-                                 org-log-note-effective-time))
-                     (cons "%d" (format-time-string
-                                 (org-time-stamp-format nil 'inactive)
-                                 org-log-note-effective-time))
-                     (cons "%D" (format-time-string
-                                 (org-time-stamp-format nil nil)
-                                 org-log-note-effective-time))
-                     (cons "%s" (cond
-                                 ((not org-log-note-state) "")
-                                 ((string-match-p org-ts-regexp
-                                                  org-log-note-state)
-                                  (format "\"[%s]\""
-                                          (substring org-log-note-state 1 -1)))
-                                 (t (format "\"%s\"" org-log-note-state))))
-                     (cons "%S"
-                           (cond
-                            ((not org-log-note-previous-state) "")
-                            ((string-match-p org-ts-regexp
-                                             org-log-note-previous-state)
-                             (format "\"[%s]\""
-                                     (substring
-                                      org-log-note-previous-state 1 -1)))
-                            (t (format "\"%s\""
-                                       org-log-note-previous-state)))))))
-        (when lines (setq note (concat note " \\\\")))
-        (push note lines))
-      (when (and lines (not org-note-abort))
-        (setq *org-git-notes (concat *org-git-notes ": " (substring-no-properties (car lines))))
-        (with-current-buffer (marker-buffer org-log-note-marker)
-          (org-with-wide-buffer
-           ;; Find location for the new note.
-           (goto-char org-log-note-marker)
-           (set-marker org-log-note-marker nil)
-           ;; Note associated to a clock is to be located right after
-           ;; the clock.  Do not move point.
-           (unless (eq org-log-note-purpose 'clock-out)
-             (goto-char (org-log-beginning t)))
-           ;; Make sure point is at the beginning of an empty line.
-           (cond ((not (bolp)) (let ((inhibit-read-only t)) (insert "\n")))
-                 ((looking-at "[ \t]*\\S-") (save-excursion (insert "\n"))))
-           ;; In an existing list, add a new item at the top level.
-           ;; Otherwise, indent line like a regular one.
-           (let ((itemp (org-in-item-p)))
-             (if itemp
-                 (indent-line-to
-                  (let ((struct (save-excursion
-                                  (goto-char itemp) (org-list-struct))))
-                    (org-list-get-ind (org-list-get-top-point struct) struct)))
-               (org-indent-line)))
-           (insert (org-list-bullet-string "-") (pop lines))
-           (let ((ind (org-list-item-body-column (line-beginning-position))))
-             (dolist (line lines)
-               (insert "\n")
-               (indent-line-to ind)
-               (insert line)))
-           (message "Note stored")
-           (org-back-to-heading t)
-           (org-cycle-hide-drawers 'children))
-          ;; Fix `buffer-undo-list' when `org-store-log-note' is called
-          ;; from within `org-add-log-note' because `buffer-undo-list'
-          ;; is then modified outside of `org-with-remote-undo'.
-          (when (eq this-command 'org-agenda-todo)
-            (setcdr buffer-undo-list (cddr buffer-undo-list)))
-          (let ((file (buffer-file-name)))
-            (magit-call-git "add" file)
-            (magit-call-git "commit" "-m" (concat file ": " *org-git-notes))
-            (magit-refresh)))))
-    ;; Don't add undo information when called from `org-agenda-todo'.
-    (let ((buffer-undo-list (eq this-command 'org-agenda-todo)))
-      (set-window-configuration org-log-note-window-configuration)
-      (with-current-buffer (marker-buffer org-log-note-return-to)
-        (goto-char org-log-note-return-to))
-      (move-marker org-log-note-return-to nil)
-      (when org-log-post-message (message "%s" org-log-post-message))))
-  (advice-add 'org-store-log-note :override #'*org-store-log-note))
 
 ;;
 ;; `org-mode' hooks

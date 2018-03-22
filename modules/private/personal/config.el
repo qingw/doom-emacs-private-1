@@ -116,12 +116,12 @@
                      (issue-filter-to-days limit "pull-requests")))))
 
   (add-to-list 'magit-status-mode-hook #'magithub-filter-maybe)
-  (setq magithub-clone-default-directory "/Users/xfu/Source/playground/"))
+  (setq magithub-clone-default-directory "~/workspace/sources/"))
 (after! magit
   (magit-wip-after-save-mode 1)
   (magit-wip-after-apply-mode 1)
   (magithub-feature-autoinject t)
-  (setq magit-repository-directories '("/Users/xfu/Source/"))
+  (setq magit-repository-directories '("~/workspace/"))
   (set! :evil-state 'magit-repolist-mode 'normal)
   (map! (:map with-editor-mode-map
           (:localleader

@@ -18,9 +18,6 @@
   ;; TODO only redisplay affect source block
   (add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
 
-  ;; (set! :popup "^CAPTURE.*\\.org$" '((side . bottom) (size . 0.4)) '((select . t)))
-  (set! :popup "^\\*Org Src" '((size . 0.6) (side . right)) '((quit) (select . t)))
-
   )
 
 ;; TODO: create org-brain workspace for all brain files
@@ -110,8 +107,6 @@ If run interactively, get ENTRY from context."
 ;; (remove-hook! 'org-load-hook #'+org|setup-evil)
 
 (add-hook 'org-load-hook #'+org-private|setup-ui t)
-(add-hook 'org-load-hook #'+org-private|setup-agenda t)
-;; (add-hook 'org-load-hook #'+org-private|setup-keybinds t)
 (add-hook 'org-load-hook #'+org-private|setup-overrides t)
 
 (remove-hook! 'org-mode-hook #'(visual-line-mode))
@@ -120,38 +115,6 @@ If run interactively, get ENTRY from context."
 
 ;; `org-load' hooks
 ;;
-
-(defun +org-private|setup-agenda ()
-  (setq org-agenda-block-separator ""
-        org-agenda-clockreport-parameter-plist (quote (:link t :maxlevel 3 :fileskip0 t :stepskip0 t :tags "-COMMENT"))
-        org-agenda-compact-blocks t
-        org-agenda-dim-blocked-tasks nil
-        org-agenda-files (append
-                          ;; (list "/Users/xfu/Dropbox/org/cal/cal.org")
-                          (ignore-errors (directory-files +org-dir t "\\.org$" t)))
-        org-agenda-follow-indirect t
-        org-agenda-ignore-properties '(effort appt category)
-        org-agenda-inhibit-startup t
-        org-agenda-log-mode-items '(closed clock)
-        org-agenda-overriding-header ""
-        org-agenda-restore-windows-after-quit t
-        org-agenda-skip-deadline-if-done t
-        org-agenda-skip-deadline-prewarning-if-scheduled t
-        org-agenda-skip-unavailable-files t
-        org-agenda-sorting-strategy '((agenda time-up priority-down category-keep)
-                                      (todo   priority-down category-keep)
-                                      (tags   priority-down category-keep)
-                                      (search category-keep))
-        org-agenda-span 'day
-        org-agenda-start-with-log-mode t
-        org-agenda-sticky nil
-        org-agenda-tags-column 'auto
-        ;; org-agenda-use-tag-inheritance nil
-        org-habit-following-days 0
-        ;; org-habit-graph-column 1
-        org-habit-preceding-days 8
-        org-habit-show-habits t
-        ))
 
 (defun +org-private|setup-ui ()
   "Configures the UI for `org-mode'."

@@ -1,5 +1,37 @@
 ;;; +todo.el ---  -*- lexical-binding: t; -*-
 
+(add-hook 'org-load-hook #'+org-private|setup-agenda t)
+(defun +org-private|setup-agenda ()
+  (setq org-agenda-block-separator ""
+        org-agenda-clockreport-parameter-plist (quote (:link t :maxlevel 3 :fileskip0 t :stepskip0 t :tags "-COMMENT"))
+        org-agenda-compact-blocks t
+        org-agenda-dim-blocked-tasks nil
+        org-agenda-files (append
+                          ;; (list "/Users/xfu/Dropbox/org/cal/cal.org")
+                          (ignore-errors (directory-files +org-dir t "\\.org$" t)))
+        org-agenda-follow-indirect t
+        org-agenda-ignore-properties '(effort appt category)
+        org-agenda-inhibit-startup t
+        org-agenda-log-mode-items '(closed clock)
+        org-agenda-overriding-header ""
+        org-agenda-restore-windows-after-quit t
+        org-agenda-skip-deadline-if-done t
+        org-agenda-skip-deadline-prewarning-if-scheduled t
+        org-agenda-skip-unavailable-files t
+        org-agenda-sorting-strategy '((agenda time-up priority-down category-keep)
+                                      (todo   priority-down category-keep)
+                                      (tags   priority-down category-keep)
+                                      (search category-keep))
+        org-agenda-span 'day
+        org-agenda-start-with-log-mode t
+        org-agenda-sticky nil
+        org-agenda-tags-column 'auto
+        ;; org-agenda-use-tag-inheritance nil
+        org-habit-following-days 0
+        ;; org-habit-graph-column 1
+        org-habit-preceding-days 8
+        org-habit-show-habits t
+        ))
 ;;
 ;; Plugins
 ;;

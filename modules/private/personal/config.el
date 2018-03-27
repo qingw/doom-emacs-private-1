@@ -1,7 +1,7 @@
 ;;; config.el -*- lexical-binding: t; -*-
 
 ;; (after! evil (load! +bindings))
-(load! +bindings)
+;; (load! +bindings)
 
 (setq
  which-key-idle-delay 0.3
@@ -177,7 +177,7 @@
 (after! magit
   (magit-wip-after-save-mode 1)
   (magit-wip-after-apply-mode 1)
-  (magithub-feature-autoinject t)
+  ;; (magithub-feature-autoinject t)
   (setq magit-repository-directories '("~/workspace/"))
   (set! :evil-state 'magit-repolist-mode 'normal)
   (map! (:map with-editor-mode-map

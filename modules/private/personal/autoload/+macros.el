@@ -20,12 +20,3 @@
      (while (= (forward-line) 0)
        ,@body)))
 
-;; Makes ; and , the universal repeat-keys in evil-mode
-(defmacro do-repeat! (command next-func prev-func)
-      "Repeat motions with ;/,"
-      (let ((fn-sym (intern (format "+evil*repeat-%s" command))))
-        `(progn
-           (defun ,fn-sym (&rest _)
-             (define-key evil-motion-state-map (kbd ";") ',next-func)
-             (define-key evil-motion-state-map (kbd "'") ',prev-func))
-           (advice-add #',command :before #',fn-sym))))

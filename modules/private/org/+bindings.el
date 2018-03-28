@@ -255,3 +255,16 @@
               :desc "Abort"  :nm "k" #'org-capture-kill
               )))))
 
+
+;; org
+(after! org
+  (do-repeat! org-forward-heading-same-level org-forward-heading-same-level org-backward-heading-same-level)
+  (do-repeat! org-next-item org-next-item org-previous-item)
+  (do-repeat! org-next-link org-next-link org-previous-link)
+  (do-repeat! org-next-block org-next-block org-previous-block)
+  (do-repeat! org-next-visible-heading org-next-visible-heading org-previous-visible-heading)
+  (do-repeat! org-backward-heading-same-level org-forward-heading-same-level org-backward-heading-same-level)
+  (do-repeat! org-previous-item org-next-item org-previous-item)
+  (do-repeat! org-previous-link org-next-link org-previous-link)
+  (do-repeat! org-previous-block org-next-block org-previous-block)
+  (do-repeat! org-previous-visible-heading org-next-visible-heading org-previous-visible-heading))

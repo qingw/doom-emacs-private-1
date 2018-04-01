@@ -14,8 +14,6 @@
 
 (package! atomic-chrome)
 
-(package! prog-fill)
-
 ;; for python lang
 (package! lsp-python)
 (package! py-isort)

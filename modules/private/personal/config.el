@@ -30,7 +30,6 @@
  electric-pair-inhibit-predicate 'ignore
 
  persp-interactive-init-frame-behaviour-override -1
- projectile-ignored-project-function 'file-remote-p
  +rss-elfeed-files '("elfeed.org")
  ;; browse-url-browser-function 'xwidget-webkit-browse-url
  mac-frame-tabbing nil
@@ -58,6 +57,14 @@
 
  )
 
+(after! projectile
+  (setq projectile-ignored-project-function
+        (lambda (root)
+          (or (file-remote-p root)
+              (string-match "/tmp/.*" root)
+              (string-match ".*Trash.*" root)
+              (string-match ".*Cellar.*" root)))))
+
 ;; *** Company
 (after! company
   (setq company-tooltip-limit 10
@@ -72,7 +79,7 @@
         company-dabbrev-code-other-buffers t
         company-tooltip-align-annotations t
         company-require-match 'never
-        company-frontends '(company-childframe-frontend company-echo-metadata-frontend)
+        ;; company-frontends '(company-childframe-frontend company-echo-metadata-frontend)
         company-global-modes '(not comint-mode erc-mode message-mode help-mode gud-mode)
         company-childframe-child-frame nil))
 (set! :company-backend '(emacs-lisp-mode) '(company-elisp company-files company-yasnippet company-dabbrev-code))
@@ -343,13 +350,6 @@ started `counsel-recentf' from. Also uses `abbreviate-file-name'."
   (setq atomic-chrome-buffer-open-style 'frame)
   (add-hook 'atomic-chrome-edit-done-hook 'delete-frame))
 
-;; Prog
-;;
-(def-package! prog-fill
-  :commands prog-fill
-  :hook
-  (prog-mode . (lambda()(map! :map prog-mode-map
-                          :nv "M-q" #'prog-fill))))
 ;; lang python
 ;;
 ;; TODO: add fully lsp-mode

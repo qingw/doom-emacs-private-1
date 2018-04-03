@@ -338,7 +338,7 @@ started `counsel-recentf' from. Also uses `abbreviate-file-name'."
   (keyfreq-autosave-mode 1))
 
 ;; maximize emacs upon startup
-(toggle-frame-maximized)
+(add-hook! 'doom-post-init-hook 'toggle-frame-maximized)
 
 (def-package! atomic-chrome
   :hook (doom-post-init . atomic-chrome-start-server)

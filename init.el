@@ -107,7 +107,8 @@
        ledger            ; an accounting system in Emacs
        lua               ; one-based indices? one-based indices
        markdown          ; writing docs for people to ignore
-       ;ocaml             ; an objective camel
+       ;; nix               ; I hereby declare "nix geht mehr!"
+       ;; ocaml             ; an objective camel
        (org              ; organize your plain life in plain text
         +attach          ; custom attachment system
         +babel           ; running code in org
@@ -133,8 +134,8 @@
        ;; toward a specific purpose. They may have additional dependencies and
        ;; should be loaded late.
        :app
-      ;(email +gmail)    ; emacs as an email client
-      ;irc               ; how neckbeards socialize
+      (email +gmail)    ; emacs as an email client
+      irc               ; how neckbeards socialize
       ;(rss +org)        ; emacs as an RSS reader
       ;twitter           ; twitter client https://twitter.com/vnought
        (write            ; emacs as a word processor (latex + org + markdown)

@@ -25,7 +25,6 @@
   :commands org-brain-visualize
   :init
   (setq org-brain-path "~/org/brain")
-  (push 'org-agenda-mode evil-snipe-disabled-modes)
   ;; (add-hook 'org-agenda-mode-hook #'(lambda () (evil-vimish-fold-mode -1)))
   (set! :evil-state 'org-brain-visualize-mode 'normal)
 

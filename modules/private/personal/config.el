@@ -112,8 +112,7 @@
   (add-to-list 'tramp-remote-path ""))
 (def-package! counsel-tramp
   :commands (counsel-tramp)
-  :init
-  (package-initialize))
+  )
 ;; (def-package! docker-tramp
 ;;   :after tramp)
 

@@ -48,10 +48,13 @@
        workspaces        ; tab emulation, persistence & separate workspaces
 
        :completion
-       company           ; the ultimate code completion backend
+       (company          ; the ultimate code completion backend
+        +auto            ; as-you-type code completion
+        +childframe)     ; a nicer company UI (Emacs 26+ only)
       ;helm              ; the *other* search engine for love and life
       ;ido               ; the other *other* search engine...
-       ivy               ; a search engine for love and life
+       (ivy              ; a search engine for love and life
+        +childframe)     ; uses childframes for popups (Emacs 26+ only)
 
        :ui
        doom              ; what makes DOOM look the way it does
@@ -61,7 +64,6 @@
        evil-goggles      ; display visual hints when editing in evil
        hl-todo           ; highlight TODO/FIXME/NOTE tags
        nav-flash         ; blink the current line after jumping
-      ;posframe          ; use child frames where possible (Emacs 26+ only)
       ;tabbar            ; FIXME an (incomplete) tab bar for Emacs
       ;unicode           ; extended unicode support for various languages
        vi-tilde-fringe   ; fringe tildes to mark beyond EOB
@@ -69,6 +71,8 @@
 
        :tools
        dired             ; making dired pretty [functional]
+       editorconfig      ; let someone else argue about tabs vs spaces
+       ein               ; tame Jupyter notebooks with emacs
        electric-indent   ; smarter, keyword-based electric-indent
        eshell            ; a consistent, cross-platform shell (WIP)
        gist              ; interacting with github gists
@@ -93,8 +97,9 @@
        ;clojure           ; java with a lisp
        ;csharp            ; unity, .NET, and mono shenanigans
        data              ; config/data formats
-       ;elixir            ; erlang done right
-       ;elm               ; care for a cup of TEA?
+      ;erlang            ; an elegant language for a more civilized age
+       ;; elixir            ; erlang done right
+       ;; elm               ; care for a cup of TEA?
        emacs-lisp        ; drown in parentheses
        ;ess               ; emacs speaks statistics
        go                ; the hipster dialect

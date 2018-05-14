@@ -84,13 +84,12 @@
           :desc "Find file in project"      :n "f" #'projectile-find-file)
 
         (:desc "git" :prefix "g"
-          :desc "Git status"            :n  "g" #'magit-status
           :desc "Git Hydra"             :n  "." #'+version-control@git-gutter/body
-          :desc "List gists"            :n  "l" #'+gist:list)
+          )
 
         (:desc "help" :prefix "h"
           :desc "Help map"              :n  "h" help-map
-          :desc "Find function"         :n  "j" #'find-function
+          :desc "Find function"         :n  "J" #'find-function
           :desc "Which key top level"   :n  "b" #'which-key-show-top-level
           :desc "Which key major mode"  :n  "B" #'which-key-show-major-mode
           :desc "Which key mino mode"   :n  "C-b" #'which-key-show-minor-mode-keymap
@@ -99,7 +98,7 @@
           :desc "Toggle profiler"       :n  "p" #'doom/toggle-profiler)
 
         (:desc "project" :prefix "p"
-          :desc "Search project with ag"  :n  "s" #'counsel-projectile-ag
+          :desc "Search project with rg"  :n  "s" #'counsel-projectile-rg
           :desc "Find file in project"    :n  "f" #'projectile-find-file
           :desc "Projectile kill buffers" :n  "k" #'projectile-kill-buffers)
 

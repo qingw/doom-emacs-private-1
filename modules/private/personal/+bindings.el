@@ -97,6 +97,9 @@
           :desc "Describe char"         :n  "C" #'describe-char
           :desc "Toggle profiler"       :n  "p" #'doom/toggle-profiler)
 
+        (:desc "insert" :prefix "i"
+          :desc "Time stamp"            :nv "t" #'hydra/timestamp/body)
+
         (:desc "project" :prefix "p"
           :desc "Search project with rg"  :n  "s" #'counsel-projectile-rg
           :desc "Find file in project"    :n  "f" #'projectile-find-file

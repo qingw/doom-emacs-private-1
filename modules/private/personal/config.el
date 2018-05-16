@@ -403,6 +403,24 @@ started `counsel-recentf' from. Also uses `abbreviate-file-name'."
   (add-hook 'python-mode-hook #'electric-operator-mode)
   (add-hook 'inferior-python-mode-hook #'electric-operator-mode)
   :config
+
+  (defun electric-operator-sh-mode-- ()
+    "Handle exponent and negative number notation"
+    (cond
+     ;; ((electric-operator-looking-back-locally "[0-9a-zA-Z-]") "-")
+
+     ;; e.g. --
+     ((electric-operator-looking-back-locally "-") "-")
+     ((electric-operator-looking-back-locally "\\s-*") " -")
+
+     ;; Space negative numbers as e.g. a = -1 (but don't space f(-1) or -1
+     ;; alone at all). This will probably need to be major mode specific
+     ;; eventually.
+     ;; ((electric-operator-probably-unary-operator?) " -")
+     ((electric-operator-just-inside-bracket) " -")
+
+     (t " - ")))
+
   (apply #'electric-operator-add-rules-for-mode 'inferior-python-mode
          electric-operator-prog-mode-rules)
   (apply #'electric-operator-add-rules-for-mode 'sh-mode
@@ -418,11 +436,13 @@ started `counsel-recentf' from. Also uses `abbreviate-file-name'."
                                         )
   (electric-operator-add-rules-for-mode 'sh-mode
                                         (cons "=" " = ")
+                                        (cons "-" #'electric-operator-sh-mode--)
                                         (cons "<=" " <= ")
                                         (cons ">=" " >= ")
                                         (cons ">" " > ")
                                         (cons "," ", ")
                                         (cons "|" " | ")))
+
 ;; search online , has no efficient instrument change variable in autoload module
 (setq +lookup-provider-url-alist
       '(("Google"             . "https://google.com/search?q=%s")

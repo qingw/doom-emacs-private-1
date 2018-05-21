@@ -26,7 +26,7 @@
 
       :n  "s-k"       #'kill-this-buffer
       :n  "s-K"       #'delete-frame
-      :nv "C-SPC"     #'+evil:fold-toggle
+      :nv "M-SPC"     #'+evil:fold-toggle
 
       :gnvime "M-g"   #'goto/body
 
@@ -81,6 +81,7 @@
 
         (:desc "file" :prefix "f"
           :desc "Counsel file fzf"          :n "/" #'counsel-fzf
+          :desc "Copy this file"            :n "C" #'doom/copy-this-file
           :desc "Find file in project"      :n "f" #'projectile-find-file)
 
         (:desc "git" :prefix "g"

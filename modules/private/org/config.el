@@ -1,8 +1,8 @@
 ;;; config.el -*- lexical-binding: t; -*-
 
-(load! +todo)
-(load! +capture)
-(load! +bindings)
+(load! "+todo")
+(load! "+capture")
+(load! "+bindings")
 
 ;; (load! +babel)
 ;; (load! +latex)

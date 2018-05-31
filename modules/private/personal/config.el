@@ -1,7 +1,7 @@
 ;;; config.el -*- lexical-binding: t; -*-
 
 ;; (after! evil (load! +bindings))
-(load! +bindings)
+(load! "+bindings")
 
 (setq
  which-key-idle-delay 0.3
@@ -419,7 +419,7 @@ started `counsel-recentf' from. Also uses `abbreviate-file-name'."
      ;; ((electric-operator-probably-unary-operator?) " -")
      ((electric-operator-just-inside-bracket) " -")
 
-     (t " - ")))
+     (t (eclectric-prog-mode--))))
 
   (apply #'electric-operator-add-rules-for-mode 'inferior-python-mode
          electric-operator-prog-mode-rules)

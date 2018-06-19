@@ -83,7 +83,7 @@
   ("<" self-insert-command)
   ("q" nil :color blue))
 
-(defhydra hydra-org (:color blue :timeout 12 :columns 4)
+(defhydra hydra-org-clock (:color blue :timeout 12 :columns 4)
   "Org commands"
   ("i" (lambda () (interactive) (org-clock-in '(4))) "Clock in")
   ("o" org-clock-out "Clock out")
@@ -91,3 +91,57 @@
   ("<f10>" org-clock-in-last "Clock in the last task")
   ("j" (lambda () (interactive) (org-clock-goto '(4))) "Go to a clock")
   ("m" make-this-message-into-an-org-todo-item "Flag and capture this message"))
+
+(defhydra hydra-clock (:color blue)
+  "
+  ^
+  ^Clock^             ^Do^
+  ^─────^─────────────^──^─────────
+  _q_ quit            _c_ cancel
+  ^^                  _d_ display
+  ^^                  _e_ effort
+  ^^                  _i_ in
+  ^^                  _j_ jump
+  ^^                  _o_ out
+  ^^                  _r_ report
+  ^^                  ^^
+  "
+  ("q" nil)
+  ("c" org-clock-cancel :color pink)
+  ("d" org-clock-display)
+  ("e" org-clock-modify-effort-estimate)
+  ("i" org-clock-in)
+  ("j" org-clock-goto)
+  ("o" org-clock-out)
+  ("r" org-clock-report))
+
+(defhydra hydra-org (:color blue)
+  "
+  ^
+  ^Org^             ^Do^
+  ^───^─────────────^──^─────────────
+  _q_ quit          _A_ archive
+  ^^                _a_ agenda
+  ^^                _c_ capture
+  ^^                _d_ decrypt
+  ^^                _i_ insert-link
+  ^^                _j_ jump-task
+  ^^                _k_ cut-subtree
+  ^^                _o_ open-link
+  ^^                _r_ refile
+  ^^                _s_ store-link
+  ^^                _t_ todo-tree
+  ^^                ^^
+  "
+  ("q" nil)
+  ("A" my/org-archive-done-tasks :color pink)
+  ("a" org-agenda)
+  ("c" org-capture)
+  ("d" org-decrypt-entry)
+  ("k" org-cut-subtree)
+  ("i" org-insert-link-global)
+  ("j" my/org-jump)
+  ("o" org-open-at-point-global)
+  ("r" org-refile)
+  ("s" org-store-link)
+  ("t" org-show-todo-tree))

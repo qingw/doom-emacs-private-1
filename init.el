@@ -1,33 +1,5 @@
 ;;; init.el -*- lexical-binding: t; -*-
-;;
-;; Author:  Henrik Lissner <henrik@lissner.net>
-;; URL:     https://github.com/hlissner/doom-emacs
-;;
-;;   =================     ===============     ===============   ========  ========
-;;   \\ . . . . . . .\\   //. . . . . . .\\   //. . . . . . .\\  \\. . .\\// . . //
-;;   ||. . ._____. . .|| ||. . ._____. . .|| ||. . ._____. . .|| || . . .\/ . . .||
-;;   || . .||   ||. . || || . .||   ||. . || || . .||   ||. . || ||. . . . . . . ||
-;;   ||. . ||   || . .|| ||. . ||   || . .|| ||. . ||   || . .|| || . | . . . . .||
-;;   || . .||   ||. _-|| ||-_ .||   ||. . || || . .||   ||. _-|| ||-_.|\ . . . . ||
-;;   ||. . ||   ||-'  || ||  `-||   || . .|| ||. . ||   ||-'  || ||  `|\_ . .|. .||
-;;   || . _||   ||    || ||    ||   ||_ . || || . _||   ||    || ||   |\ `-_/| . ||
-;;   ||_-' ||  .|/    || ||    \|.  || `-_|| ||_-' ||  .|/    || ||   | \  / |-_.||
-;;   ||    ||_-'      || ||      `-_||    || ||    ||_-'      || ||   | \  / |  `||
-;;   ||    `'         || ||         `'    || ||    `'         || ||   | \  / |   ||
-;;   ||            .===' `===.         .==='.`===.         .===' /==. |  \/  |   ||
-;;   ||         .=='   \_|-_ `===. .==='   _|_   `===. .===' _-|/   `==  \/  |   ||
-;;   ||      .=='    _-'    `-_  `='    _-'   `-_    `='  _-'   `-_  /|  \/  |   ||
-;;   ||   .=='    _-'          '-__\._-'         '-_./__-'         `' |. /|  |   ||
-;;   ||.=='    _-'                                                     `' |  /==.||
-;;   =='    _-'                                                            \/   `==
-;;   \   _-'                                                                `-_   /
-;;    `''                                                                      ``'
-;;
-;; These demons are not part of GNU Emacs.
-;;
-;;; License: MIT
-
-;; (require 'core (concat user-emacs-directory "core/core"))
+;; Copy me to ~/.doom.d/init.el or ~/.config/doom/init.el, then edit me!
 
 (doom! :feature
       ;debugger          ; FIXME stepping through code, to help you add bugs
@@ -46,12 +18,12 @@
 
        :completion
        (company          ; the ultimate code completion backend
-        +auto            ; as-you-type code completion
-        +childframe)     ; a nicer company UI (Emacs 26+ only)
-      ;helm              ; the *other* search engine for love and life
+        +auto)           ; as-you-type code completion
+      ;(helm             ; the *other* search engine for love and life
+      ; +fuzzy)          ; enable fuzzy search backend for helm
       ;ido               ; the other *other* search engine...
        (ivy              ; a search engine for love and life
-        +childframe)     ; uses childframes for popups (Emacs 26+ only)
+        +fuzzy)          ; enable fuzzy search backend for ivy
 
        :ui
        doom              ; what makes DOOM look the way it does
@@ -59,21 +31,27 @@
        doom-modeline     ; a snazzy Atom-inspired mode-line
        doom-quit         ; DOOM quit-message prompts when you quit Emacs
        evil-goggles      ; display visual hints when editing in evil
+      ;fci               ; a `fill-column' indicator
        hl-todo           ; highlight TODO/FIXME/NOTE tags
        nav-flash         ; blink the current line after jumping
        neotree           ; a project drawer, like NERDTree for vim
+      ;treemacs          ; a project drawer, like neotree but cooler
        (popup            ; tame sudden yet inevitable temporary windows
         +all             ; catch all popups that start with an asterix
         +defaults)       ; default popup rules
+      ;pretty-code       ; replace bits of code with pretty symbols
       ;tabbar            ; FIXME an (incomplete) tab bar for Emacs
       ;unicode           ; extended unicode support for various languages
        vi-tilde-fringe   ; fringe tildes to mark beyond EOB
        window-select     ; visually switch windows
 
+       :editor
+      ;parinfer          ; turn lisp into python, sort of
+
        :emacs
        dired             ; making dired pretty [functional]
        ediff             ; comparing files in Emacs
-       electric-indent   ; smarter, keyword-based electric-indent
+       electric          ; smarter, keyword-based electric-indent
        eshell            ; a consistent, cross-platform shell (WIP)
        imenu             ; an imenu sidebar and searchable code index
       ;term              ; terminals in Emacs
@@ -90,12 +68,14 @@
       ;prodigy           ; FIXME managing external services & code builders
       ;rgb               ; creating color strings
        rotate-text       ; cycle region at point between text candidates
-       tmux              ; an API for interacting with tmux
-       upload            ; map local to remote projects via ssh/ftp
+      tmux              ; an API for interacting with tmux
+      ;upload            ; map local to remote projects via ssh/ftp
+      wakatime
 
        :lang
       ;assembly          ; assembly for fun or debugging
-      ;cc                ; C/C++/Obj-C madness
+      ;(cc +irony +rtags); C/C++/Obj-C madness
+      ;common-lisp       ; if you've seen one lisp, you've seen them all
       ;crystal           ; ruby at the speed of c
       ;clojure           ; java with a lisp
       ;csharp            ; unity, .NET, and mono shenanigans
@@ -128,8 +108,9 @@
        ;php               ; perl's insecure younger brother
        plantuml          ; diagrams for confusing people more
        ;purescript        ; javascript, but functional
-       python            ; beautiful is better than ugly
-       rest              ; Emacs as a REST client
+      python            ; beautiful is better than ugly
+      ;qt                ; the 'cutest' gui framework ever
+      rest              ; Emacs as a REST client
        ;ruby              ; 1.step do {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
        rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;scala             ; java, but good
@@ -155,6 +136,10 @@
       ;impatient-mode    ; show off code over HTTP
 
        :config
+       ;; For literate config users. This will tangle+compile a config.org
+       ;; literate config in your `doom-private-dir' whenever it changes.
+      ;literate
+
        ;; The default module set reasonable defaults for Emacs. It also provides
        ;; a Spacemacs-inspired keybinding scheme, a custom yasnippet library,
        ;; and additional ex commands for evil-mode. Use it as a reference for

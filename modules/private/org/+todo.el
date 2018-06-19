@@ -88,7 +88,7 @@
 
 (after! org-agenda
   (org-super-agenda-mode)
-  (def-hydra! +org@org-agenda-filter (:color pink :hint nil)
+  (defhydra +org@org-agenda-filter (:color pink :hint nil)
     "
 _;_ tag      _h_ headline      _c_ category     _r_ regexp     _d_ remove    "
     (";" org-agenda-filter-by-tag)
@@ -134,8 +134,8 @@ _;_ tag      _h_ headline      _c_ category     _r_ regexp     _d_ remove    "
       (run-with-timer 60 nil 'org-wild-notifier-mode 1)
       (message "Org wild notifier, naughty naughty fire!")))
   (start-org-wild-notifier)
-  (set! :popup "^\\*Org Agenda.*\\*$" '((slot . -1) (size . 0.5) (side . right)) '((select . t) (modeline . nil)))
+  (set-popup-rule! "^\\*Org Agenda.*\\*$" '((slot . -1) (size . 0.5) (side . right)) '((select . t) (modeline . nil)))
   (push 'org-agenda-mode evil-snipe-disabled-modes)
   (add-hook 'org-agenda-finalize-hook #'hide-mode-line-mode)
-  (set! :evil-state 'org-agenda-mode 'normal))
+  (set-evil-initial-state! 'org-agenda-mode 'normal))
 

@@ -26,7 +26,7 @@
   :init
   (setq org-brain-path "~/org/brain")
   ;; (add-hook 'org-agenda-mode-hook #'(lambda () (evil-vimish-fold-mode -1)))
-  (set! :evil-state 'org-brain-visualize-mode 'normal)
+  (set-evil-initial-state! 'org-brain-visualize-mode 'normal)
 
   :config
   (require 'org)
@@ -48,7 +48,7 @@ If run interactively, get ENTRY from context."
         org-capture-templates)
   (setq org-brain-visualize-default-choices 'root
         org-brain-title-max-length 20)
-  (set! :popup "^\\*org-brain\\*$" '((vslot . -1) (size . 0.3) (side . left)) '((select . t) (quit) (transient)))
+  (set-popup-rule! "^\\*org-brain\\*$" '((vslot . -1) (size . 0.3) (side . left)) '((select . t) (quit) (transient)))
 
   (map!
    (:map org-brain-visualize-mode-map
@@ -123,8 +123,8 @@ If run interactively, get ENTRY from context."
   ;; (defface org-todo-keyword-done '((t ())) "org-done" :group 'org)
   ;; (defface org-todo-keyword-habt '((t ())) "org-habt" :group 'org)
 
-  (set! :popup "^\\*Org Src" '((size . 0.4) (side . right)) '((quit) (select . t) (modeline)))
-  (set! :popup "^CAPTURE.*\\.org$" '((side . bottom) (size . 0.4)) '((quit) (select . t)))
+  (set-popup-rule! "^\\*Org Src" '((size . 0.4) (side . right)) '((quit) (select . t) (modeline)))
+  (set-popup-rule! "^CAPTURE.*\\.org$" '((side . bottom) (size . 0.4)) '((quit) (select . t)))
 
   (setq org-adapt-indentation nil
         org-export-babel-evaluate nil

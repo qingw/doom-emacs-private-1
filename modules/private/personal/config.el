@@ -82,17 +82,17 @@
         ;; company-frontends '(company-childframe-frontend company-echo-metadata-frontend)
         company-global-modes '(not comint-mode erc-mode message-mode help-mode gud-mode)
         company-childframe-child-frame nil))
-(set! :company-backend '(emacs-lisp-mode) '(company-elisp company-files company-yasnippet company-dabbrev-code))
-(set! :company-backend '(python-mode) '(company-anaconda company-files company-yasnippet company-dabbrev-code))
-(set! :company-backend '(inferior-python-mode) '(company-capf company-files company-yasnippet company-dabbrev-code))
-(set! :company-backend '(inferior-ess-mode) '(company-capf company-files company-yasnippet company-dabbrev-code))
-(set! :company-backend '(org-mode) '(company-capf company-files company-yasnippet company-dabbrev))
-(set! :lookup 'emacs-lisp-mode :documentation #'helpful-at-point)
+(set-company-backend! '(emacs-lisp-mode) '(company-elisp company-files company-yasnippet company-dabbrev-code))
+(set-company-backend! '(python-mode) '(company-anaconda company-files company-yasnippet company-dabbrev-code))
+(set-company-backend! '(inferior-python-mode) '(company-capf company-files company-yasnippet company-dabbrev-code))
+(set-company-backend! '(inferior-ess-mode) '(company-capf company-files company-yasnippet company-dabbrev-code))
+(set-company-backend! '(org-mode) '(company-capf company-files company-yasnippet company-dabbrev))
+(set-lookup-handlers! 'emacs-lisp-mode :documentation #'helpful-at-point)
 
 ;; ** Help
 (after! helpful
-  (set! :lookup 'helpful-mode :documentation #'helpful-at-point)
-  (set! :popup "^\\*helpful.*"
+  (set-lookup-handlers! 'helpful-mode :documentation #'helpful-at-point)
+  (set-popup-rule! "^\\*helpful.*"
     '((size . 80) (side . right))
     '((select . t) (quit . t))))
 
@@ -100,7 +100,7 @@
   :commands (tldr)
   :config
   (setq tldr-directory-path (concat doom-etc-dir "tldr/"))
-  (set! :popup "^\\*tldr\\*"
+  (set-popup-rule! "^\\*tldr\\*"
     '((size . 80) (side . right))
     '((transient . nil)  (modeline . nil) (select . t) (quit . t))))
 
@@ -185,15 +185,15 @@
   (magit-wip-after-apply-mode 1)
   ;; (magithub-feature-autoinject t)
   (setq magit-repository-directories '("~/workspace/"))
-  (set! :evil-state 'magit-repolist-mode 'normal)
+  (set-evil-initial-state! 'magit-repolist-mode 'normal)
   (map! (:map with-editor-mode-map
           (:localleader
             :desc "Finish" :n "," #'with-editor-finish
             :desc "Abort"  :n "k" #'with-editor-cancel)))
-  (set! :popup "^.*magit" '((slot . -1) (side . right) (size . 80)) '((modeline . nil) (select . t)))
-  (set! :popup "^\\*magit.*popup\\*" '((slot . 0) (side . right)) '((modeline . nil) (select . t)))
-  (set! :popup "^.*magit-revision:.*" '((slot . 2) (side . right) (window-height . 0.6)) '((modeline . nil) (select . t)))
-  (set! :popup "^.*magit-diff:.*" '((slot . 2) (side . right) (window-height . 0.6)) '((modeline . nil) (select . nil))))
+  (set-popup-rule! "^.*magit" '((slot . -1) (side . right) (size . 80)) '((modeline . nil) (select . t)))
+  (set-popup-rule! "^\\*magit.*popup\\*" '((slot . 0) (side . right)) '((modeline . nil) (select . t)))
+  (set-popup-rule! "^.*magit-revision:.*" '((slot . 2) (side . right) (window-height . 0.6)) '((modeline . nil) (select . t)))
+  (set-popup-rule! "^.*magit-diff:.*" '((slot . 2) (side . right) (window-height . 0.6)) '((modeline . nil) (select . nil))))
 
 
 ;; * Ivy Actions
@@ -340,7 +340,17 @@ started `counsel-recentf' from. Also uses `abbreviate-file-name'."
 (add-hook! 'doom-post-init-hook 'toggle-frame-maximized)
 
 (def-package! atomic-chrome
-  :hook (doom-post-init . atomic-chrome-start-server)
+  :preface
+  (defun atomic-chrome-server-running-p ()
+    (cond ((executable-find "lsof")
+           (zerop (call-process "lsof" nil nil nil "-i" ":64292")))
+          ((executable-find "netstat") ; Windows
+           (zerop (call-process-shell-command "netstat -aon | grep 64292")))))
+  :hook (atomic-chrome-edit-mode . flyspell-mode)
+  :init
+  (if (atomic-chrome-server-running-p)
+      (message "Can't start atomic-chrome server, because port 64292 is already used")
+    (atomic-chrome-start-server))
   :config
   (setq atomic-chrome-default-major-mode 'markdown-mode)
   (setq atomic-chrome-url-major-mode-alist
@@ -356,8 +366,8 @@ started `counsel-recentf' from. Also uses `abbreviate-file-name'."
 ;;   :commands (lsp-python-enable)
 ;;   :config
 ;;   (setq python-indent-guess-indent-offset-verbose nil)
-;;   (set! :company-backend '(python-mode) '(company-lsp company-files company-yasnippet))
-;;   (set! :lookup 'python-mode
+;;   (set-company-backend! '(python-mode) '(company-lsp company-files company-yasnippet))
+;;   (set-lookup-handlers! 'python-mode
 ;;     :definition #'lsp-ui-peek-find-definitions
 ;;     :references #'lsp-ui-peek-find-references))
 
@@ -472,7 +482,7 @@ started `counsel-recentf' from. Also uses `abbreviate-file-name'."
   (setq undo-tree-visualizer-timestamps t)
   ;; FIXME windows not display stable
   ;; (setq undo-tree-visualizer-diff t)
-  (set! :popup "^ ?\\*undo-tree\*" :ignore))
+  (set-popup-rule! "^ ?\\*undo-tree\*" :ignore))
 
 
 ;; for workspace problem

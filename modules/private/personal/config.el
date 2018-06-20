@@ -150,6 +150,8 @@
 
 ;; ** Magit
 (def-package! orgit :after magit)
+;; (def-package! magit-todos :after magit)
+
 (after! magithub
   (require 'parse-time)
   (defmacro magithub--time-number-of-days-since-string (iso8601)

@@ -5,6 +5,7 @@
 (package! orgit)
 (package! evil-magit)
 (package! magithub)
+;; (package! magit-todos)
 
 (package! tldr)
 (package! keyfreq)

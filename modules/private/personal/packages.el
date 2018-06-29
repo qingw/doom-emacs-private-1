@@ -3,8 +3,6 @@
 ;; (package! centered-window-mode :ignore t)
 
 (package! orgit)
-(package! evil-magit)
-(package! magithub)
 ;; (package! magit-todos)
 
 (package! tldr)

@@ -13,7 +13,6 @@
        spellcheck        ; tasing you for misspelling mispelling
        (syntax-checker   ; tasing you for every semicolon you forget
         +childframe)     ; use childframes for error popups (Emacs 26+ only)
-       version-control   ; remember, remember that commit in November
        workspaces        ; tab emulation, persistence & separate workspaces
 
        :completion
@@ -35,18 +34,20 @@
        hl-todo           ; highlight TODO/FIXME/NOTE tags
        nav-flash         ; blink the current line after jumping
        neotree           ; a project drawer, like NERDTree for vim
-      ;treemacs          ; a project drawer, like neotree but cooler
+       treemacs          ; a project drawer, like neotree but cooler
        (popup            ; tame sudden yet inevitable temporary windows
         +all             ; catch all popups that start with an asterix
         +defaults)       ; default popup rules
       ;pretty-code       ; replace bits of code with pretty symbols
       ;tabbar            ; FIXME an (incomplete) tab bar for Emacs
       ;unicode           ; extended unicode support for various languages
+       vc-gutter         ; vcs diff in the fringe
        vi-tilde-fringe   ; fringe tildes to mark beyond EOB
        window-select     ; visually switch windows
 
        :editor
       ;parinfer          ; turn lisp into python, sort of
+       rotate-text       ; cycle region at point between text candidates
 
        :emacs
        dired             ; making dired pretty [functional]
@@ -54,7 +55,8 @@
        electric          ; smarter, keyword-based electric-indent
        eshell            ; a consistent, cross-platform shell (WIP)
        imenu             ; an imenu sidebar and searchable code index
-      ;term              ; terminals in Emacs
+       term              ; terminals in Emacs
+       vc                ; version-control and Emacs, sitting in a tree
 
        :tools
        editorconfig      ; let someone else argue about tabs vs spaces
@@ -62,15 +64,14 @@
       ;gist              ; interacting with github gists
       ;macos             ; MacOS-specific commands
       ;make              ; run make tasks from Emacs
-      ;magit             ;
+       magit             ;
       ;password-store    ; password manager for nerds
        pdf               ; pdf enhancements
       ;prodigy           ; FIXME managing external services & code builders
       ;rgb               ; creating color strings
-       rotate-text       ; cycle region at point between text candidates
-      tmux              ; an API for interacting with tmux
-      ;upload            ; map local to remote projects via ssh/ftp
-      wakatime
+       tmux              ; an API for interacting with tmux
+       upload            ; map local to remote projects via ssh/ftp
+      ;wakatime
 
        :lang
       ;assembly          ; assembly for fun or debugging
@@ -84,13 +85,13 @@
       ;elixir            ; erlang done right
       ;elm               ; care for a cup of TEA?
        emacs-lisp        ; drown in parentheses
-       ;ess               ; emacs speaks statistics
-       go                ; the hipster dialect
-       ;(haskell +intero) ; a language that's lazier than I am
+      ;ess               ; emacs speaks statistics
+      ;go                ; the hipster dialect
+      ;(haskell +intero) ; a language that's lazier than I am
        hy                ; readability of scheme w/ speed of python
-       ;(java +meghanada) ; the poster child for carpal tunnel syndrome
+      ;(java +meghanada) ; the poster child for carpal tunnel syndrome
        javascript        ; all(hope(abandon(ye(who(enter(here))))))
-       ;; julia             ; a better, faster MATLAB
+      ;julia             ; a better, faster MATLAB
        latex             ; writing papers in Emacs has never been so fun
        ledger            ; an accounting system in Emacs
        lua               ; one-based indices? one-based indices
@@ -105,34 +106,34 @@
         +export          ; Exporting org to whatever you want
         +present)        ; Emacs for presentations
       ;perl              ; write code no one else can comprehend
-       ;php               ; perl's insecure younger brother
+      ;php               ; perl's insecure younger brother
        plantuml          ; diagrams for confusing people more
-       ;purescript        ; javascript, but functional
-      python            ; beautiful is better than ugly
+      ;purescript        ; javascript, but functional
+       python            ; beautiful is better than ugly
       ;qt                ; the 'cutest' gui framework ever
-      rest              ; Emacs as a REST client
-       ;ruby              ; 1.step do {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
-       rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
-       ;scala             ; java, but good
+       rest              ; Emacs as a REST client
+      ;ruby              ; 1.step do {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
+      ;rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
+      ;scala             ; java, but good
        sh                ; she sells (ba|z)sh shells on the C xor
       ;solidity          ; do you need a blockchain? No.
       ;swift             ; who asked for emoji variables?
-      ;web               ; the tubes
+       web               ; the tubes
 
        ;; Applications are complex and opinionated modules that transform Emacs
        ;; toward a specific purpose. They may have additional dependencies and
        ;; should be loaded late.
        :app
-      (email +gmail)    ; emacs as an email client
-      irc               ; how neckbeards socialize
+       (email +gmail)    ; emacs as an email client
+       irc               ; how neckbeards socialize
       ;(rss +org)        ; emacs as an RSS reader
       ;twitter           ; twitter client https://twitter.com/vnought
-      (write            ; emacs as a word processor (latex + org + markdown)
-      +wordnut         ; wordnet (wn) search
-      +langtool)       ; a proofreader (grammar/style check) for Emacs
+       (write            ; emacs as a word processor (latex + org + markdown)
+        +wordnut         ; wordnet (wn) search
+        +langtool)       ; a proofreader (grammar/style check) for Emacs
 
        :collab
-       floobits          ; peer programming for a price
+      ;floobits          ; peer programming for a price
       ;impatient-mode    ; show off code over HTTP
 
        :config

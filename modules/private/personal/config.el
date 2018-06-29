@@ -182,20 +182,22 @@
 
   (add-to-list 'magit-status-mode-hook #'magithub-filter-maybe)
   (setq magithub-clone-default-directory "~/workspace/sources/"))
+
 (after! magit
-  (magit-wip-after-save-mode 1)
-  (magit-wip-after-apply-mode 1)
+  ;; (magit-wip-after-save-mode 1)
+  ;; (magit-wip-after-apply-mode 1)
   ;; (magithub-feature-autoinject t)
   (setq magit-repository-directories '("~/workspace/"))
-  (set-evil-initial-state! 'magit-repolist-mode 'normal)
-  (map! (:map with-editor-mode-map
-          (:localleader
-            :desc "Finish" :n "," #'with-editor-finish
-            :desc "Abort"  :n "k" #'with-editor-cancel)))
-  (set-popup-rule! "^.*magit" '((slot . -1) (side . right) (size . 80)) '((modeline . nil) (select . t)))
-  (set-popup-rule! "^\\*magit.*popup\\*" '((slot . 0) (side . right)) '((modeline . nil) (select . t)))
-  (set-popup-rule! "^.*magit-revision:.*" '((slot . 2) (side . right) (window-height . 0.6)) '((modeline . nil) (select . t)))
-  (set-popup-rule! "^.*magit-diff:.*" '((slot . 2) (side . right) (window-height . 0.6)) '((modeline . nil) (select . nil))))
+  ;; (set-evil-initial-state! 'magit-repolist-mode 'normal)
+  ;; (map! (:map with-editor-mode-map
+  ;;         (:localleader
+  ;;           :desc "Finish" :n "," #'with-editor-finish
+  ;;           :desc "Abort"  :n "k" #'with-editor-cancel)))
+  ;; (set-popup-rule! "^.*magit" '((slot . -1) (side . right) (size . 80)) '((modeline . nil) (select . t)))
+  ;; (set-popup-rule! "^\\*magit.*popup\\*" '((slot . 0) (side . right)) '((modeline . nil) (select . t)))
+  ;; (set-popup-rule! "^.*magit-revision:.*" '((slot . 2) (side . right) (window-height . 0.6)) '((modeline . nil) (select . t)))
+  ;; (set-popup-rule! "^.*magit-diff:.*" '((slot . 2) (side . right) (window-height . 0.6)) '((modeline . nil) (select . nil)))
+  )
 
 
 ;; * Ivy Actions

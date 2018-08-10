@@ -2,8 +2,8 @@
 
 (map!
 
- :gnvime "s-r" #'counsel-org-capture
- :gnvime "s-R" #'counsel-projectile-org-capture
+ :gnvime "<f8>" #'counsel-org-capture
+ :gnvime "S-<f8>" #'counsel-projectile-org-capture
 
  :gnvime "s-g" #'org-agenda-show-daily
 

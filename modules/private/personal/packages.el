@@ -2,8 +2,10 @@
 
 ;; (package! centered-window-mode :ignore t)
 
+;; (package! flycheck-popup-tip :disable t)
+;; (package! flycheck-pos-tip :disable t)
+
 (package! orgit)
-;; (package! magit-todos)
 
 (package! tldr)
 (package! keyfreq)

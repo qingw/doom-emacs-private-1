@@ -167,3 +167,17 @@ evil state , use evil-paster instead
 :END:
 [2018-03-21 Wed]
 [[file:~/workspace/doom-emacs-private/modules/private/org/+bindings.el:::nm%20"H"%20#'org-habit-toggle-habits]]
+** TODO how to use multi-edit effect in doom config :study:
+:PROPERTIES:
+:Created: [2018-07-09 Mon 10:49]
+:Linked:
+:END:
+
+
+** FIXME syntax-checker module case emacs crash
+:PROPERTIES:
+:Created: [2018-07-09 Mon 15:45]
+:Linked: [[file:~/.doom.d/init.el::;;%20(syntax-checker%20;%20tasing%20you%20for%20every%20semicolon%20you%20forget]]
+:END:
+
+

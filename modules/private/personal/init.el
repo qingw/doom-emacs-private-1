@@ -15,6 +15,8 @@
 (setq user-mail-address "driftcrow@gmail.com"
       user-full-name    "driftcrow"
 
+      evil-want-integration nil
+
       doom-localleader-key ","
 
       doom-font (font-spec :family "Fira Code" :size 14 )

@@ -14,13 +14,6 @@
  ivy-extra-directories '("./")
 
  delete-by-moving-to-trash t
- avy-keys '(?a ?s ?d ?f ?j ?k ?l ?\;)
- ivy-use-selectable-prompt t
- ivy-auto-select-single-candidate t
- ivy-rich-parse-remote-buffer nil
- ivy-magic-slash-non-match-action 'ivy-magic-slash-non-match-cd-selected
- ivy-height 20
- ivy-rich-switch-buffer-name-max-length 50
  counsel-evil-registers-height 20
  counsel-yank-pop-height 20
  visual-fill-column-center-text t
@@ -50,10 +43,6 @@
 
 
  alert-default-style 'notifier
-
- ;; ace-window
- aw-scope 'visible
- aw-background nil
 
  )
 
@@ -117,6 +106,7 @@
 ;;   :after tramp)
 
 (after! recentf
+  (setq recentf-auto-cleanup 60)
   (add-to-list 'recentf-exclude 'file-remote-p)
   (add-to-list 'recentf-exclude ".*\\.gz$")
   (add-to-list 'recentf-exclude ".*\\.gpg$")
@@ -138,9 +128,33 @@
   (add-to-list 'recentf-exclude "COMMIT_EDITMSG")
   (add-to-list 'recentf-exclude ".*Cellar.*"))
 
-(add-hook 'minibuffer-setup-hook #'smartparens-mode)
-(add-hook 'minibuffer-setup-hook #'doom|no-fringes-in-minibuffer)
+(after! smartparens
+  (add-hook 'minibuffer-setup-hook #'smartparens-mode)
+  (add-hook 'eshell-mode-hook #'smartparens-mode)
+  ;; Auto-close more conservatively and expand braces on RET
+  (sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil)
+  (let ((unless-list '(sp-point-before-word-p
+                       sp-point-after-word-p
+                       sp-point-before-same-p)))
+    (sp-pair "'" nil :unless unless-list)
+    (sp-pair "\"" nil :unless unless-list))
+  (sp-pair "{" nil :post-handlers '(("||\n[i]" "RET") ("| " " "))
+           :unless '(sp-point-before-word-p sp-point-before-same-p))
+  (sp-pair "(" nil :post-handlers '(("||\n[i]" "RET") ("| " " "))
+           :unless '(sp-point-before-word-p sp-point-before-same-p))
+  (sp-pair "[" nil :post-handlers '(("| " " "))
+           :unless '(sp-point-before-word-p sp-point-before-same-p)))
+
 (set-window-fringes (minibuffer-window) 0 0 nil)
+
+(after! avy
+  (setq avy-keys '(?a ?s ?d ?f ?j ?k ?l ?\;)))
+(after! ace-window
+  (setq aw-keys '(?f ?d ?s ?r ?e ?w)
+        aw-scope 'visible
+        ;; aw-scope 'frame
+        aw-ignore-current t
+        aw-background nil))
 
 ;; (def-package-hook! ace-window
 ;;   :post-config
@@ -201,38 +215,17 @@
 
 
 ;; * Ivy Actions
+(after! ivy
+  (setq ivy-use-selectable-prompt t
+        ivy-auto-select-single-candidate t
+        ivy-rich-parse-remote-buffer nil
+        +ivy-buffer-icons nil
+        ivy-use-virtual-buffers nil
+        ivy-magic-slash-non-match-action 'ivy-magic-slash-non-match-cd-selected
+        ivy-height 20
+        ivy-rich-switch-buffer-name-max-length 50))
+
 (after! counsel
-  (defun +ivy-recentf-transformer (str)
-    "Dim recentf entries that are not in the current project of the buffer you
-started `counsel-recentf' from. Also uses `abbreviate-file-name'."
-    (abbreviate-file-name str))
-  ;; ** counsel-find-file
-  (defun +ivy/reloading (cmd)
-    (lambda (x)
-      (funcall cmd x)
-      (ivy--reset-state ivy-last)))
-  (defun +ivy/given-file (cmd prompt) ; needs lexical-binding
-    (lambda (source)
-      (let ((target
-             (let ((enable-recursive-minibuffers t))
-               (read-file-name
-                (format "%s %s to:" prompt source)))))
-        (funcall cmd source target 1))))
-  (defun +ivy/confirm-delete-file (x)
-    (dired-delete-file x 'confirm-each-subdirectory))
-  (ivy-add-actions
-   'counsel-find-file
-   `(("c" ,(+ivy/given-file #'copy-file "Copy file") "copy file")
-     ("d" ,(+ivy/reloading #'+ivy/confirm-delete-file) "delete")
-     ("r" (lambda (path) (rename-file path (read-string "New name: "))) "Rename")
-     ("m" ,(+ivy/reloading (+ivy/given-file #'rename-file "Move")) "move")
-     ("f" find-file-other-window "other window")
-     ("p" (lambda (path) (with-ivy-window (insert (f-relative path)))) "Insert relative path")
-     ("P" (lambda (path) (with-ivy-window (insert path))) "Insert absolute path")
-     ("l" (lambda (path) "Insert org-link with relative path"
-            (with-ivy-window (insert (format "[[./%s]]" (f-relative path))))) "Insert org-link (rel. path)")
-     ("L" (lambda (path) "Insert org-link with absolute path"
-            (with-ivy-window (insert (format "[[%s]]" path)))) "Insert org-link (abs. path)")))
   ;; ** counsel-M-x
   (defun +ivy/helpful-function (prompt)
     (helpful-function (intern prompt)))
@@ -343,6 +336,18 @@ started `counsel-recentf' from. Also uses `abbreviate-file-name'."
 ;; maximize emacs upon startup
 (add-hook! 'doom-post-init-hook 'toggle-frame-maximized)
 
+(after! yasnippet
+  (push "~/.doom.d/snippets" yas-snippet-dirs)
+  )
+
+;; *** evil
+(after! evil-mc
+  ;; Make evil-mc resume its cursors when I switch to insert mode
+  (add-hook! 'evil-mc-before-cursors-created
+    (add-hook 'evil-insert-state-entry-hook #'evil-mc-resume-cursors nil t))
+  (add-hook! 'evil-mc-after-cursors-deleted
+    (remove-hook 'evil-insert-state-entry-hook #'evil-mc-resume-cursors t)))
+
 (def-package! atomic-chrome
   :preface
   (defun atomic-chrome-server-running-p ()
@@ -410,52 +415,11 @@ started `counsel-recentf' from. Also uses `abbreviate-file-name'."
         ))
 
 
+;; *** electric
 (def-package! electric-operator
-  :commands (electric-operator-mode)
-  :init
-  (add-hook 'sh-mode-hook #'electric-operator-mode)
-  (add-hook 'python-mode-hook #'electric-operator-mode)
-  (add-hook 'inferior-python-mode-hook #'electric-operator-mode)
-  :config
-
-  (defun electric-operator-sh-mode-- ()
-    "Handle exponent and negative number notation"
-    (cond
-     ;; ((electric-operator-looking-back-locally "[0-9a-zA-Z-]") "-")
-
-     ;; e.g. --
-     ((electric-operator-looking-back-locally "-") "-")
-     ((electric-operator-looking-back-locally "\\s-*") " -")
-
-     ;; Space negative numbers as e.g. a = -1 (but don't space f(-1) or -1
-     ;; alone at all). This will probably need to be major mode specific
-     ;; eventually.
-     ;; ((electric-operator-probably-unary-operator?) " -")
-     ((electric-operator-just-inside-bracket) " -")
-
-     (t (eclectric-prog-mode--))))
-
-  (apply #'electric-operator-add-rules-for-mode 'inferior-python-mode
-         electric-operator-prog-mode-rules)
-  (apply #'electric-operator-add-rules-for-mode 'sh-mode
-         electric-operator-prog-mode-rules)
-  (electric-operator-add-rules-for-mode 'inferior-python-mode
-                                        (cons "**" #'electric-operator-python-mode-**)
-                                        (cons "*" #'electric-operator-python-mode-*)
-                                        (cons ":" #'electric-operator-python-mode-:)
-                                        (cons "//" " // ") ; integer division
-                                        (cons "=" #'electric-operator-python-mode-kwargs-=)
-                                        (cons "-" #'electric-operator-python-mode-negative-slices)
-                                        (cons "->" " -> ") ; function return types
-                                        )
-  (electric-operator-add-rules-for-mode 'sh-mode
-                                        (cons "=" " = ")
-                                        (cons "-" #'electric-operator-sh-mode--)
-                                        (cons "<=" " <= ")
-                                        (cons ">=" " >= ")
-                                        (cons ">" " > ")
-                                        (cons "," ", ")
-                                        (cons "|" " | ")))
+  :hook ((sh-mode . electric-operator-mode)
+         (ess-mode . electric-operator-mode)
+         (python-mode . electric-operator-mode)))
 
 ;; search online , has no efficient instrument change variable in autoload module
 (setq +lookup-provider-url-alist

@@ -70,7 +70,7 @@
       ;gist              ; interacting with github gists
        macos             ; MacOS-specific commands
        make              ; run make tasks from Emacs
-       magit             ;
+       magit             ; a git porcelain for Emacs
       ;password-store    ; password manager for nerds
        pdf               ; pdf enhancements
       ;prodigy           ; FIXME managing external services & code builders
@@ -80,13 +80,13 @@
       ;wakatime
 
        :lang
-      ;assembly          ; assembly for fun or debugging
-      ;(cc +irony +rtags); C/C++/Obj-C madness
-      ;clojure           ; java with a lisp
-      ;common-lisp       ; if you've seen one lisp, you've seen them all
-      ;coq               ; proofs-as-programs
-      ;crystal           ; ruby at the speed of c
-      ;csharp            ; unity, .NET, and mono shenanigans
+       ;;assembly          ; assembly for fun or debugging
+       ;;(cc +irony +rtags); C/C++/Obj-C madness
+       ;;clojure           ; java with a lisp
+       ;;common-lisp       ; if you've seen one lisp, you've seen them all
+       ;;coq               ; proofs-as-programs
+       ;;crystal           ; ruby at the speed of c
+       ;;csharp            ; unity, .NET, and mono shenanigans
        data              ; config/data formats
       ;erlang            ; an elegant language for a more civilized age
       ;elixir            ; erlang done right
@@ -117,7 +117,7 @@
       ;php               ; perl's insecure younger brother
        plantuml          ; diagrams for confusing people more
       ;purescript        ; javascript, but functional
-       python            ; beautiful is better than ugly
+       (python +conda)  ; beautiful is better than ugly
       ;qt                ; the 'cutest' gui framework ever
       ;racket            ; a DSL for DSLs
       ;rest              ; Emacs as a REST client

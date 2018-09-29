@@ -123,8 +123,8 @@ If run interactively, get ENTRY from context."
   ;; (defface org-todo-keyword-done '((t ())) "org-done" :group 'org)
   ;; (defface org-todo-keyword-habt '((t ())) "org-habt" :group 'org)
 
-  (set-popup-rule! "^\\*Org Src" '((size . 0.4) (side . right)) '((quit) (select . t) (modeline)))
-  (set-popup-rule! "^CAPTURE.*\\.org$" '((side . bottom) (size . 0.4)) '((quit) (select . t)))
+  ;; (set-popup-rule! "^\\*Org Src" '((size . 0.4) (side . right)) '((quit) (select . t) (modeline)))
+  ;; (set-popup-rule! "^CAPTURE.*\\.org$" '((side . bottom) (size . 0.4)) '((quit) (select . t)))
 
   (setq org-adapt-indentation nil
         org-export-babel-evaluate nil

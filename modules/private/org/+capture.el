@@ -87,7 +87,7 @@
 %i
 %?" )
           ("wl" "Works Log" entry
-           (file+datetree+prompt org-default-works-file )
+           (file+datetree org-default-works-file )
            "* %^{Logging for...} :logs:
 %^{Effort}p
 %^T
@@ -95,7 +95,7 @@
 - Things to discuss:
 
 %i
-%?"   )
+%?"  :time-prompt t )
 
           ("M" "Meeting" entry
            (file+olp+datetree org-default-works-file)
@@ -121,14 +121,14 @@ SCHEDULED: %(format-time-string \"%<<%Y-%m-%d %a .+5d/7d>>\")
 %?")
 
           ("j" "Journal" entry
-           (file+datetree+prompt org-default-journal-file)
+           (file+datetree org-default-journal-file)
            "* %^{Logging for...}
 :PROPERTIES:
 :Created: %U
 :Linked: %a
 :END:
 %i
-%?"   )
+%?"   :time-prompt t)
           ("i" "Idea" entry
            (file+headline org-default-notes-file "Ideas")
            "* %A :idea:

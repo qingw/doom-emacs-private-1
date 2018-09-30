@@ -87,7 +87,7 @@
 %i
 %?" )
           ("wl" "Works Log" entry
-           (file+datetree org-default-works-file )
+           (file+olp+datetree org-default-works-file )
            "* %^{Logging for...} :logs:
 %^{Effort}p
 %^T
@@ -121,7 +121,7 @@ SCHEDULED: %(format-time-string \"%<<%Y-%m-%d %a .+5d/7d>>\")
 %?")
 
           ("j" "Journal" entry
-           (file+datetree org-default-journal-file)
+           (file+olp+datetree org-default-journal-file)
            "* %^{Logging for...}
 :PROPERTIES:
 :Created: %U

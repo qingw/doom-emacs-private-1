@@ -396,6 +396,22 @@
         :localleader
         :nv "=" #'yapfify-buffer))
 
+(after! conda
+  (setq conda-anaconda-home "/opt/anaconda")
+  (defun conda--switch-buffer-auto-activate (&rest args)
+    "Add conda env activation if a buffer has a file, handling ARGS."
+    (when (eq major-mode 'python-mode)
+      (let ((filename (buffer-file-name)))
+        (when filename
+          (with-demoted-errors "Error: %S"
+            (conda-env-activate-for-buffer))))))
+  (conda-env-autoactivate-mode 1)
+  (conda-env-initialize-interactive-shells)
+  (conda-env-initialize-eshell)
+  ;; Version management with pyenv
+  (add-hook 'conda-postactivate-hook #'+python|add-version-to-modeline)
+  (add-hook 'conda-postdeactivate-hook #'+python|add-version-to-modeline))
+
 (def-package! pipenv
   :hook (python-mode . pipenv-mode)
   :init

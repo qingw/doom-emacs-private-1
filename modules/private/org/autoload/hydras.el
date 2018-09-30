@@ -145,3 +145,43 @@
   ("r" org-refile)
   ("s" org-store-link)
   ("t" org-show-todo-tree))
+
+(defhydra hydra-org2 (:color blue :hint nil :exit nil :foreign-keys nil)
+  "
+
+^Org Mode^
+------------------------------------------------------------------------
+_y_ ivy todo     _d_ deadline       _t_ tags          _e_mphasis-s
+_c_ calendar     _w_ widen          _A_ align tags    _E_mphasis-h
+_a_ agenda       _h_ hide other     _o_ goto
+_r_ refile       _l_ store link     _g_ goto all
+_b_ sw. buffe    _s_ sort todos     _s_ sync
+_i_ cliplink     _S_ spart tree     _p_ edit special
+  "
+("q" nil)
+("SPC o" nil)
+("<escape>" nil)
+("E" org-hide-emphasis)
+("e" org-show-emphasis)
+("y" ivy-todo)
+("c" calendar)
+("r" org-refile)
+("b" org-switchb)
+("i" org-cliplink)
+("d" org-deadline)
+("w" widenToCenter)
+("h" org-hide-other)
+("l" org-store-link)
+("s" org-sort-todos)
+("S" org-sparse-tree)
+("t" counsel-org-tag)
+("p" org-edit-special)
+("o" counsel-org-goto)
+("g" counsel-org-goto-all)
+("A" org-align-all-tags)
+("T" org-set-tags-command)
+("c" counsel-org-capture)
+("n" org-narrow-to-subtree)
+("x" org-toggle-latex-fragment)
+("u" org-archive-subtree-default)
+("a" hydra-org-agenda/body))

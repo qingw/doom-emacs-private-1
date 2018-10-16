@@ -5,7 +5,7 @@
 (load! "+bindings")
 
 ;; (load! +babel)
-;; (load! +latex)
+(load! "+latex")
 ;; (load! +export)
 
 (after! org

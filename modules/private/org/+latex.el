@@ -61,6 +61,7 @@
                                         \\usepackage[a4paper,hmargin=1.25in,vmargin=1in]{geometry}
                                         \\usepackage{graphicx}
                                         \\usepackage{longtable}
+                                        \\usepackage{pdflscape}
                                         \\usepackage{float}
                                         \\usepackage{wrapfig}
                                         \\usepackage{rotating}

@@ -19,11 +19,11 @@
 
       doom-localleader-key ","
 
-      doom-font (font-spec :family "Fira Code" :size 14 )
+      ;; doom-font (font-spec :family "Fira Code" :size 14 )
       ;; doom-font (font-spec :family "Source Code Pro" :size 14 )
       ;; doom-variable-pitch-font (font-spec :family "Fira Sans")
-      doom-unicode-font (font-spec :family "Source Code Pro" :size 14)
-      doom-big-font (font-spec :family "Fira Mono" :size 18)
+      ;; doom-unicode-font (font-spec :family "Source Code Pro" :size 14)
+      ;; doom-big-font (font-spec :family "Fira Mono" :size 18)
 
       frame-resize-pixelwise t
       )

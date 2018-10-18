@@ -30,8 +30,11 @@
 
       :gnvime "M-g"   #'goto/body
 
-      :nie "C-S-u" #'doom/backward-kill-to-bol-and-indent
-      :nie "C-u"   #'kill-line
+      :nie "C-S-u"    #'doom/backward-kill-to-bol-and-indent
+      :nie "C-u"      #'kill-line
+
+      :nie "\C-b"     #'backward-char
+      :nie "\C-f"     #'forward-char
 
       ;; "C-s"           #'counsel-grep-or-swiper
       ;; "C-S-s"         #'doom/swiper-region-or-symbol

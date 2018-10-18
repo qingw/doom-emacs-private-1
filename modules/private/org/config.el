@@ -12,6 +12,8 @@
   (setq
    org-modules (quote (org-bibtex org-habit org-info org-protocol org-mac-link org-notmuch))
    org-ellipsis " ▼ "
+
+   +org-export-dir "/tmp/org-export/"
    )
   ;; from https://emacs.stackexchange.com/questions/30520/org-mode-c-c-c-c-to-display-inline-image
   ;; TODO only redisplay affect source block
